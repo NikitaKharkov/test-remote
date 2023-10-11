@@ -255,9 +255,9 @@ function print_all_messages($message=NULL, $error=NULL, $note=NULL, $warning=NUL
  *    - short           RETURNS Nov 26, 1973
  *    - long            RETURNS Tuesday, November 26, 1973
  *    - datetime        RETURNS Tuesday, November 26, 1973 5:24 pm
- *    - mysql_date      RETURNS 1973-11-26
- *    - mysql_datetime  RETURNS 1973-11-26 17:24:59
- *    - mysql_timestamp RETURNS 19731126172459
+ *    - mysqli_date      RETURNS 1973-11-26
+ *    - mysqli_datetime  RETURNS 1973-11-26 17:24:59
+ *    - mysqli_timestamp RETURNS 19731126172459
  *    - mssql_datetime  RETURNS 1973-11-26 17:24:59.000
  *    - php             RETURNS formatting from $php_formatting (default is November 26, 1973)
  *    - php|m/d/Y       RETURNS shorthand php formatting. replace m/d/Y with php date() {@link http://php.net/date PHP.net date()}
@@ -330,11 +330,11 @@ function convert_date($date='', $format='', $php_formatting='F j, Y')
 		return date('l, F j, Y', $time);                      // "Tuesday, November 26, 1973"
 	} elseif ($lower_format == 'datetime') {
 		return date('l, F j, Y g:i a', $time);                // "Tuesday, November 26, 1973 5:24 pm"
-	} elseif ($lower_format == 'mysql_date') {
+	} elseif ($lower_format == 'mysqli_date') {
 		return date('Y-m-d', $time);                          // "1973-11-26"
-	} elseif ($lower_format == 'mysql_datetime') {
+	} elseif ($lower_format == 'mysqli_datetime') {
 		return date('Y-m-d H:i:s', $time);                    // "1973-11-26 17:24:59"
-	} elseif ($lower_format == 'mysql_timestamp') {
+	} elseif ($lower_format == 'mysqli_timestamp') {
 		return date('YmdHis', $time);                         // "19731126172459"
 	} elseif ($lower_format == 'mssql_datetime') {
 		return date('Y-m-d H:i:s.000', $time);                // "1973-11-26 17:24:59.000"

@@ -4,7 +4,7 @@
  $s = $_REQUEST['s'];
  // SQL injection protection for the _GET
  foreach ($_GET as $key => $value) {
-    $_GET[$key] = mysql_real_escape_string($value);
+    $_GET[$key] = mysqli_real_escape_string($value);
   } 
  
  // Get the search variable
@@ -30,10 +30,10 @@
   	}
  
  //connect to database
- mysql_connect("supportdb102.epnet.com","supportUser","kn0wl3dge2g@1n$"); //(host, username, password)
+ mysqli_connect("supportdb102.epnet.com","supportUser","kn0wl3dge2g@1n$"); //(host, username, password)
 
  //specify database
- mysql_select_db("support_epnet") or die("Unable to select database");
+ mysqli_select_db("support_epnet") or die("Unable to select database");
 
  if ($words == 2)	{
  // Build SQL Query  
@@ -84,8 +84,8 @@ foreach ($trimmed as $word) {
  }
  //echo $query;
  
- $numresults=mysql_query($query);
- $numrows=mysql_num_rows($numresults);
+ $numresults=mysqli_query($query);
+ $numrows=mysqli_num_rows($numresults);
 
  if ($numrows == 0)
  	{
@@ -102,7 +102,7 @@ foreach ($trimmed as $word) {
   
  // get results
  	$query .= " limit $s,$limit";
- 	$result = mysql_query($query) or die("Couldn't execute query");
+ 	$result = mysqli_query($query) or die("Couldn't execute query");
 
  // display what the person searched for
  	echo "<div><p class='results'>Your search results for <b>" . $var . "</b></p></div>";
@@ -112,7 +112,7 @@ foreach ($trimmed as $word) {
  	//$count = 1 + $s ;
 
  // now you can display the results returned
- 	while ($row= mysql_fetch_array($result))
+ 	while ($row= mysqli_fetch_array($result))
  	{
  		$title = $row["title"];
  		$help_page_id = $row["help_page_id"];

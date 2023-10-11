@@ -27,7 +27,7 @@ class ADODB_pdo_mysql extends ADODB_pdo {
 		$parentDriver->hasTransactions = false;
 		#$parentDriver->_bindInputArray = false;
 		$parentDriver->hasInsertID = true;
-		$parentDriver->_connectionID->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+		$parentDriver->_connectionID->setAttribute(PDO::mysqli_ATTR_USE_BUFFERED_QUERY,true);
 	}
 	
 		// dayFraction is a day in floating point

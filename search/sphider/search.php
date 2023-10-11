@@ -111,8 +111,8 @@ function poweredby () {
 
 function saveToLog ($query, $elapsed, $results) {
         global $mysql_table_prefix;
-	mysql_query("insert into ".$mysql_table_prefix."query_log (query, time, elapsed, results) values ('$query', now(), '$elapsed', '$results')");
-	echo mysql_error();
+	mysqli_query("insert into ".$mysql_table_prefix."query_log (query, time, elapsed, results) values ('$query', now(), '$elapsed', '$results')");
+	echo mysqli_error();
 }
 
 switch ($search) {

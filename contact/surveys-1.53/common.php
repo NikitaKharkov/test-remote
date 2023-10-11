@@ -2646,7 +2646,7 @@ function getArrayFiltersForGroup($gid)
 	// Get All Questions in Current Group
 	$qquery = "SELECT * FROM ".db_table_name('questions')." WHERE sid='$surveyid' AND gid='$gid' AND language='".$_SESSION['s_lang']."' ORDER BY qid";
 	$qresult = db_execute_assoc($qquery);
-	$grows = array(); //Create an empty array in case mysql_fetch_array does not return any rows
+	$grows = array(); //Create an empty array in case mysqli_fetch_array does not return any rows
 	// Store each result as an array with in the $grows array
 	while ($qrow = $qresult->FetchRow()) {
 		$grows[$qrow['qid']] = array('qid' => $qrow['qid'],'type' => $qrow['type'], 'mandatory' => $qrow['mandatory'], 'title' => $qrow['title']);

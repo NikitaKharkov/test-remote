@@ -634,7 +634,7 @@ Changes from 1.81 to 1.82 (build 6757) [2009/04/29] - Legend: + new feature, # u
 -Fixed issue: Import of question types was dumbed down due to version restriction (c_schmitz)
 -Fixed issue: Notices when exporting to CSV file (c_schmitz)
 -Fixed upload image not working for assessments. (lemeur)
--Fixed Issue unknown: changed mysql_escape_string to db_quote... now hopefully working for all db types... (wahrendorff)
+-Fixed Issue unknown: changed mysqli_escape_string to db_quote... now hopefully working for all db types... (wahrendorff)
 -Fixed issue #2332: VVimport fails with MSSQL DB (c_schmitz)
 -Fixed issue #3025: On MS SQL Server editing template rights does not list any templates (c_schmitz)
 -Fixed issue #3042: Assessments don't work correctly with multiple choice questions (c_schmitz)

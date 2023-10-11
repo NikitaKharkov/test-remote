@@ -94,7 +94,7 @@ $statisticsoutput .= "</table>\n"
 
 //Select public language file
 $query = "SELECT datestamp FROM {$dbprefix}surveys WHERE sid=$surveyid";
-$result = db_execute_assoc($query) or die("Error selecting language: <br />".$query."<br />".mysql_error());
+$result = db_execute_assoc($query) or die("Error selecting language: <br />".$query."<br />".mysqli_error());
 while ($row=$result->FetchRow()) {$datestamp=$row['datestamp'];}
 
 // 1: Get list of questions from survey

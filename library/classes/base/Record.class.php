@@ -2938,7 +2938,7 @@ abstract class Record extends Foundation
                 }    
             }
             
-            $new_value = convert_date($value, 'mysql_datetime');
+            $new_value = convert_date($value, 'mysqli_datetime');
             // If we can't standardize the date let the validator catch it
             if ($new_value === NULL) {
                 return $value;

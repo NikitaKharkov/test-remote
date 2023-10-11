@@ -45,10 +45,10 @@ function dbInsert(
 	global $dbServer, $dbUsername, $dbPassword, $dbSchema;
 
 	// Open DB connection
-	$db = mysql_connect($dbServer, $dbUsername, $dbPassword)
-    OR die("Could not connect to database: ".mysql_error());
-	mysql_select_db($dbSchema, $db)
-		OR die ("Could not connect to database: ".mysql_error());
+	$db = mysqli_connect($dbServer, $dbUsername, $dbPassword)
+    OR die("Could not connect to database: ".mysqli_error());
+	mysqli_select_db($dbSchema, $db)
+		OR die ("Could not connect to database: ".mysqli_error());
 	
 	// Convert submitted arrays into strings
 	$sections = join($selectedSections, ";");
@@ -57,30 +57,30 @@ function dbInsert(
 	
 	
 	// Sanitize user-provided data - helps prevent security holes
-	$custID = mysql_real_escape_string($custID);
-	$cmeEmail = mysql_real_escape_string($cmeEmail);
-	$firstName = mysql_real_escape_string($firstName);
-	$lastName = mysql_real_escape_string($lastName);
-	$userEmail = mysql_real_escape_string($userEmail);
-	$userTypeID = mysql_real_escape_string($userTypeID);//added 2009-03-12, tufts only
-	$userType = mysql_real_escape_string($userType);//added 2009-03-12, tufts only
-	$ccEmail = mysql_real_escape_string($ccEmail);
-	$type = mysql_real_escape_string($type);
-	$title = mysql_real_escape_string($title);
-	$searching = mysql_real_escape_string($searching);
-	$sections = mysql_real_escape_string($sections);
-	$found = mysql_real_escape_string($found);
-	$learningID = mysql_real_escape_string($learningID); //added 2009-03-13
-	$learning = mysql_real_escape_string($learning);
-	$date = mysql_real_escape_string($date);
-	$creditTypeID = mysql_real_escape_string($creditTypeID);//added 2009-03-12
-	$creditType = mysql_real_escape_string($creditType);
-	$feedback = mysql_real_escape_string($feedback);
-	$phoneNumber = mysql_real_escape_string($phoneNumber);//added 2009-12-05
-	$address = mysql_real_escape_string($address);
-	$city = mysql_real_escape_string($city);
-	$state = mysql_real_escape_string($state);
-	$zip = mysql_real_escape_string($zip);
+	$custID = mysqli_real_escape_string($custID);
+	$cmeEmail = mysqli_real_escape_string($cmeEmail);
+	$firstName = mysqli_real_escape_string($firstName);
+	$lastName = mysqli_real_escape_string($lastName);
+	$userEmail = mysqli_real_escape_string($userEmail);
+	$userTypeID = mysqli_real_escape_string($userTypeID);//added 2009-03-12, tufts only
+	$userType = mysqli_real_escape_string($userType);//added 2009-03-12, tufts only
+	$ccEmail = mysqli_real_escape_string($ccEmail);
+	$type = mysqli_real_escape_string($type);
+	$title = mysqli_real_escape_string($title);
+	$searching = mysqli_real_escape_string($searching);
+	$sections = mysqli_real_escape_string($sections);
+	$found = mysqli_real_escape_string($found);
+	$learningID = mysqli_real_escape_string($learningID); //added 2009-03-13
+	$learning = mysqli_real_escape_string($learning);
+	$date = mysqli_real_escape_string($date);
+	$creditTypeID = mysqli_real_escape_string($creditTypeID);//added 2009-03-12
+	$creditType = mysqli_real_escape_string($creditType);
+	$feedback = mysqli_real_escape_string($feedback);
+	$phoneNumber = mysqli_real_escape_string($phoneNumber);//added 2009-12-05
+	$address = mysqli_real_escape_string($address);
+	$city = mysqli_real_escape_string($city);
+	$state = mysqli_real_escape_string($state);
+	$zip = mysqli_real_escape_string($zip);
 	
 	
 	// Convert the submitted date into a format MySQL understands
@@ -111,10 +111,10 @@ function dbInsert(
 			
 	
 	// Execute Query
-	mysql_query($insert)
-		OR die ("Could not insert to the database: ".mysql_error());
+	mysqli_query($insert)
+		OR die ("Could not insert to the database: ".mysqli_error());
 	
 	// Close DB connection
-	mysql_close($db);
+	mysqli_close($db);
 }
 ?>

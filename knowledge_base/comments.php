@@ -40,15 +40,15 @@ if ( $_POST['submit'] ) {
 $cids = $_REQUEST['q'];
 $_SESSION['comment'][$cids] = $cids;
 
-mysql_connect("supportdb102.epnet.com", "faqUser", "c0mm3ntsOnu5") or die(mysql_error());
-mysql_select_db("faq_ratings") or die(mysql_error());
+mysqli_connect("supportdb102.epnet.com", "faqUser", "c0mm3ntsOnu5") or die(mysqli_error());
+mysqli_select_db("faq_ratings") or die(mysqli_error());
 
 $mysql = array();
-$mysql['id'] = mysql_real_escape_string( $_POST['q'] );
-$mysql['rating'] =  mysql_real_escape_string( $_POST['rating'] );
-$mysql['comment'] = mysql_real_escape_string( $_POST['comment'] );
+$mysql['id'] = mysqli_real_escape_string( $_POST['q'] );
+$mysql['rating'] =  mysqli_real_escape_string( $_POST['rating'] );
+$mysql['comment'] = mysqli_real_escape_string( $_POST['comment'] );
 $sql = "INSERT INTO comments ( id,rating,comment,date ) VALUES ( '{$mysql['id']}','{$mysql['rating']}','{$mysql['comment']}', NOW() )"; 
-mysql_query( $sql );
+mysqli_query( $sql );
 
 //echo "Thank you for your feedback!";
 header('Location: /knowledge_base/thanku.php', true, 302);
