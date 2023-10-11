@@ -1,0 +1,195 @@
+@charset "utf-8";
+
+ul
+{
+	margin-bottom: 10px;
+}
+
+hr
+{
+	margin-top: 35px;
+	margin-bottom: 5px;
+}
+
+h3
+{
+	margin-top: 0px;
+	margin-bottom: 10px;
+	float: left;
+}
+
+.parameters
+{
+	padding: 0px;
+	margin-bottom: 10px;
+	border: 0px;
+	border-collapse: collapse;
+}
+
+#showhide_btn
+{
+	 position: absolute;
+	 top: 0px;
+	 left: 0px;
+}
+
+#showhide_btn a
+{
+	font-size: 10px;
+}
+
+.parameters th
+{
+	border: 0px;
+	
+	padding: 0px;
+	margin: 0px;
+	
+	height: 45px;
+
+	color: #FFFFFF;
+	font-weight: bold;
+	
+	background-image: url('../img/api_table_header_bknd.png');
+	background-repeat: repeat-x;
+	
+	border-collapse: collapse;
+}
+
+.th_leftcorner
+{
+	background-image: url('../img/api_table_header_left.png');
+	background-repeat: no-repeat;
+	
+	padding-left: 5px;
+	
+	float: left;
+	width: 7px;
+	height: 45px;
+	
+	border-collapse: collapse;
+}
+
+.th_rightcorner
+{
+	background-image: url('../img/api_table_header_right.png');
+	background-repeat: no-repeat;
+	
+	float: right;
+	width: 8px;
+	height: 45px;
+	
+	border-collapse: collapse;
+}
+
+.parameters tr
+{
+	background-color: #fbfbfe;
+	
+	background-image: url('../img/api_table_border.png');
+	background-repeat: repeat-y;
+	
+}
+
+.parameters td
+{
+	padding: 5px;
+	margin-left: 0px;
+	
+	
+	background-image: url('../img/api_table_border.png');
+	background-repeat: repeat-y;
+	
+	border-bottom: 1px solid #1079c9;
+	
+	border-collapse: collapse;
+}
+
+
+.highlight
+{
+	font-style: italic;
+	font-weight: bold;
+}
+
+.highlight2
+{
+	color: #5a0000;
+}
+
+.highlight3
+{
+	font-style: italic;
+}
+
+pre
+{
+	border: 1px dashed #000000;
+	background-color: #f5ffff;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	
+	padding: 5px;
+}
+
+.ws_infobox
+{
+	border: 1px solid #327700;
+	background-color: #e6f3e6;
+	
+	padding: 5px;
+	
+	float: right;
+	width: 250px; 
+	 
+	margin-top: 15px;
+	margin-left: 10px;
+}
+
+.txt
+{
+	border: 1px solid #327700;
+	/*background-color: #f2fbef; */
+	background-color: #ffffff;
+}
+
+.th_lefttext
+{
+	float: left;
+	height: 30px;
+	padding-top: 15px;
+}
+
+.th_text
+{
+	float: left;
+	height: 30px;
+	padding-left: 7px;
+	padding-top: 15px;
+	border-left: 1px solid #1079c9;
+}
+
+.tr_header
+{
+	border: 0px;
+}
+
+.th_right
+{
+	width: 100px;
+	border: 0px;
+}
+
+.th_righttext
+{
+	float: left; 
+	height: 30px; 
+	padding-left: 7px; 
+	padding-top: 15px; 
+	border-left: 1px solid #1079c9;
+}
+
+.td_right
+{
+	border-right: 1px solid #1079c9;
+}

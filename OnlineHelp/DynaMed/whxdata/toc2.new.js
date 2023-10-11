@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"What is DynaMed CME","type":"item","url":"Continuing_Education/What_is_CME.htm"},{"name":"Claiming CME Credits","type":"item","url":"Continuing_Education/Claiming_CME_Credits.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

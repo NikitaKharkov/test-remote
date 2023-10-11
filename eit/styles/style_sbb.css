@@ -1,0 +1,512 @@
+input[type=text], select {
+	width: 305px;
+}
+
+input[type=text] {
+	color: #353535;
+	font-size: 9pt;
+	text-align: left;
+}
+
+.input-auto-width input {
+	width: auto;
+}
+
+#sbbForm .center-to-db-list {
+	margin: 0 auto;
+	width: 600px; /* same as multiselect css class */
+}
+
+#sbbForm h3 {
+	margin-bottom: 14px;
+}
+
+p {
+	color: #000000;
+	font-size: 11px;
+	line-height: 15px;
+}
+
+#sbbForm fieldset {
+	padding: 7px;
+	width: 286px;
+	white-space: nowrap;
+	font-size: 11px;
+}
+
+#sbbForm fieldset li {
+	float: left;
+	width: 49%;
+}
+
+#sbbMainContainer > * {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#sbbForm .add-help-text
+{
+	margin-bottom: 5px;
+}
+
+.add-container {
+	position: relative;
+	height: 60px;
+}
+
+.db-display-name {
+	width: 170px;
+}
+
+input.db-code {
+	width: 70px;
+}
+.add-container > label {
+	position: absolute;
+	top: 26px;
+}
+
+.db-display-name ~ label {
+	left: 0;
+}
+
+.db-code ~ label {
+	left: 147px;
+}
+
+.db-add {
+	background: url("https://imageserver.ebscohost.com/branding/images/authentication/barBlue.gif") repeat-x scroll 50% center #025DA2;
+	border: 2px outset #E0E0E0;
+	color: #FFFFFF;
+	font-weight: bold;
+	margin-left: 2px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	text-align: center;
+	vertical-align: middle;
+	width: 53px;
+}
+
+.general li {
+	list-style-image: url(../images/tiny_bullet.gif);
+}
+
+
+#sbbMainContainer > * {
+	position: relative;
+}
+
+.col-1 {
+	display: inline-block;
+	vertical-align: top;
+	width: 135px;
+}
+
+.col-1 ~ ul {
+	padding: 0;
+	display: inline-block;
+}
+
+/* use only when element not next to element with .col-1 */
+.col-2 {
+	margin-left: 138px;
+}
+
+#sbbForm .multiselect
+{
+	margin: 0 auto;
+	padding: 0;
+
+	min-height: 100px;
+	max-height: 400px;
+	width: 600px;
+	overflow: auto;
+	overflow-x: hidden;
+	list-style-type: none;
+	border: 1px solid #D0D0BF;
+}
+
+.db-short-name
+{
+	margin-left: 5px;
+	color: #999999;
+}
+
+#methods {
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+#chooseDatabasesHelpText {
+	font-size: 11px;
+	color: #999999;
+}
+
+#searchehisdatabases {
+	margin-top: 10px;
+}
+
+.scroll-box-container
+{
+	border: 1px solid #D0D0BF;
+	padding: 10px;
+	overflow: auto;
+	max-height: 600px;
+}
+
+#disciplinesContainer
+{
+	border: 3px solid #797859;
+}
+
+#disciplinesContainer .first
+{
+	width: 100px;
+}
+#disciplinesContainer .second
+{
+	width: 400px;
+}
+#disciplinesContainer .third
+{
+	width: 150px;
+}
+
+#disciplinesContainer td, #disciplinesContainer th
+{
+	padding: 5px;
+	border-width: 1px 1px 0 0;
+	border-color: #A1A1A1;
+	border-style: solid;
+}
+
+#disciplineDisplayTypeMethods
+{
+	display: inline;
+}
+
+.disciplines-section-title
+{
+	margin: 0 7px 10px;
+}
+
+/* ----- FORMS ----- */
+
+.main input {
+	background-color: #FFF;
+	color: #999999;
+	border: 1px solid #CCC;
+	font-size: 11px;
+}
+
+button {
+	background-color: #EFEFEF;
+	line-height: 11px;
+	color: #000;
+	border: 1px solid #CCC;
+	font-size: 11px;
+	height: 20px;
+}
+
+/* ----- IMAGES ----- */
+
+img {
+	border: 0;
+}
+
+img a {
+	border: 0;
+	text-decoration: none;
+}
+
+img a:hover {
+	border: none;
+}
+
+
+/* ----- CONTENT ----- */
+
+
+#primaryContent {
+	padding: 10px 5px 10px 55px;
+	border-right: 5px solid #e7e7e7;
+	font-size: 11px;
+}
+
+
+#secondaryContent {
+	padding: 10px 14px;
+	font-size: 11px;
+}
+
+#secondaryContent h2 {
+	background: url(../images/intro_bg.gif) no-repeat;
+	color: #fff;
+	line-height: 21px;
+	font-size: 13px;
+	font-weight: normal;
+}
+
+#secondaryContent h3 {
+	color: #87b220;
+}
+
+#secondaryContent ul {
+	list-style: none;
+}
+
+#secondaryContent li {
+	list-style: none;
+	background: url(../images/tiny_bullet.gif) left bottom no-repeat;
+}
+#secondaryContent li a {
+	color: #87b220;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#secondaryContent li a:hover {
+	color: #575757;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#secondaryContent .links li {
+	background: none;
+}
+
+/* ----- COMMENTS ----- */
+
+#comments #status {
+	color: #546d17;
+	background: #f8f8f8;
+	border: 2px solid #ececec;
+}
+#comments #status dd, #comments #status dt {
+	display: inline;
+}
+
+#comments a {
+	color: #546d17;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#comments a:hover {
+	color: #666;
+	text-decoration: underline;
+}
+
+#comments .comment {
+	border-top: 3px solid #7fa71f;
+}
+
+#comments .comment dd {
+	color: #656565;
+	line-height: 20px;
+	font-size: 10px;
+}
+
+#comments .comment .date {
+	line-height: 12px;
+	font-size: 11px;
+	color: #585858;
+}
+
+/* ----- CLASSES ----- */
+
+.menu li p, .menu li a {
+	text-decoration: none;
+	font-weight:bold;
+}
+
+#sbbForm h3 b
+{
+	color: #144679;
+	font-weight: normal;
+}
+
+#sbbForm ul {
+	margin: 0;
+	padding: 0;
+}
+
+#sbbForm li
+{
+	margin: 0 0 10px 0;
+	list-style-type: none;
+}
+
+#testDrivePreview li {
+	margin: 0;
+
+}
+
+#searchdatabases .multiselect {
+	padding-top: 5px;
+}
+
+#profileCredentials ul {
+	/*margin: 12px auto;*/
+	/*padding-right: 40px;*/ /* so it looks centered */
+	width: 220px;
+}
+#profileCredentials li {
+
+}
+#profileCredentials input {
+	margin-bottom: 2px;
+	width: 215px;
+}
+
+
+.horizontal {
+	display: inline;
+	padding: 0;
+}
+.horizontal li {
+	display: inline;
+}
+
+#memoCode {
+	width: 700px;
+	height: 300px;
+}
+
+#buildSearchBoxButton {
+	display: inline;
+	margin-top: 30px;
+}
+
+#resetFormLink {
+	margin-left: 50px;
+}
+
+/* ---- Form elements -- */
+
+select,
+div.labeltext input,
+div.labeltext,
+fieldset.labeltext {
+	font-size: 9pt;
+	color: #353535;
+	text-align: left;
+}
+
+/* -- END Form elements ---- */
+
+div.titletext,
+div.subtitletext {
+	font-weight: bold;
+	color: #FFFFFF;
+	text-align: left;
+}
+
+.labeltext option,
+.labeltext textarea {
+	font-size: 9pt;
+	color: #353535;
+	text-align:left;
+}
+
+.commenttext {
+	margin-top: 5px;
+	padding-left: 2px;
+	display: block;
+	font-size: 7pt;
+	color: #333333;
+	text-align: left;
+}
+
+img.default-style {
+	border: 2px solid #CCCCCC;
+}
+
+img.selectStyle {
+	border: 2px solid #2d5a26;
+}
+
+
+p {
+	color: #000000;
+	font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.balloon {
+	background-color: lightyellow;
+	padding: 5px;
+	border: 1px solid #999999;
+	z-index: 100;
+	font-family: Arial,Verdana;
+	font-size: 9pt;
+	color: #353535;
+}
+
+a.tt {
+	position: relative;
+	z-index:24;
+}
+a.tt span {
+	display: none;
+}
+
+a.tt:hover {
+	z-index:25;
+	color: #aaaaff;
+}
+
+a.tt:hover span.tooltip {
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: -345px;
+	padding: 15px 0 0 0;
+	width: 754px;
+	height: 513px;
+}
+
+.choose-db-list {
+	list-style-type: none;
+}
+
+.choose-db-list li {
+	display:block;
+	overflow: auto;
+}
+
+.choose-db-check {
+	color:red;
+}
+
+.choose-db-detail {
+	border-left: solid 1px #E7E7E7;
+	line-height: 1.4em;
+}
+
+.summary {
+	background-color: #1D5DA7;
+	color: #FFFFFF;
+	border: solid 1px #1D5DA7;
+}
+
+#customizeLayout li {
+	margin-bottom: 22px;
+}
+
+#dbfilter {
+margin-left: 64px;
+}
+#dbfilter input {
+width: 580px;
+}
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}

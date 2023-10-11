@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Installing the DynaMed Mobile App","type":"item","url":"Mobile/Install_Mobile_App.htm"},{"name":"DynaMed Mobile App FAQs","type":"item","url":"Mobile/Mobile_App_FAQs.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

@@ -1,0 +1,33 @@
+<types>
+	<type id="DiseaseSummary">
+		<option>General Information (including ICD-9/-10 Codes)</option>
+		<option>Causes and Risk Factors</option>
+		<option>Complications and Associated Conditions</option>
+		<option>History</option>
+		<option>Physical</option>
+		<option>Diagnosis</option>
+		<option>Prognosis</option>
+		<option>Treatment</option>
+		<option>Prevention and Screening</option>
+		<option>References including Reviews and Guidelines</option>
+		<option>Patient Information</option>
+	</type>
+	<type id="DrugSummary">
+		<option>Overview</option>
+		<option>Warnings</option>
+		<option>General Information</option>
+		<option>Uses and Efficacy</option>
+		<option>Dosage and Administration</option>
+		<option>Cautions and Adverse Effects</option>
+		<option>Drug Interactions</option>
+		<option>Mechanism of Action/Pharmacokinetics</option>
+		<option>Stability</option>
+		<option>Preparations</option>
+		<option>Patient Information</option>
+		<option>Patient Monitoring</option>
+		<option>Overdose</option>
+		<option>Costs</option>
+		<option>Individual Drugs and Alternatives</option>
+		<option>References</option>
+	</type>
+</types>

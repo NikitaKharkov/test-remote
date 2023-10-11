@@ -1,0 +1,542 @@
+@charset "utf-8";
+
+body
+{
+	background-color: #e2e8e6;
+	background-image: url( '../img/carousel/background.png');
+	background-position: bottom left;
+	background-repeat: repeat-x;
+	margin:0px;
+    padding: 0px;
+    border: 0px;
+	
+	
+	
+	text-align: left;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+#builderHolder .rule
+{
+	width: 100%;
+	border-top: 1px solid #666666;
+	height: 0px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#builderHolder
+{
+
+	position: relative;
+
+}
+
+/* Config Area */
+
+#builderHolder .configArea
+{
+	width: 280px;
+	
+	background-color: #FFFFFF;
+	padding: 10px;
+	margin-top: 15px;
+	
+	height: 195px;
+	
+	
+	position: relative;
+}
+
+#builderHolder .configAreaTitle
+{
+	position: absolute;
+	
+	height: 20px;
+	padding: 5px;
+	padding-bottom: 0px;
+	
+	left: 15px;
+	top: -26px;
+	
+	border: 1px solid #666666;
+	border-bottom: 0px;
+	
+	font-size: 14px;
+	font-weight: bold;
+	
+	background-color: #FFFFFF;
+}
+
+#builderHolder .configBoxName
+{
+	width: 150px;
+	text-align: left;
+	float: left;
+}
+
+#builderHolder .configBoxValue
+{
+	width: 130px;
+	text-align: left;
+	float: left;
+}
+
+#builderHolder .configBoxForm
+{
+	width: 130px;
+}
+
+#builderHolder .clear
+{
+	clear: both;
+	height: 10px;
+	width: 1px;
+}
+
+
+/* Book Area */
+
+#builderHolder .bookArea
+{
+	width: 280px;
+	
+	background-color: #FFFFFF;
+	padding: 10px;
+	margin-top: 10px;
+
+	height: 220px;
+	
+	position: relative;
+}
+
+#builderHolder .bookAreaTitle
+{
+	position: absolute;
+	
+	height: 20px;
+	padding: 5px;
+	padding-bottom: 0px;
+	
+	left: 15px;
+	top: -26px;
+	
+	border: 1px solid #666666;
+	border-bottom: 0px;
+	
+	font-size: 14px;
+	font-weight: bold;
+	
+	background-color: #FFFFFF;
+}
+
+#builderHolder ul
+{
+	width: 280px;
+	height: 180px;
+	border: 1px solid #000000;
+	padding: 0px;
+	margin: 0px;
+	
+	overflow: scroll;
+	
+	overflow-x: hidden;
+	
+	position: relative;
+	
+	margin-bottom: 10px;
+}
+
+#builderHolder li
+{
+	list-style-type: none;
+	padding: 5px;
+	margin: 0px;
+}
+
+#builderHolder li:hover
+{
+	background-color: #daf5d7;
+}
+
+#builderHolder .emptyList
+{
+	font-style: italic;
+	background-color: #FFFFFF;
+	color: #666666;
+}
+
+#builderHolder .emptyList:hover
+{
+	background-color: #FFFFFF;
+}
+
+#builderHolder .bookTitle
+{
+	width: 170px;
+	float: left;
+	clear: both;
+}
+
+#builderHolder .edit
+{
+	width: 20px;
+	height: 20px;
+	
+	float: right;
+	cursor: pointer;
+	
+	background-image: url( '../img/carousel/edit_sprite.png' );
+	background-position: -3px -5px;
+}
+
+#builderHolder .delete
+{
+	width: 20px;
+	height: 20px;
+	
+	float: right;
+	cursor: pointer;
+	
+	background-image: url( '../img/carousel/edit_sprite.png' );
+	background-position: -23px -5px;
+}
+
+#builderHolder .up
+{
+	width: 19px;
+	height: 19px;
+	
+	background-image: url( '../img/carousel/updown.png' );
+	background-position: 0px 0px;
+	
+	float: right;
+	cursor: pointer;
+}
+
+#builderHolder .down
+{
+	width: 19px;
+	height: 19px;
+	
+	background-image: url( '../img/carousel/updown.png' );
+	background-position: 19px 0px;
+	
+	float: right;
+	cursor: pointer;
+}
+
+#builderHolder .check
+{
+	width: 25px;
+	height: 25px;
+	
+	float: left;
+	
+	background-image: url( '../img/carousel/check.png' );
+	background-repeat: no-repeat;
+	background-position: -0px -0px;
+}
+
+
+#builderHolder .add
+{
+	
+	width: 25px;
+	height: 25px;
+	
+	float: left;
+}
+
+#builderHolder .checkButton
+{
+	border: 1px solid #AAAAAA;
+	padding: 5px;
+	padding-left: 30px;
+	cursor: pointer;
+	
+	float: right;
+	
+	background-image: url( '../img/carousel/check.png' );
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	
+	
+	margin-left: 5px;
+
+}
+
+
+#builderHolder .checkButton:hover
+{
+	background-color: #daf5d7;
+}
+
+
+#builderHolder .addButton
+{
+	border: 1px solid #AAAAAA;
+	padding: 5px;
+	padding-left: 30px;
+	cursor: pointer;
+	
+	float: right;
+	
+	background-image: url( '../img/carousel/add.png' );
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	
+	margin-left: 5px;
+
+}
+
+
+#builderHolder .addButton:hover
+{
+	background-color: #daf5d7;
+}
+
+
+
+#builderHolder .closeButton
+{
+	border: 1px solid #AAAAAA;
+	padding: 5px;
+	padding-left: 30px;
+	cursor: pointer;
+	
+	float: right;
+	
+	background-image: url( '../img/carousel/x.png' );
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	
+	margin-left: 5px;
+
+}
+
+
+#builderHolder .closeButton:hover
+{
+	background-color: #daf5d7;
+}
+
+
+.editButton
+{
+	border: 1px solid #AAAAAA;
+	padding: 5px;
+	padding-left: 30px;
+	cursor: pointer;
+	
+	position: absolute;
+	top: 5px;
+	right: 40px;
+	
+	width: 70px;
+	
+	background-image: url( '../img/carousel/pencil.png' );
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	
+	margin-left: 5px;
+
+}
+
+
+.editButton:hover
+{
+	background-color: #daf5d7;
+}
+
+#builderHolder .noclick
+{
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	
+	position: absolute;
+}
+
+#builderHolder .add_popup
+{
+	position: absolute;
+	left: 310px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	background-repeat: repeat;
+}
+
+#builderHolder .addBox
+{
+	width: 250px;
+	padding: 10px;
+	height: 220px;
+	border: 1px solid #666666;
+	background-color: #FFFFFF;
+	
+	position: relative;
+}
+
+#builderHolder .addBoxName
+{
+	width: 100px;
+	text-align: left;
+	float: left;
+	
+	margin-bottom: 5px;
+}
+
+#builderHolder .addBoxValue
+{
+	width: 150px;
+	text-align: left;
+	float: left;
+	margin-bottom: 5px;
+}
+
+#builderHolder .addBoxForm
+{
+	width: 145px;
+}
+
+#builderHolder .helpBox
+{
+	position: fixed;
+
+	width: 170px;
+	height: 165px;
+	
+	background-image: url( '../img/carousel/help.png' );
+	background-repeat: 0px;
+}
+
+#builderHolder .submitBox
+{
+	border: 1px solid #666666;
+	
+	background-color: #FFFFFF;
+	
+	width: 280px;
+	float: left;
+	margin-top: 35px;
+	
+	padding: 10px;
+	
+	position: relative;
+}
+
+#builderHolder .submitTitle
+{
+	position: absolute;
+	
+	height: 20px;
+	padding: 5px;
+	padding-bottom: 0px;
+	
+	left: 15px;
+	top: -26px;
+	
+	border: 1px solid #666666;
+	border-bottom: 0px;
+	
+	font-size: 14px;
+	font-weight: bold;
+	
+	background-color: #FFFFFF;
+}
+
+
+#codeHolder
+{
+	width: 730px;
+	
+	padding-top: 0px;
+	
+	position: relative;
+}
+
+#codeHolder .codeBox
+{
+	
+	background-color: #FFFFFF;
+	
+	width: 730px;
+	float: left;
+	margin-top: 15px;
+	
+	padding-top: 10px;
+	
+	position: relative;
+}
+
+#codeHolder .codeTitle
+{
+	position: absolute;
+	
+	height: 20px;
+	padding: 5px;
+	padding-bottom: 0px;
+	
+	left: 15px;
+	top: -26px;
+	
+	border: 1px solid #666666;
+	border-bottom: 0px;
+	
+	font-size: 14px;
+	font-weight: bold;
+	
+	background-color: #FFFFFF;
+}
+
+.previewBox
+{
+	background-color: #FFFFFF;
+	
+	width: 728px;
+	height: 300px;
+	
+	margin-top: 10px;
+	
+	border: 1px solid #ACACAC;
+	
+	float: left;
+	
+	display: none;
+	
+	overflow-x: scroll;
+	overflow-y: none;
+
+}
+
+.bookAreaInactive
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 0px;
+	
+	background-image: url( '../img/carousel/popup_background.png' );
+	background-repeat: repeat;
+}
+
+pre
+{
+	border: 1px dashed #000000;
+	background-color: #f5ffff;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	
+	width: 718px;
+	max-height: 150px;
+	padding: 5px;
+	
+	position: relative;
+	
+	text-align: left;
+}

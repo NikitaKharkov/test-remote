@@ -1,0 +1,47 @@
+<!-- MAKE SURE VALUES ARE UNIQUE -->
+<learned>
+	<item>
+		<p>
+			<div class="learnedCheck">
+				<input type="checkbox" id="learned_0" name="learned_0"
+					value="1" title="I fulfilled my educational need and learned something that will change how I manage patients."/>
+			</div>
+			<div class="learnedLabel">
+				<label for="learned_0">I fulfilled my educational need and learned something that will change how I manage patients.</label>
+			</div>
+		</p>
+	</item>
+	<item>
+		<p>
+			<div class="learnedCheck">
+				<input type="checkbox" id="learned_1" name="learned_1"
+					value="2" title="I fulfilled my educational need and reinforced information that supports how I currently manage patients."/>
+			</div>
+			<div class="learnedLabel">
+				<label for="learned_1">I fulfilled my educational need and reinforced information that supports how I currently manage patients.</label>
+			</div>
+		</p>
+	</item>
+	<item>
+		<p>
+			<div class="learnedCheck">
+				<input type="checkbox" id="learned_2" name="learned_2"
+					value="3" title="I partially fulfilled my educational need and provide constructive feedback for improving the educational resource."/>
+			</div>
+			<div class="learnedLabel">
+				<label for="learned_2">I partially fulfilled my educational need and provide constructive feedback for improving the educational resource.</label>
+			</div>
+		</p>
+	</item>
+	<item>
+		<p>
+			<div class="learnedCheck">
+				<input type="checkbox" id="learned_3" name="learned_3"
+					value="4" title="I did not find information to meet my original educational need but I learned something that will change how I manage patients."/>
+			</div>
+			<div class="learnedLabel">
+				<label for="learned_3">I did not find information to meet my original educational need but I learned something that will change how I manage patients.</label>
+			</div>	
+		</p>
+	</item>
+</learned>

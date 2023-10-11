@@ -1,0 +1,4 @@
+	
+function frontage() {
+	this.focus();
+}

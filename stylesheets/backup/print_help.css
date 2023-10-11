@@ -1,0 +1,113 @@
+/**
+**
+** Template: HELP
+** 
+** Author: iMarc LLC, http://www.imarc.net
+**
+*/
+
+
+/*
+** HTML FRAMEWORK
+** ---------------------------------------------------- */
+body {
+	margin: 0 auto 0 auto;
+	padding: 0;
+	text-align:left;
+	line-height: normal;
+		
+	
+	/* horiz line that separates nav and content is a bg image */
+	/*background: #FFF url("/images/bg_line_ccc.gif") repeat-y scroll 21% 0%;*/
+}
+#header {
+	border-bottom: 1px solid #CCC;
+	padding: 0;
+	margin: 0;
+	display: none;
+}
+#header .logo {
+	border: none;
+	margin: 5px 0 2px 10px;
+	display: none;
+}
+
+.close {
+	margin: 5px 5px 0 0;
+	float:right;
+}
+.close img {
+	border:none;
+	margin: 5px 5px 0 0;
+}
+
+
+
+/* 
+** NAVIGATION TEMPLATE
+** ---------------------------------------------------- */
+#help_navigation_holder {
+	float: left;
+	width: 0%;
+	margin: 0;
+	padding: 0;
+	display: none;
+
+}
+#help_navigation {
+	padding: 5px;
+	display: none;
+}
+
+.topic_group {
+	/*line-height: 1.2em;*/
+	line-height: 95%;
+	display: none;
+}
+.topic_group ul {
+	padding: 0;
+	margin-left: 1.5em;
+	margin-top: .1em;
+	margin-bottom: .1em;
+	display: none;
+}
+.topic_group a          {color: #000; text-decoration:none;}
+.topic_group a:Visited  {color: #000; text-decoration:none;}
+.topic_group a:Active   {color: #000; text-decoration:none;}
+.topic_group a:Hover    {color: #00F; text-decoration:underline;}
+
+.topic_current, .topic_on, .topic_off {
+	margin: 0;
+	padding: 5px;
+	font-size: 90%;
+	display: none;
+}
+.topic_current {
+	background-color: #DDDDDD;
+}
+.topic_on {
+	background-color: #EEEEEE;
+}
+.topic_off {
+	background-color: #FFFFFF;
+}
+
+
+
+
+
+/* 
+** CONTENT TEMPLATE
+** ---------------------------------------------------- */
+#help_content_holder {
+	
+	float: left;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	min-height: 400px;
+	
+}
+#help_content {
+	padding: 5px 5px 5px 15px;
+}

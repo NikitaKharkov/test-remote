@@ -1,0 +1,371 @@
+/**
+**
+** Template: HELP
+** 
+** Author: iMarc LLC, http://www.imarc.net
+**
+*/
+
+
+/**
+**  
+** Template: ALL TEMPLATES
+** 
+** Author: iMarc LLC, http://www.imarc.net
+**
+*/
+
+
+
+/*
+** GENERAL
+** ---------------------------------------------------- */
+html { 
+	font-size: small;
+	font-family: 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	font-weight: normal;
+	line-height: 1.5em;
+}
+
+body {
+	margin: 0; padding: 0; border: none;
+	background-color: #FFF;
+	color: #333;
+	text-align: center;
+}
+
+h1 {
+	font: normal 700 2em 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	color: #333;
+	margin: 10px 0 15px 0;
+	border: none;
+	padding: 0;
+}
+
+h2 {
+	font: normal 900 1.5em 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	color: #999;
+	margin: 0 0 2px 0;
+	border: none;
+	padding: 0;
+}
+
+h3, .h3 {
+	font: normal 900 1.2em 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	color: #666;
+	margin: 0 0 2px 0;
+	border: none; padding: 0;
+}
+
+th { text-align: left; font-weight: bold; }
+
+td { vertical-align: top; }
+
+hr {
+	margin: 5px 0 5px 0;
+	padding: 0; border: none; 
+	color: #999; 
+	background-color: #999; 
+	height: 1px;
+}
+
+form { padding: 0; margin: 0; }
+
+img {
+	border: none;
+}
+.blanche {
+	color: #ffffff;
+}
+
+/*
+** USED THROUGHOUT SITES - AVAILABE IN FCKEditor PULLDOWNS
+** ---------------------------------------------------- */
+.ghost    { color: #666666; font-size: .95em; }
+.red      { color: #ff0000; }
+.smalltext, .smalltext td, .smalltext li {
+	font-size: .75em;
+}
+.error {
+	border: 1px solid #CC0000;
+	background-color: #FAEDED;
+	background-image: url(/images/admin/error.gif);
+	background-position: 0% 0%;
+	background-repeat: no-repeat;
+	padding: 3px 4px 4px 32px;
+	margin: 0px 0px 12px 0px;
+	color: #333333;
+}
+
+.message {
+	border: 1px solid #66CC00;
+	background-color: #F3F9EC;
+	background-image: url(/images/admin/message.gif);
+	background-position: 0% 0%;
+	background-repeat: no-repeat;
+	padding: 3px 4px 4px 32px;
+	margin: 0px 0px 12px 0px;
+	color: #333333;
+}
+
+.heading {
+	font: normal 900 1.5em 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	color: #000;
+	margin: 0 0 2px 0;
+	border: none;
+	padding: 0;
+}
+
+/*
+** OTHER SPECIFIC STYLES
+** ---------------------------------------------------- */
+.required { color: #f00; font-weight:bold; }
+.note {
+	margin: 10px 0 10px 0; 
+	padding: 8px;
+	border: 1px solid #CCC; 
+	background-color: #EEE;
+	color: #333;
+}
+
+.highlightbox, .question {
+	margin: 10px 0 10px 0; 
+	padding: 8px;
+	border: 1px solid #CC9; 
+	background-color: #FFC;
+	color: #000;
+}
+
+
+.warning {
+	border: 1px solid #FFFF33;
+	background-color: #FFFFCC;
+	background-image: url(/images/admin/warning.gif);
+	background-position: 0% 0%;
+	background-repeat: no-repeat;
+	padding: 3px 4px 4px 32px;
+	margin: 0px 0px 12px 0px;
+	color: #333333;
+}
+
+.warning img {
+	border: 0px;
+	vertical-align: middle;
+}
+
+.devnote, .dev_note {
+	border: 1px solid #0D61BE;
+	background-color: #F3F7FB;
+	background-image: url(/images/admin/dev.gif);
+	background-position: 0% 0%;
+	background-repeat: no-repeat;
+	padding: 3px 4px 4px 32px;
+	margin: 0px 0px 12px 0px;
+	color: #333333;
+}
+.normal_width {
+	width: auto;
+}
+
+.graphic_button {
+	width: auto;
+ 	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	vertical-align: top;
+}
+
+.float_right {
+	float: right;
+	color: #666;
+}
+
+.center_table  .form_table{
+	margin: 0 auto;
+}
+
+/**
+ * div that displays x of y for search results
+ */
+.pagination {
+	margin:  3px 0px 3px 0px;
+	font-size: 1em;
+}
+
+/**
+ * table that holds page walker
+ */
+
+.page_walker {
+	border-collapse: separate;
+	margin: 24px auto 0px;
+	font: normal normal 11px/normal Arial, Helvetica, sans-serif;
+	text-align: center;
+	line-height: 24px;
+}
+
+	/**
+	 * links to each page
+	 */
+	.page_walker a {
+		border: 1px solid #9BB0CB;
+		padding: 3px 6px;
+		margin: 0 1px 0 0;
+		text-decoration: none;
+		width: 50px;
+		font-weight: normal;
+	}
+	
+	/** 
+	 * over state for page links
+	 */
+	.page_walker a:Hover {
+		text-decoration: none;
+		color: #3D5262;
+		border: 1px solid #78899D;
+		background-color: #EEE;
+	}
+	
+	/**
+	 * page that is currently selected
+	 */
+	.page_walker .pw_highlight {
+		padding: 3px 6px;
+		margin: 0 1px 0 0;
+		color: #FFF;
+		background-color: #5E9F00;
+		font-weight: normal;
+		border: 1px solid #5E9F00;
+	}
+	
+	/**
+	 * previous and next boxes
+	 */
+	.page_walker .pw_previous, .page_walker .pw_next {
+		margin: 0 7px;
+		font-weight: bold;
+	}
+	
+	/**
+	 * disabled previous and next boxes
+	 */
+	.page_walker .pw_disabled {
+		color: #999;
+		font-weight: normal;
+		margin: 0 7px;
+		padding: 3px 6px;
+		border: 1px solid #DDD;
+	}
+
+/*
+** HTML FRAMEWORK
+** ---------------------------------------------------- */
+body {
+	margin: 0 auto 0 auto;
+	padding: 0;
+	text-align:left;
+	line-height: normal;
+	
+	
+	/* horiz line that separates nav and content is a bg image */
+	/*background: #FFF url("/images/bg_line_ccc.gif") repeat-y scroll 21% 0%;*/
+}
+#header {
+	border-bottom: 1px solid #CCC;
+	padding: 0;
+	margin: 0;
+	background: #FFF url(/images/background_help_top.jpg) no-repeat fixed top right;
+}
+#header .logo {
+	border: none;
+	margin: 5px 0 2px 10px;
+}
+
+.close {
+	margin: 5px 5px 0 0;
+	float:right;
+}
+
+.print {
+	margin: 5px 5px 0 0;
+	float: right;
+}
+
+.close img {
+	border:none;
+	margin: 5px 5px 0 0;
+}
+
+/* 
+** NAVIGATION TEMPLATE
+** ---------------------------------------------------- */
+#help_navigation_holder {
+	float: left;
+	width: 20%;
+	margin: 0;
+	padding: 0;
+}
+#help_navigation {
+	padding: 5px;
+}
+
+.topic_group {
+	/*line-height: 1.2em;*/
+	line-height: 95%;
+}
+.topic_group ul {
+	padding: 0;
+	margin-left: 1.5em;
+	margin-top: .1em;
+	margin-bottom: .1em;
+}
+.topic_group a          {color: #000; text-decoration:none;}
+.topic_group a:Visited  {color: #000; text-decoration:none;}
+.topic_group a:Active   {color: #000; text-decoration:none;}
+.topic_group a:Hover    {color: #00F; text-decoration:underline;}
+
+.topic_current, .topic_on, .topic_off {
+	margin: 0;
+	padding: 5px;
+	font-size: 90%;
+}
+.topic_current {
+	background-color: #DDDDDD;
+}
+.topic_on {
+	background-color: #EEEEEE;
+}
+.topic_off {
+	background-color: #FFFFFF;
+}
+
+
+
+
+
+/* 
+** CONTENT TEMPLATE
+** ---------------------------------------------------- */
+#help_content_holder {
+	border-left: 1px solid #CCC;
+	float: right;
+	width: 78%;
+	margin: 0;
+	padding: 0;
+	min-height: 400px;
+}
+#help_content {
+	padding: 5px 5px 5px 15px;
+}
+a          {color: #000eee; text-decoration:underline;}
+a:Visited  {color: #000eee; text-decoration:underline;}
+a:Active   {color: #000eee; text-decoration:underline;}
+a:Hover    {color: #00F; text-decoration:underline;}
+
+.results {
+	font: 1.2em 'Lucida Grande', Arial, tahoma, verdana, sans-serif;
+	color: #999;
+	margin: 1 0 2px 0;
+	border: none;
+	padding: 0;
+}

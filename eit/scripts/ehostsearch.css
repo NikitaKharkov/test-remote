@@ -1,0 +1,55 @@
+.ebscohostsearchbox1 {
+	background-image: url(http://supportforms.epnet.com/eit/images/SearchBox_OverSized_Gold.gif);
+	height:66px;
+	width:379px;
+	margin:0;
+	padding:0;
+}
+
+.ebscohostsearchbox1 .singleline{
+	padding-bottom:10px;
+	padding-top:34px;
+	padding-left:150px;
+	position: relative;
+}
+
+.ebscohostsearchbox1 .textfield{
+	z-index: 100;
+	position: absolute;
+}
+
+.ebscohostsearchbox1 .submitbutton{
+	z-index: 99;
+	position: absolute;
+	padding-left:152px;
+	margin-top:-1px;
+}
+
+.ebscohostsearchbox2 {
+	background-image: url(http://supportforms.epnet.com/eit/images/SearchBox_Large_GOLD.gif);
+	height:66px;
+	width:300px;
+	margin:0;
+	padding:0;
+}
+
+.ebscohostsearchbox2 .singleline{
+	padding-bottom:10px;
+	padding-top:34px;
+	padding-left:75px;
+	position: relative;
+}
+
+.ebscohostsearchbox2 .textfield{
+	z-index: 100;
+	position: absolute;
+}
+
+.ebscohostsearchbox2 .submitbutton{
+	position: absolute;
+	padding-left:152px;
+	margin-top:-1px;
+	z-index: 99;
+}
+
+

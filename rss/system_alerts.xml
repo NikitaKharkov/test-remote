@@ -1,0 +1,46 @@
+<?php
+require_once($_SERVER['DOCUMENT_ROOT'] . "/library/init.php");
+header("Content-type: text/xml");
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+?>
+
+<rss version="2.0">
+<channel>
+<title>EBSCO System Alerts</title>
+<description>The latest EBSCO System Alerts</description>
+<language>en-us</language>
+<copyright>Copyright 2015, EBSCO Industries</copyright>
+<link>http://support.ebsco.com</link>
+
+<?php
+try {
+	$news_items = $news_item_controller->listNewsItems('display_date_desc', 'Release Notes', array('public','private'), 10);
+
+	foreach($news_items as $news_item_id => $news_item) {
+
+		$link = "http://" . $_SERVER['SERVER_NAME'] . "/support_news/detail.php?id=" . $news_item_id . "&amp;t=h";
+	
+		$short_description = htmlentities(substr(strip_tags($news_item->getContent()), 0, 200) . "...");
+	
+		$title = htmlentities($news_item->getTitle());
+
+		if (!$news_item->getContent() && $news_item->getUrl()) {
+			$link = htmlentities($news_item->getUrl());
+		}
+		?>
+	
+		<item>
+			<title><?= $title ?></title>
+			<description><?= $short_description ?></description>
+			<pubDate><?= $news_item->getLastUpdated() ?></pubDate>
+			<link><?= $link ?></link>
+			<guid><?= $link ?></guid>
+		</item>
+	
+		<?php
+	}
+} catch (Exception $e) {}
+?>
+
+</channel>
+</rss>

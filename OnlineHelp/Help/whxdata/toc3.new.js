@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Drug Interaction Checker","type":"item","url":"Features/Drug_Interaction_Checker.htm"},{"name":"Following a DynaMed Topic","type":"item","url":"Features/Following_a_DynaMed_Topic.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

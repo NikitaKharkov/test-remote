@@ -1,0 +1,123 @@
+/*--General Styles------------------------------------------------------------*/
+* { font-family: verdana; font-size: 1.0em; margin: 0px; padding: 0px; }
+body {
+	width:610px;
+	margin: 0px;
+	margin-left:auto;
+	margin-right:auto;	
+	background: #b4d4c9 url('../images/bg.gif') top left repeat-x; 
+	padding: 5px 1em 5px 1em; font-size: 0.75em; }
+h1 { clear: both; color: #fff; 
+	background: #6696ae url('../images/tl.gif') top left no-repeat; 
+	padding-left: 18px; }
+h1 span { display:block; 
+	background: url('../images/tr.gif') top right no-repeat; 
+	padding:2px 25px 2px 0px; font-size: 1.1em; }
+h1.bottom { clear: both; color: #fff; 
+	background: url('../images/bl.gif') top left no-repeat; 
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px; }
+h1.bottom span { display:block; 
+	background: #6696ae url('../images/br.gif') bottom right no-repeat; 
+	padding:10px 0px 6px 0px;
+	margin: 0px 0px 0px 14px; }
+h2 { background: url('../images/box.gif') 0% 65% no-repeat;
+	font-size: 1.1em;
+	clear: both;
+	margin: 0px 0px 0px 0px;
+	padding: 20px 0px 10px 15px;
+	color: #4d7f9a; }
+h3 { font-weight: normal; padding: 0px 0 10px 0; margin: 0px 2% 0px 4%; }
+a img { border: none; }
+p { padding-bottom: 0.75em; }
+form p, div.outerSet { padding: 0px 0px 0px 0px; clear: both; }
+
+h3.bottom { clear: both;  
+	background: url('../images/pageBottomLeft.gif') bottom left no-repeat; 
+	padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; }
+h3.bottom span { display:block; 
+	background: url('../images/pageBottomRight.gif') bottom right no-repeat; 
+	padding:2px 0px 2px 0px;}
+h3.bottom span.box { display:block; 
+	background: #ffffff; 
+	margin: -2px 5px -2px 5px;
+	padding: 0px 0px -8px 0px;
+	font-size:0.01em;}
+
+/*--Main section styles-------------------------------------------------------*/
+form, #inner { padding: 8px 15px 50px 15px; border: 1px solid #6696ae; 
+	_height: 1%; }
+#inner:last-child:after, #errorMessage:last-child:after, p>*:last-child:after, 
+	p:last-child:after, div.outerSet:after { 
+	content:"."; height:0; visibility:hidden; display:block; clear:both; }
+#main { background: #fff url('../images/trBar.gif') top right no-repeat;
+	padding: 0px 5px 5px 5px; }
+#header { background: url('../images/logo.png') top left no-repeat;
+	margin-left: -5px; height: 60px; }
+#header a { float: right; font-weight: bold; color:#061ab2; 
+	padding: 7px 10px 0px 0px; }
+
+/*--Form styles---------------------------------------------------------------*/
+input, label, textarea, select, .fieldSetLabel, #sections {
+	padding: 2px 2px 2px 2px; 
+	float: left; clear:none;
+	border: 1px solid #aaa; }
+fieldset { border-style: none; clear: both; _height: 1%;
+	display:block; padding: 0.5em 0em 0.5em 0em; }
+
+input, textarea, .checks { width: 66%; _width: 61%; }
+textarea { margin-top: 0.15em; }
+
+.phoneField { float: none; }
+
+label, .fieldSetLabel {
+	padding: 0px 0px 0.75em 2%; margin: 0% 2% 0% 4%; width: 135px; 
+	border-style: none; display: block; clear:left; }
+.fieldSetLabel { }
+
+.fieldComment { float: right; font-style: italic; padding-right: 3%; 
+	padding-bottom: 15px; clear:both; }
+.disabled { background: #e4e4e4; }
+.checks { clear:none; float: left; }
+.checks input, .check input { width: auto; border-style: none; float: none;
+	margin-right: 4px; _margin: 0px; }
+.checks label { margin: 0px; margin-bottom: 0px; padding-bottom: 2px;  
+	width: 100%; _width: 97%; vertical-align: middle;}
+
+#sections { height: auto; width: 100%; overflow: show; }
+#sections label { width: 90%; }
+.requiredNotice { font-style: italic; padding-left: 2%; }
+.requiredNotice, .required { 
+	background: transparent url('../images/asterisk.png') 0px 1px no-repeat; }
+.tm { font-size: 0.8em; vertical-align: super; }
+
+.learnedCheck {	float:left; }
+.learnedLabel {	float:right; width:350px; _width:320px; padding-bottom: 5px;}
+.sectionCheck { float:left; padding-left:5px; }
+.sectionLabel{ float:right; width:345px; _width:320px; padding-top:2px; padding-bottom:2px;}
+.emailCheck { float:left; }
+.emailLabel { float:right; width:110px; _width:105px; }
+
+/*--Error box styles----------------------------------------------------------*/
+#errorMessageWrapper { clear: both; padding-top: 10px; padding-left: 25px; }
+#errorMessage { width: auto; margin: 0px auto 0px auto;
+	padding: 0px 10px 0px 10px; 
+	background: #fefefe; color: #c44;
+	_height: 1%; clear:both; }
+#errorMessage p { font-weight: bold; margin: 0px -10px; 
+	background: #fefefe; color: #c44; padding: 5px; }
+#errorMessage ul { padding: 0px 10px 10px 10px;
+	list-style: square; }
+#errorMessage li { padding-bottom: 5px; }
+
+/*--Button styles-------------------------------------------------------------*/
+.buttons { clear:both; width: 80px; padding: 10px 0px 10px 0px; 
+	margin: 0px auto; }
+.close { cursor: pointer; width: auto; float:left; display: block;
+	text-decoration: none; color: #000; 
+	background: url('../images/buttonClose.gif') no-repeat top left; 
+	padding: 10px 60px 25px 10px; }
+.submit {cursor: pointer; width: auto; float:left; display: block;
+	text-decoration: none; color: #000; 
+	background: url('../images/buttonSubmit.gif') no-repeat top left; 
+	padding: 10px 70px 25px 10px; }

@@ -1,0 +1,63 @@
+ul { 
+	list-style-image: none; 
+	margin: 0px;
+}
+
+#detail {
+
+  font: 0.9em Tahoma, Arial, sans-serif; line-height: 1.6em;
+}
+
+#detail h3 a{
+ text-decoration:none;
+}
+
+#detail  img{
+  border:none;
+  display:none;
+}
+
+			#production_div {
+				height:780px;
+				display:block;
+			}
+			#marc_div {
+				height:460px;
+			}
+			#ebsconet_div {
+				height:490px;
+			}
+			#trial_div {
+				height:550px;
+			}
+			#erm_div {
+				height:380px;
+				display:block;
+				padding-top:100px;
+			}
+			#demoWrapper {
+				padding : 1em;
+				width : 750px;
+				border-style: solid;
+				border-width:1px;
+				display:block;
+				
+				background-color:#ffffff;
+				font: 0.9em Tahoma, Arial, sans-serif; line-height: 1.6em;
+			}
+			#demoWrapper  ul{
+				list-style-type:none;
+			}
+			
+			.font_normal_07em_black {
+			font: 1.4em Tahoma, Arial, sans-serif;
+			}
+			
+			#fieldWrapper {
+			}
+
+			#demoNavigation {
+				margin-top : 0.5em;
+				margin-right : 1em;
+				text-align: right;
+			}

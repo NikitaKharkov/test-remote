@@ -1,0 +1,40 @@
+.searchBox{
+	width : 200px;
+	font-size: 12px;
+	border: 1px solid black;
+	padding: 3px;
+}
+
+.searchTitle {
+	font-size:14px;
+	width:200px;
+}
+
+.searchInput{
+	width : 200px;
+	font-size: 11px;
+}
+
+.searchButton{
+	font-size: 12px;
+}
+
+.noresults{
+	font-size:12px;
+}
+
+.searchTerm{
+	color:red;
+}
+
+.resultList{
+	font-size: 12px;
+	list-style-type: none;
+	margin:5px;
+	padding:0px;
+}
+a.searchLink:link, a.searchLink:visited , a.searchLink :active { text-decoration : none; color:black;}
+
+a.searchLink:hover { text-decoration : underline; color:blue;}
+
+.resultItem{ }

@@ -1,0 +1,1 @@
+[11-Oct-2007 07:31:01] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted at /supportsite-install/install/archives/php/php-5.2.4/Zend/zend_API.c:1206 (tried to allocate 16 bytes) in /srv/www/support.epnet.com/search/sphider/admin/spider.php on line 255

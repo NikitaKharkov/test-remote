@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                         MAIN STRUCTURE                              -->
+
+<!ELEMENT epdirect (errors | initResponse | searchResponse | presentResponse | terminateResponse)>
+<!ATTLIST epdirect
+            sessionID CDATA #REQUIRED
+> 
+<!-- SessionID will accompany all responses.  It uniquely identifies the
+                 session "object" on the OEMDirectXML site which is storing the user
+                 session state information. The caller will use this in subsequent
+                 requests to ensure continuity. 
+            -->
+<!ATTLIST epdirect
+            version CDATA #IMPLIED
+> 
+<!-- version is the version of the EPDirect DTD/protocol being used 
+            -->
+<!-- ============================================================================== -->
+<!--                                          INIT RESPONSE  
+              This node will be returned as a result of a "INIT" request.  The 
+              purpose of the INIT request to establish a session for a particular
+              user of the caller's site.  The key element in this request
+              will be the SessionID attribute of the root node.  This should be
+              used on all subsequent request for this user for the current session.  
+              (Note that, if there is more than 10 minutes of inactivity, the current
+              session may be dropped at EBSCO,  if a request come in after that
+              time, a new session will be created and a new SessionID assigned.  It
+              is important to track the latest sessionID for the user.)
+              
+              The caller will be returned the following nodes as part of this response:
+                        errors:  A list of errors specific to the login.  Could include
+                                    things like bad user ID, profile not found, etc.
+                        dblist:  The list of databases the user can search. For each 
+                                    database will be the long name (if the caller wants 
+                                    to display) and the code for use in SEARCH requests.
+                        userLimits: lists various restrictions for the user, such 
+                                    as maximum number of hits, maximum number of results
+                                    that can be viewed for a given search.
+                        otherInfo: not used, but could be in the future.
+-->
+<!ELEMENT initResponse (errors?, dbList, userLimits?)>
+<!ELEMENT dbList (db+)>
+<!ELEMENT db (dbCode | dbName | dbType | dbSortOptions?)*>
+<!ATTLIST db
+            seqNo CDATA #IMPLIED
+> 
+<!ELEMENT dbCode (#PCDATA)>
+<!ELEMENT dbName (#PCDATA)>
+<!ELEMENT dbType (#PCDATA)>
+<!ELEMENT dbSortOptions (dbSort)>
+<!ELEMENT dbSort (#PCDATA)>
+<!ELEMENT userLimits (MaxHitsAllowed, MaxResultSetSize)>
+<!ELEMENT MaxHitsAllowed (#PCDATA)>
+<!ELEMENT MaxResultSetSize (#PCDATA)>
+<!-- ============================================================================== -->
+<!--                                          SEARCH RESPONSE        
+              This node will be returned as a result of a "SEARCH" request.  
+              
+              The resultSetID attribute of the searchResponse should be retained by the
+              caller for use on subsequent retrievals (Present Requests) for the given
+              search.
+              
+              The caller will be provide with the following nodes (if applicable):
+                        
+                        Errors-  lists any overall errors encountered with the protocol
+                                    (any specific search errors will be shown under the 
+                                    searchResults node and any retrieval errors will be shown 
+                                    under the individual records.)
+                        
+                        RequestInfo - Restating the request and how it was applied,
+                                    e.g. the query used, the databases, number or records
+                                    requested, format requested, any limits and expanders
+                                    applied (defaults used if not added to the actual request)
+                        
+                        SearchResults - Basically this holds the total hits.
+                        
+                        Records - this section stores the requested records resulting
+                                    from the search.
+-->
+<!ELEMENT searchResponse (requestInfo?, searchResults?, records?)>
+<!ATTLIST searchResponse
+            resultSetID CDATA #IMPLIED
+            totalHits CDATA #IMPLIED
+            numOfRecOnPage CDATA #IMPLIED
+            firstRecOnPage CDATA #IMPLIED
+            firstPage CDATA #IMPLIED
+            lastPage CDATA #IMPLIED
+            curPage CDATA #IMPLIED
+            numOfPages CDATA #IMPLIED
+> 
+<!--
+            resultSetID ID #IMPLIED
+            resultSetID CDATA #IMPLIED
+-->
+<!ELEMENT requestInfo (dbList, booleanQuery?, fuzzyQuery?, searchText?, applyThes?, startRecNo?, noRec?, otherRecs?, display?, ftformat?, sort?)>
+<!ELEMENT booleanQuery (#PCDATA)>
+<!ELEMENT fuzzyQuery (#PCDATA)>
+<!ELEMENT searchText (#PCDATA)>
+<!ELEMENT applyThes (#PCDATA)>
+<!ELEMENT startRecNo (#PCDATA)>
+<!ELEMENT noRec (#PCDATA)>
+<!ELEMENT otherRecs (#PCDATA)>
+<!ELEMENT display (#PCDATA)>
+<!ELEMENT ftformat (#PCDATA)>
+<!ELEMENT sort (#PCDATA)>
+<!ELEMENT searchResults (totalHits | errors?)>
+<!ATTLIST searchResults
+            status (success | failure) #IMPLIED
+> 
+<!ELEMENT totalHits (#PCDATA)>
+<!ELEMENT records (rec+)>
+<!-- the count attribute indicates number RETURNED -->
+<!ATTLIST records
+            count CDATA #IMPLIED
+            resultSetID CDATA #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                          PRESENT RESPONSE      
+              This node will be returned as a result of a "PRESENT" request.  
+              The response is identical to the Search Response.  This is done
+              on purpose to allow the caller to get all of the search information
+              without having to store this state on their end.   
+              
+              The PresentResponse returns the ResultSetID for ease of reference.  This
+              should be identical to the one submitted by the caller in the request
+              except if the request "timed-out" and the search was re-exectuted.  The
+              caller should treat this as the correct resultSetID for subsequent
+              Present Requests.
+              
+              The caller will be provide with the following nodes (if applicable):
+                        Errors-  lists any overall errors encountered with the request.
+                        RequestInfo - Restating the request and how it was applied,
+                                    e.g. the query used, the databases, number or records
+                                    requested, format requested, any limits and expanders
+                                    applied (defaults used if not added to the actual request)
+                        SearchResults - Basically this holds the total hits.
+                        Records - this section stores the the requested records resulting
+                                    from the search.
+-->
+<!ELEMENT presentResponse (requestInfo?, searchResults, records?)>
+<!ATTLIST presentResponse
+            resultSetID ID #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                              TERMINATE RESPONSE           
+              This node will be returned as a result of a "TERMINATE" request.  The 
+              reponse is very simple and merely provides a status of OK or Failure.  
+              If failure, then the "errors" node should describe what went wrong.
+              
+              This is informational only, the caller is not expected to take any
+              action on a "failed" request for termination.
+-->
+<!ELEMENT terminateResponse (errors?)>
+<!ATTLIST terminateResponse
+            status (ok | failure) #REQUIRED
+> 
+<!-- =================================================================== -->
+<!--                                                      RECORD STRUCTURE                                 -->
+<!--==================================================================== -->
+<!-- =================================================================== -->
+<!--               Elements That Comprise the Record                     
+                        The attributes include (Y/N flags added in chronologically-added order; consider breaking into its own element if we find we are adding more flags):
+                                    resultID, sequential record number for resultSet
+                                    source, DS from which record is retrieved (DS:10.0.32.161:21749)
+                                    id, Records Unique Identifier (DS:nfh:1:76594)
+                                    EpFT, Y/N indicator if EP Full Text is available for record (User Specific)
+                                    ExternFT, Y/N indicator if ExternFT is available for record (User Specific)
+                                    EpQV, Y/N indicator if EP Quick View Image is available for record (User Specific)
+                                    EpML, YNYNY (string of Y or N per collecton) indicators that item has Multi-Lingual language (translated) version(s) available for record, Y or N string in order of language querymask items (User Specific).  In the case of EpML, this is an aggregation of query masks/bitmap hits for each type of language. Therefore the EpML element will look more like EpML="YNNNYNYYNN", with the number and order of the "Y" and "N" characters exactly corresponding to the order in which the query masks were received from UserInfo.GetQueryMaskSearchDetails(). EpML attribute will not show up at all if there are no hits.-->
+<!-- =================================================================== -->
+<!ELEMENT rec (errors?, header, abody?)>
+<!ATTLIST rec
+            resultID CDATA #IMPLIED
+            source CDATA #IMPLIED
+            id CDATA #IMPLIED
+            EpFT CDATA #IMPLIED
+            ExternFT CDATA #IMPLIED
+            EpQV CDATA #IMPLIED
+            EpML CDATA #IMPLIED
+> 
+<!ELEMENT errors (error_msg+)>
+<!ATTLIST errors
+            count CDATA #IMPLIED
+> 
+<!ELEMENT error_msg (#PCDATA)>
+<!ATTLIST error_msg
+            errNum CDATA #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                                                  HEADER
+                        Contains metadata elements used for the control and display of book, 
+                        journal, article, and copyright information.  The header itself
+                        includes attribute for natural language searches.  These are the
+                        relevance percentage (rrScore) and the number of matching relevant 
+                        words (rrWords).                                                                                       
+-->
+<!-- ==============================================================================             -->
+<!ELEMENT header (controlInfo?, displayInfo?, externalLinkInfo?, marcInfo?)>
+<!ATTLIST header
+            rrScore CDATA #IMPLIED
+            rrWords CDATA #IMPLIED
+            shortDbName CDATA #REQUIRED
+            longDbName CDATA #IMPLIED
+            uiTag CDATA "AN"
+            uiTerm CDATA #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                          Control Section Within Header 
+                        Contains metadata elements for describing books, journals, and articles.      
+-->
+<!--                  bkinfo                book information 
+                        chapinfo                        book chapter information
+                        revinfo              review information
+                        dissinfo             dissertation information
+                        confinfo             conference information
+                        jinfo                  journal information
+                        pubinfo              publication information, has dt, vid, iid, ptid, jiid, iiid, ed, pub, place
+                        artinfo               article information, has ui, ppf, ppct, pages, extent, lexile, grade, formats, tig, aug, su, sug, ab, fmlt, src, pubtype, doctype, genre, ougenre, hasRIF
+                        exclusion                       holdings
+                        language                       language information
+                        holdings                        holdings
+                        libinfo                Library information 
+                        refinfo               Cited References  information 
+                        illusinfo             Illustrations information, has path, caption, source, uiMain, prodCode, rightsinfo
+                        imageinfo                      Images section from CE in main/source record's controlinfo. Holds the Illustration Record controlinfo (including illusinfo), has image. 
+                        limiters              limiter information, has limiterGroup, limiter.
+                        ehisInfo             EBSCOhost Integrated Search information 
+                        copyright                       copyright 
+                        browseTerm      Authority Search and Browse information, has browseTerm, useTerm, searchString, searchTerm, searchTag, focusTag, narrowTerms,
+                        authLevel                       level of authority record
+                        meshinfo                       MESH information, has permutedTerm, searchPermutedTag, treeTag, treeChildrenTag, qualifierTag, IsExplodable, IsNonMesh, Tree, QualifierCodeList, RelatedCrossReference, CrossReference, EntryCombinations, RelatedHeadings, UniqueIdentifier
+                        Qualifier                        Qualifier information
+-->
+<!-- ==============================================================================             -->
+<!ELEMENT controlInfo (bkinfo?, chapinfo?, revinfo?, dissinfo?, confinfo?, jinfo?, pubinfo?, artinfo?, exclusion?, language?, multilingualinfo?, holdings?, libInfo?, refInfo?, illusinfo?, imageinfo?, limiters?, ehisInfo?, copyright?, browseTerm?, useTerm?, searchString?, searchTerm?, searchTag?, focusTag?, narrowTerms?, authLevel?, meshinfo?, Qualifier?)>
+<!-- ========================================= -->
+<!--          Book information                 -->
+<!-- ========================================= -->
+<!ELEMENT bkinfo (btl?, bstl?, contrib?, bkkey?, aug?, sertl?, isbn*, popularity?)>
+<!-- Book title (For Novelist, this is without subtitle) -->
+<!ELEMENT btl (#PCDATA)>
+<!-- Book title & subtitle (Added for Novelist as part of the EIT Fall 2008 project ) -->
+<!ELEMENT bstl (#PCDATA)>
+<!-- Book Contributers/Statement of Responsibility (Added for Novelist as part of the EIT Fall 2008 project ) -->
+<!ELEMENT contrib (#PCDATA)>
+<!-- Book Key (Added for Novelist as part of the EIT Fall 2008 project) -->
+<!ELEMENT bkkey (#PCDATA)>
+<!-- Series Title -->
+<!-- track attribute added 2/2008 for NoveList interfaces series data for the alert trigger (as of 2/2008 only value will be 1). Only regular db records that contain the series alert flag should have this attribute -->
+<!ELEMENT sertl (#PCDATA)>
+<!ATTLIST sertl
+            track CDATA #IMPLIED
+> 
+<!-- ISBN -->
+<!ELEMENT isbn (#PCDATA)>
+<!ATTLIST isbn
+            type (print | electronic | other) #IMPLIED
+> 
+<!-- Popularity - Added for NoveList 3/2009-->
+<!ELEMENT popularity (#PCDATA)>
+<!-- ========================================= -->
+<!--          Book Chapter information                 -->
+<!-- ========================================= -->
+<!ELEMENT chapinfo (num?)>
+<!-- Book Chapter number-->
+<!ELEMENT num (#PCDATA)>
+<!-- ========================================= -->
+<!--          Review information                 -->
+<!-- ========================================= -->
+<!ELEMENT revinfo (rtl?, aug?)>
+<!-- Review title: Title of original book being reviewed (if aug present, is author of said book). -->
+<!ELEMENT rtl (#PCDATA)>
+<!-- ========================================= -->
+<!--          Dissertation information                 -->
+<!-- ========================================= -->
+<!ELEMENT dissinfo (disstl?, dissinst?, degree?)>
+<!-- Dissertation title-->
+<!ELEMENT disstl (#PCDATA)>
+<!-- Dissertation institution-->
+<!ELEMENT dissinst (#PCDATA)>
+<!-- Dissertation degree-->
+<!ELEMENT degree (#PCDATA)>
+<!-- ========================================= -->
+<!--          Conference information                 -->
+<!-- ========================================= -->
+<!ELEMENT confinfo (conftl?)>
+<!-- Conference title-->
+<!ELEMENT conftl (#PCDATA)>
+<!-- ========================================= -->
+<!--          Journal information              -->
+<!-- ========================================= -->
+<!ELEMENT jinfo (jid*, jtl?, supptl?, sici?, issn*, coden*, maglogo?, formats?, filingRules?)>
+<!-- Journal identifiers -->
+<!ELEMENT jid (#PCDATA)>
+<!ATTLIST jid
+            type (mid | eonline | issn | coden | other) #IMPLIED
+> 
+<!-- Journal title for each journal issue-->
+<!ELEMENT jtl (#PCDATA)>
+<!-- Journal Supplement title (added for CINAHL custom links 1/2008 SI 2629)-->
+<!ELEMENT supptl (#PCDATA)>
+<!-- SICI -->
+<!ELEMENT sici (#PCDATA)>
+<!ATTLIST sici
+            type (print | electronic | other) #IMPLIED
+> 
+<!-- ISSN -->
+<!ELEMENT issn (#PCDATA)>
+<!ATTLIST issn
+            type (print | electronic | locals | other) #IMPLIED
+> 
+<!ELEMENT coden (#PCDATA)>
+<!ELEMENT maglogo (#PCDATA)>
+<!ELEMENT filingRules (#PCDATA)>
+<!-- ========================================= -->
+<!--          Publication information          -->
+<!-- ========================================= -->
+<!ELEMENT pubinfo (dt?, vid*, iid*, ptid*, jiid*, iiid*, ed?, pub?, place?, price?)>
+<!-- Date -->
+<!ELEMENT dt (#PCDATA)>
+<!ATTLIST dt
+            year CDATA #IMPLIED
+            month CDATA #IMPLIED
+            day CDATA #IMPLIED
+> 
+<!-- Volume number -->
+<!ELEMENT vid (#PCDATA)>
+<!-- Issue number -->
+<!ELEMENT iid (#PCDATA)>
+<!-- Part Number - First used for Multi-part illustrations, Killustrata project Fall 2007-->
+<!ELEMENT ptid (#PCDATA)>
+<!-- Journal Internal ID -->
+<!ELEMENT jiid (#PCDATA)>
+<!--Issue  Internal ID -->
+<!ELEMENT iiid (#PCDATA)>
+<!-- Edition -->
+<!ELEMENT ed (#PCDATA)>
+<!-- Publisher -->
+<!ELEMENT pub (#PCDATA)>
+<!-- Publication place -->
+<!ELEMENT place (#PCDATA)>
+<!-- Price - Added for NoveList 3/2009-->
+<!ELEMENT price (#PCDATA)>
+<!-- ========================================= -->
+<!--          Article information              -->
+<!--  artinfo - Attributes are new with BRC 3/3009 -->
+<!--  (defDetailLoc added for BRC. Web needed XML that will indicate to where the PLink should be directed so that ehost may create/deliver a PLink of an article that will go to "fullWithResults" (AKA 'the Landing page'). When the PLink is clicked, it will send the user back to the landing page instead of the regular citation view ("detail"). defDetailLoc stands for "default detail location" where it is required to be explicitly populated with  "fullwithresults" if a record needs this non-standard page. Otherwise "detail" is default behavior (not required)).  --> 
+<!--  (openFT - DDP needed an indicator if Open Access Full Text is available for a given record (first used with ffh). Forms will pass artinfo@openFT='Y' if indicating flag field is present. DDP will not populate with 'N' if missing, as we don't want to make this required for everything. Associated Custom Link Field Mask will be {OPENFT} (deployed 5/2009) (not required)  -->
+<!--  (vendorFT added for ehost usage on ERIC when we want to suppress custom links 5/2009. DDP will not populate with 'N' if missing, as we don't want to make this required for everything. Ehost logic is as follows: 1) If EP SmartLink exists, do not display Custom link ; 2) If NO EP SmartLink AND field 137 is present (i.e., passed as /artinfo/ui@vendorFT="Y"), display EDRS link and do not display Custom Link (assuming that customer profile is set to hide custom links when FT is present) ; 3) If no EP SmartLink and NO field 137 (i.e., NO artinfo/ui@vendorFT="Y"), display Custom Link. (not required))  -->
+<!--  (thinDisp attribute added for 'thin display' on EDA db (or any other applicable database) to downgrade these records when DAServer evaluates multidb results for de-duplication (Merge/Dedupe processing). Reason: EDA display of records are less desirable than other products' display of the same records. EDA metadata is indexed, however it's display is less rich than standard databases'. We chose to suppress the standard field display (like abstracts, subject headings, etc.) for these records so that they do not compete with their for-sales RDK counterparts. This 'less rich' metadata has been described here and there throughout the Discovery project as 'thin' hence the attribute name.  XML req: DDP will only populate this attribute with 'Y' if applicable. DDP will not populate with 'N' if missing, as we don't want to make this required for everything.  Logic: DAServer will implement a corresponding rule whereby records for which this flag is set are retained during merge/dedupe only if either 1) no other records are found to match them or 2) the only records that match them are also 'thin', in which case it would choose a 1st version of the record encountered. Added for EDS project, December 2009 11.4 release (not required)  -->
+<!-- ========================================= -->
+<!ELEMENT artinfo (ui*, ppf?, ppct?, pages?, lexile?, grade?, formats?, tig?, aug?, su*, sug?, ab?, fmlt?, src?, pubtype?, doctype?, genre?, ougenre?, hasRIF?)>
+<!ATTLIST artinfo
+            defDetailLoc (fullWithResults) #IMPLIED
+            openFT CDATA #IMPLIED
+            vendorFT CDATA #IMPLIED
+            thinDisp CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!-- ui - Identifiers  -->
+<!-- (added type 'mfs' for Mixed Content data's AN from MFS, 10/2007) -->
+<!-- (added type 'chunkID' for EP (MFS) ANs used by medical products, for NRC2 project (db is NPR), 3/2009. All translated records share the same 'chunkID'. ehost used this temporarily (pre-11.3 release) in lieu of smartlinking to find all available languages for a given Health Library record as they all have the same EPAN aka chunk ID. For post-11.3 smartlinking version, ehost will use this ui type for the mlTerm attribute in multilingualinfo/mlItem. -->
+<!-- (added type 'ripm' for RIPM Custom Link to external FT from the RIPM IP. Associated FieldMask is {RIPM})We need these values to support Custom Links that go to the native catalog record. -->
+<!-- (added type 'ils', associated FieldMask is {ILSRecNo} ; also added type 'oclc', associated FieldMask is OCLC) Both were added to support requirements for custom links using ILS and OCLC numbers in connector records. This was required for a sale to CUNY. We need these values to support Custom Links that go to the native catalog record.  Not restricted to EhIS and can be used for Discovery Service, or any other use. -->
+<!ELEMENT ui (#PCDATA)>
+<!ATTLIST ui
+            type (aiid | ciid | chunkID | doi | edrs | ehost | eonline | ils | mfs | oclc | pii | pmid | ripm | umi | other) "ehost"
+            code CDATA #IMPLIED
+> 
+<!-- Starting page of an article -->
+<!ELEMENT ppf (#PCDATA)>
+<!-- Page count -->
+<!ELEMENT ppct (#PCDATA)>
+<!-- Range of Pages for the Article, for example 21-30 -->
+<!ELEMENT pages (#PCDATA)>
+<!-- Lexile Level of the Article -->
+<!ELEMENT lexile (#PCDATA)>
+<!-- Grade Level of the Item -->
+<!ELEMENT grade (#PCDATA)>
+<!-- Article formats (not just articles, but other publication types & formats covered here) -->
+<!-- T Text; C Compound (Text/Embedded Images); P PDF; V Video; M Flash Animation (.swf); L Flash Video (.flv); F NoveList First Chapter HTML FT; H NoveList TOC HTML FT;  D Digitized Documents (Digitized textual or graphic content that uses a scanned-content Document Viewer; when used in conjunction with type D, indicates the need to use doid with segid for the Document Viewer);BS Brief HTML FT Summary; FS Full PDF Summary; SS Audio (mp3)-->
+<!-- id - added 1/2008 for NoveList - when used in conjunction with types F & H, passed as AN to the content server -->
+<!-- doid - 9/2008 for Digital Archives project - Digital Object ID (not DOI) - this is used in conjunction with with segid & fmt type D to access the Document Viewer --> 
+<!-- segid - 9/2008 for Digital Archives project - Segment ID - this is used in conjunction with with doid & fmt type D to access the Document Viewer -->  
+<!-- size - currently for PDFs only-->
+<!-- height - currently for flash animation only-->
+<!-- width - currently for flash animation only-->
+<!-- topic - focus/theme/subject of item (required for healthology M target)  -->
+<!-- target for external sources; 'healthology' triggers use of the URL Mask in AppConfig; other values are internal file's path (EX. QBH/). First used for qbh mp3 audio files 2/2009.-->
+<!-- fileneme - filename with extension. First added for qbh mp3 audio files 2/2009. -->
+<!-- caption - Caption to be displayed next to @type-derived icon. First added for qbh mp3 audio files 2/2009. -->
+<!ELEMENT formats (fmt+)>
+<!ELEMENT fmt (#PCDATA)>
+<!ATTLIST fmt
+            type (T | C | P | V | M | L | F | H | D | BS | FS | SS | other) #IMPLIED
+            id ID #IMPLIED
+            doid CDATA #IMPLIED
+            segid CDATA #IMPLIED
+            size CDATA #IMPLIED
+            height CDATA #IMPLIED
+            width CDATA #IMPLIED
+            topic CDATA #IMPLIED
+            target (healthology | other) #IMPLIED
+            filename CDATA #IMPLIED
+            caption CDATA #IMPLIED
+> 
+<!-- Title group -->
+<!ELEMENT tig (atl, sbt?)>
+<!-- Article title -->
+<!ELEMENT atl (#PCDATA)>
+<!-- Subject heading elements -->
+<!ELEMENT su (#PCDATA)>
+<!-- Subjects Group (added for Enhanced Clustering project ehost winter 2008) -->
+<!ELEMENT sug (subj*)>
+<!-- Granular Subjects -->
+<!-- "minor", "person" and "product" subjects will in their specific xpaths but cluster with the generic 'Subject' type along with "unclass"-->
+<!--  "bisac", "lcsh", "local" & "genre" Added for Novelist as part of the EIT Fall 2008 project. Not currently planned for usage in enhanced clustering.  "primary" added for PTA database (Dec 2008) for use in Enhanced Clustering  -->
+<!--  lang attribute added at dbpm's request for multilingual subjects for use in Enhanced Clustering (DB project July 2009). Will first be used with pcl, fcs (all but German), & future pdx "PSYNDEX".  Data will be passed as whole word in English, not as code, so that the values can be used in folder exports (see 2009 Citation Project & Corporate Folder Enhancements projects). Not required; default value will be assumed 'English' when attribute is missing, and will  cluster under generic Subjects. Note: Adding new clusters for each language will become unwieldly for maintenance and will also clutter the displays, so we should keep the possibility of a better method in mind.-->
+<!ELEMENT subj (#PCDATA)>
+<!ATTLIST subj
+            type (unclass | bisac | lcsh | local | genre | thes | primary | major | minor | geo | corp | product | naics | person | age | gender) "unclass"
+            lang (English| French | German | Spanish) "English"
+> 
+<!--Category- generic category or classification. Description should go in element and if present, an optional code into the code attribute.  Added for PTA db project (Dec 2008)for Enhanced Clustering.   -->
+<!ELEMENT category (#PCDATA)>
+<!ATTLIST category
+            code CDATA #IMPLIED
+> 
+<!--Nationality - Added for BRC project (3/2009) for Enhanced Clustering.   -->
+<!ELEMENT nationality (#PCDATA)>
+<!--Occupation -  Added for BRC project (3/2009) for Enhanced Clustering.   -->
+<!ELEMENT occupation (#PCDATA)>
+<!-- Abstract element -->
+<!ELEMENT ab (#PCDATA)>
+<!-- Find More Like This -->
+<!ELEMENT fmlt (#PCDATA)>
+<!-- Source of Content Level of the Article -->
+<!ELEMENT src (#PCDATA)>
+<!-- text (ascii)|compound doc|pdf|xml          -->
+<!-- Publication (Source-level) Type -->
+<!ELEMENT pubtype (#PCDATA)>
+<!-- Document (Item/Article-level) Type -->
+<!ELEMENT doctype (#PCDATA)>
+<!-- Topic (added for src interfaces Quantum release 2005; used for Fiction/NonFiction designation in Novelist as part of the EIT Fall 2008 project)-->
+<!ELEMENT genre (#PCDATA)>
+<!-- OpenURL Genre -->
+<!ELEMENT ougenre (#PCDATA)>
+<!-- Target Audience (added for Novelist as part of the EIT Fall 2008 project) -->
+<!-- May be used for physical, intellectual, or interest level of any general or specialized audience for which the item is intended.  -->
+<!-- Examples are reading grade, and interest age information.-->
+<!ELEMENT audn (#PCDATA)>
+<!-- Article has Related Inset Feature in FT -->
+<!ELEMENT hasRIF (#PCDATA)>
+<!-- ========================================= -->
+<!--          Database Exclusion                         -->
+<!-- ========================================= -->
+<!ELEMENT exclusion (#PCDATA)>
+<!-- ========================================= -->
+<!--          Language                         -->
+<!-- ========================================= -->
+<!ELEMENT language (#PCDATA)>
+<!ATTLIST language
+            code CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!--          Multi-Lingual information             -->
+<!-- multilingualinfo section - Added for NRC2 Phase 3 ML 11.3 release. This element is a holder element;  no repeat, not required; but if present, currently holds one sub-Element which may repeat, mlitem. -->
+<!--See also EpML under /rec. If any matches are found and EpML is populated with any Y's, you'll see multilingualinfo in the record XML. Tagging note: We at EP use ML for two things, multilingual and mulitidb limiters. The full term is spelled out for mulitilingualinfo section so folks know what it is. mlitem is then shortened to the abbreviation. Bitmaps and authorities note: 1. bitmap maker requires DT (or equiv, like ZT) present. We need to ONLY update the EPT and DDF for DT tag, field 191/30. 2. LO/EX must be added to ept (just as any regular db has them). -->
+<!-- mlitem holds language caption from admin,configured under db parameters, is a multilingual field. passed by admin in profile language; repeats, required if multilingualinfo is present. It is in SmartLinkMatchInfo.linkText which CE MLEnhance gets from UserInfo.GetQueryMaskDisplayDetails()-->
+<!-- @codeProd - from admin. This is in SmartLinkMatchInfo.dbName which CE MLEnhance gets from UserInfo.GetQueryMaskDisplayDetails(). This has already been implemented -->
+<!-- @mlTag - 'EP' from form -->
+<!-- @mlTerm - from chunkID controlinfo chunkID xpath to source the data to enter into EP.Components.ContentEnhance.Record is header/controlInfo/artinfo/ui[@type="chunkID"]/text()Dev added chunkID to EP.Components.ContentEnhance.Record to then use it to set the mlTerm.  -->
+<!-- ========================================= -->
+<!ELEMENT multilingualinfo (mlItem?)>
+<!ATTLIST mlItem
+            codeProd CDATA #REQUIRED
+            mlTag CDATA "AN"
+            mlTerm CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!--          Holdings information             -->
+<!-- ========================================= -->
+<!-- Holdings:  reflects the holdings information
+            with respect to the library's holdings on EBSCOhost.
+            Not normally used with OEMDirectXML.  -->
+<!ELEMENT holdings (hldgMsg?, hldgNote?)>
+<!ATTLIST holdings
+            islocal (Y | N) #IMPLIED
+> 
+<!ELEMENT hldgMsg (#PCDATA)>
+<!ELEMENT hldgNote (#PCDATA)>
+<!-- ========================================= -->
+<!--          Library information             -->
+<!-- ========================================= -->
+<!-- libraryinfo is Library Information. This basically serves as a wrapper for library catalog-specific XML found only in Catalog EPD/EPDB records. Added for EDS project Fall 2009. Can hold any type of library information we need to pass via forms to support EDS and/or any other future or current interface. -->
+<!ELEMENT libinfo (RTACKey?, libitemGroup?)>
+<!-- ========================================= -->
+<!-- RTACKey - may get broader definition in the future, but for phase 1, this is the ILS number (the unamended AN in 10013 from vendor). RTACKey is expected to be a single occurence per record, but may repeat if we add primary/secondary levels at a later date. We may add a new stored field for <RTACKey> where there could be an external lookup to the loader where this RTACKey can be configured per catalog db code as needed It would indicate the loader to either pass the AN, OCLC number, ISBN, or ISSN (at least, these are the fields currently discussed) as <RTACKey>{field}.-->
+<!ELEMENT RTACKey (#PCDATA)>
+<!-- libItemGroup - groups together library items. Occurrence is a single group per Catalog record. Added for EDS project Fall 2009.  -->
+<!-- count attribute: Added 12/2009.  In order to prevent Ehost from asking for RTAC for a performance-overwhelming number of holdings, catalog loaders will load a holdings count into the record. Ehost will evaluate this count against a configuration setting, and request RTAC for records with too many holdings. AppConfig item RTAC has the new parameter: MaxHoldings ~ Threshold value for number of holdings per record; applicable for all targets ~Numeric~ 25. To test this, look for the new libItemGroup count attribute @ header/controlInfo/libinfo/libItemGroup[@count='{25+}] - should have no RTAC. Results: if count >25 eds will print 'Location: Multiple Locations'. Full Display: if count >25 will print all locations (no restrictions). Folder: if item with >25 items, eds will print 'Location: Multiple Locations' on folder list view. However, will deliver up to the max count (25).   -->
+<!ELEMENT libItemGroup (libItem*)>
+<!ATTLIST libItemGroup
+            count CDATA #IMPLIED
+> 
+<!-- libItem - barcode number/id; each occurrence is a single holding item per Catalog record. Added for EDS project Fall 2009.  -->
+<!-- libItem Attribute info: location is general Location (the rolled-up version for clustering), usually based upon a building; collection is in which Collection the item is held - sort of a sub-location like a more granular location like Reference, Reserve room, or a temporary or permanent special collection (copy-specific granular location); callnum is the shelf-specific location or Call Number.   -->
+<!ELEMENT libItem (#PCDATA)>
+<!ATTLIST libItem
+            location CDATA #IMPLIED
+            collection CDATA #IMPLIED
+            callnum CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!--          Reference Browsing information                           -->
+<!-- ========================================= -->
+<!ELEMENT refInfo (hasReferences?, hasTimesCited?, refHasTimesCited?, refFindRelated?, refHasMain?)>
+<!-- ========================================= -->
+<!--          Main Type Record Reference Information         -->
+<!-- ========================================= -->
+<!ELEMENT hasReferences EMPTY>
+<!ATTLIST hasReferences
+            count CDATA #IMPLIED
+            key CDATA #IMPLIED
+            tag CDATA #IMPLIED
+            additional CDATA #IMPLIED
+            bQuery CDATA #IMPLIED
+            fQuery CDATA #IMPLIED
+            shortDbName CDATA #IMPLIED
+> 
+<!ELEMENT hasTimesCited EMPTY>
+<!ATTLIST hasTimesCited
+            count CDATA #IMPLIED
+            key CDATA #IMPLIED
+            tag CDATA #IMPLIED
+            additional CDATA #IMPLIED
+            bQuery CDATA #IMPLIED
+            fQuery CDATA #IMPLIED
+            shortDbName CDATA #IMPLIED
+> 
+<!--From Form: attributes count;key;tag;additional and   
+      shortDbName may be present   
+     After processed by CE : attributes count;bQuery;Qquery and  
+     shortDbName may be present-->
+<!-- ========================================= -->
+<!--          Reference Type Record Reference Information  -->
+<!-- ========================================= -->
+<!ELEMENT refHasTimesCited EMPTY>
+<!ATTLIST refHasTimesCited
+            count CDATA #IMPLIED
+            key CDATA #IMPLIED
+            tag CDATA #IMPLIED
+            additional CDATA #IMPLIED
+            bQuery CDATA #IMPLIED
+            fQuery CDATA #IMPLIED
+            shortDbName CDATA #IMPLIED
+> 
+<!ELEMENT refFindRelated EMPTY>
+<!ATTLIST refFindRelated
+            key CDATA #IMPLIED
+            tag CDATA #IMPLIED
+            additional CDATA #IMPLIED
+            bQuery CDATA #IMPLIED
+            fQuery CDATA #IMPLIED
+            shortDbName CDATA #IMPLIED
+> 
+<!ELEMENT refHasMain EMPTY>
+<!ATTLIST refHasMain
+            hasValue CDATA #IMPLIED
+            key CDATA #IMPLIED
+            tag CDATA #IMPLIED
+            additional CDATA #IMPLIED
+            bQuery CDATA #IMPLIED
+            fQuery CDATA #IMPLIED
+            shortDbName CDATA #IMPLIED
+> 
+<!--From Form: attributes hasValue;key;tag;additional and shortDbName may be present
+     After processed by CE : attributes bquery;fquery and shortDbName may be present-->
+<!-- ========================================= -->
+<!--         Illustration Type Record information (added 10/2007 for Killustrata project)              -->
+<!--   This section originates in FT-derived illustration databases (qvw is initial db of this scope (changed to iqv in 2008)).   -->
+<!--   It holds that information that is currently unique to these Illustration records. -->
+<!--   CE will parrot this info along with other necessary standard controlinfo from these records when displaying -->
+<!--   individual illustration information on Main record result and for the illustration citation pop-up. -->
+<!--  PLEASE note: The type attributes for illusinfo here have underscores in place of spaces. They were added to correct a dtd design error.   -->
+<!--   Actual data passed by the forms will NOT have the underscores (i.e., type="Color Photograph" NOT type="Color_Photograph") -->
+<!--   ImageQuickView Phase 2b Release (January 2009) changes:  -->
+<!--   Added new value for illusinfo/path@type=”orig”;  -->
+<!--   Added new element rightsinfo for FT db to which the customer has rights. CE will populated the attributes db and ui.  -->
+<!--   This will initially be used for the CE-generated plink on image records. This element is required and may not repeat ONLY after CE resolution, hence the '?'. ;  -->
+<!--   Discontinued prodCode, Product codes that have the Main/Host FT Record AN - space delimited list  No longer needed for Phase 2b, removed from DTD.-->
+<!-- ========================================= -->
+<!ELEMENT illusinfo (path?, caption?, source?, uiMain?, prodCode?, rightsinfo?)*>
+<!ATTLIST illusinfo
+            type (Color_Photograph | Black_and_White_Photograph | Illustration | Diagram | Chart | Graph | Map | Cartoon) #IMPLIED
+            count CDATA #IMPLIED
+            seqno CDATA #IMPLIED
+> 
+<!-- Path for each of 4 sizes of the same Illustration (original size 'orig' added 8/2008) -->
+<!ELEMENT path (#PCDATA)>
+<!ATTLIST path
+            type (full | large | small | orig) #IMPLIED
+> 
+<!-- Caption Used when title is missing on Main Records. -->
+<!ELEMENT caption (#PCDATA)>
+<!-- Source of illustration (could have copyright) Only place we see this, so should keep for phase 2b or until data improves enough for displayInfo.-->
+<!ELEMENT source (#PCDATA)>
+<!-- Accession Number, or UI, for Main/Host FT Record. CE uses it for internal matching, this is the AN in QXTH and db on customer profile or group. -->
+<!ELEMENT uiMain (#PCDATA)>
+<!-- ========================================= -->
+<!-- rightsinfo - Added Fall 2008 in ImageQuickView phase2 for searching IQV directly.  FT db to which the customer has rights. CE will populate the attributes db and ui.  -->
+<!-- This will initially be used for the Ehost-generated plink on image records.  -->
+<!-- inProfile, Y/N indicator if parent/target article is on the user's profile (User Specific). Added 3/2009 for JIRA EHST-3070 / NetCRM SI 21012. Problem: The parent/target article of the IQV image could be in the user’s group but not in the user’s profile. When viewing the image detail, and clicking on the 'Original Article' link, the user will get redirected to the search screen with a 'No Results Found' message. Fix: Now, CE will add an 'inProfile' attribute to rightsinfo. Method: CE will first make an AMS call with just the DBs in the user’s profile and try to get an AMS match. If that succeeds, it sets rightsinfo db and ui to the appropriate target DB/UI and sets inProfile to 'Y'.If it fails, CE will set 'inProfile' to 'N' (must include the attribute). CE will then make a second AMS call using the group databases. If it finds a match, it will set rightsinfo db and ui and leave inProfile to 'N'. Outcome: Ehost UI uses rightsinfo db and ui to make a plink, which it will do regardless of whether or not the DB is in the user’s profile. However, it only displays the 'Original Article' link if inProfile='Y'. -->
+<!ELEMENT rightsinfo EMPTY>
+<!ATTLIST rightsinfo
+            db CDATA #IMPLIED
+            ui CDATA #IMPLIED
+            inProfile (Y | N) #IMPLIED
+> 
+<!-- ========================================= -->
+<!-- Image information (added 10/2007 for Killustrata project; Update: 2008 qvw becomes iqv) -->
+<!-- This will be added by CE to Parent/Main/Host record controlinfo after resolving illustrations. -->
+<!-- This basically serves as a wrapper for illustration-specific XML needed for the display of illustrations. -->
+<!-- count - this is from iqv's illusinfo@count, via CE-->
+<!-- smallcount - this is from CE -->
+<!-- largecount - this is from CE -->
+<!-- id - this is from iqv's illusinfo/uiMain via CE.-->
+<!-- code - this is from CE, is the matching code from qvw's illusinfo/prodCode. 2008 : CE will not longer populate; removed from attlist -->
+<!-- ========================================= -->
+<!ELEMENT imageinfo (image*, coverArt*)>
+<!ATTLIST imageinfo
+count CDATA #IMPLIED 
+smallcount CDATA #IMPLIED 
+largecount CDATA #IMPLIED
+id ID #IMPLIED
+> 
+<!ELEMENT image (#PCDATA)> 
+<!-- Cover Art Images --> 
+<!ELEMENT coverArt (#PCDATA)>
+<!ATTLIST coverArt 
+type (thumb | medium) #IMPLIED
+target (url) #IMPLIED
+> 
+<!-- ========================================= -->
+<!--         Limiter information            -->
+<!-- ========================================= -->
+<!-- limiters -->
+<!ELEMENT limiters (limiterGroup+, limiter+)>
+<!-- limiterGroup -->
+<!ELEMENT limiterGroup (#PCDATA)>
+<!ATTLIST limiterGroup
+            groupID CDATA #IMPLIED
+> 
+<!-- limiter -->
+<!ELEMENT limiter (#PCDATA)>
+<!ATTLIST limiter
+            ID CDATA #IMPLIED
+            val CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!--          EhIS (EBSCOhost Integrated Search) Information  (Winter 2009 http://mps/sites/ep/PWA/FederatedSearch/default.aspx)   -->
+<!-- ========================================= -->
+<!-- ehisInfo holds XML related to Ehost Integrated Search external records. We will have ehisInfo node created with a value of Y for ALL external records.  -->
+<!ELEMENT ehisInfo (url*, plinkExt?)>
+<!-- URL is the link to remote full text returned by EhIS which will diffentiate between remote PDF or remote ASCII, and the overall remote FT location. We acquire the remote FT access point from the Muse result input, pass it through an XSLT which mimics the rec xml, where web then consumes it. Not every external EhIS record will have URL. -->
+<!ELEMENT url (#PCDATA)>
+<!ATTLIST url
+            type (resource | pdf | html | other) #IMPLIED
+> 
+<!-- plinkExt is the persistant link to remote full text returned by EhIS  Added 3/25/2009. plinkExt isn't required, but if present, may not repeat. While we only expect 50% of overall sources to provide a persistant link (at time of writing), we do expect all NewsGator results to have them. Example from IP data: <PersistentLink>http://www.salon.com/env/feature/2009/03/09/bill_gates/index.html?source=rss&amp;aim=/env/feature</PersistentLink> -->
+<!ELEMENT plinkExt (#PCDATA)>
+<!-- ========================================= -->
+<!--          Copyright information            -->
+<!-- ========================================= -->
+<!ELEMENT copyright (custom?, item?, holder?, dt?, copyrightText?)>
+<!ATTLIST copyright
+            flag (Y | N) #IMPLIED
+> 
+<!ELEMENT custom (#PCDATA)>
+<!ELEMENT holder (#PCDATA)>
+<!ELEMENT copyrightText (#PCDATA | epkwic | field | link | displayList | icon)*>
+<!-- ========================================= -->
+<!--          Authority Search and Browse information                 -->
+<!-- ========================================= -->
+<!-- Browse Term associated with Authority Record-->
+<!-- If searchString is not present, used to perform an additional search for results in select Interfaces for RISTS.  -->
+<!ELEMENT browseTerm (#PCDATA)>
+<!-- Use Term (AKA "Preferred Term") associated with Authority Record - New for EIT Fall 2008-->
+<!-- If useTerm is present, searchTerm should have the same data populated.  -->
+<!ELEMENT useTerm (#PCDATA)>
+<!-- Search String associated with Authority Record added for multi-item RISTS (Related Inset Source Type Searching) search.            -->
+<!-- When present, searchString is used in place of browseTerm, to perform an additional search for results in select Interfaces        -->
+<!ELEMENT searchString (#PCDATA)>
+<!--Search Term associated with Authority Record -->
+<!--Used when performing a search and term         -->
+<!--cannot be specified within a link element            -->
+<!--New for EIT Fall 2008: If useTerm present,it should populate searchTerm, otherwise this is same as browseTerm.  -->
+<!ELEMENT searchTerm (#PCDATA)>
+<!-- Search Tag associated with Authority Record -->
+<!-- Used in conjunction with Search Term              -->
+<!ELEMENT searchTag (#PCDATA)>
+<!-- focusTag and narrowTerms are used in Thesaurus Auth dbs -->
+<!-- for building exploded or focused search term -->
+<!ELEMENT focusTag (#PCDATA)>
+<!ELEMENT narrowTerms (narrowTerm+)>
+<!ELEMENT narrowTerm (#PCDATA)>
+<!-- ========================================= -->
+<!--         Level of Authority Record                -->
+<!-- ========================================= -->
+<!-- Level of Authority Record 1..6 -->
+<!ELEMENT authLevel (#PCDATA)>
+<!-- item                       Now defined in abody.dtd   -->
+<!--ELEMENT EPKWIC ( #PCDATA )-->
+<!-- ========================================= -->
+<!--          MeSH information                 -->
+<!-- ========================================= -->
+<!ELEMENT meshinfo (permutedTerm?, searchPermutedTag?, treeTag?, treeChildrenTag?, qualifierTag?, IsExplodable?, IsNonMesh?, Tree?, QualifierCodeList?, RelatedCrossReference?, CrossReference?, EntryCombinations?, RelatedHeadings?, UniqueIdentifier?)>
+<!-- Permuted Term -->
+<!ELEMENT permutedTerm (#PCDATA)>
+<!-- Tag used to search against permuted term -->
+<!ELEMENT searchPermutedTag (#PCDATA)>
+<!-- Tag used to access tree view of an element -->
+<!ELEMENT treeTag (#PCDATA)>
+<!-- Tag used to access tree view of children elements -->
+<!ELEMENT treeChildrenTag (#PCDATA)>
+<!-- Tag used to search for qualifier codes-->
+<!ELEMENT qualifierTag (#PCDATA)>
+<!-- Y or N indicator as to whether term can be exploded -->
+<!ELEMENT IsExplodable (#PCDATA)>
+<!-- Y or N indicator as to whether term is non mesh-->
+<!ELEMENT IsNonMesh (#PCDATA)>
+<!-- Information about tree to which term belongs-->
+<!-- Up to 9 level dotted number representing tree element-->
+<!-- + or blank display indicator whether tree reference can be exploded -->
+<!ELEMENT Tree (#PCDATA)>
+<!ATTLIST Tree
+            Number CDATA #IMPLIED
+            hasChildren CDATA #IMPLIED
+> 
+<!-- Blank separated list of qualifier codes allowed with MeSH term-->
+<!ELEMENT QualifierCodeList (#PCDATA)>
+<!-- Multiple of which related to MeSH term-->
+<!ELEMENT RelatedCrossReference (#PCDATA)>
+<!-- Multiple of which related to MeSH term-->
+<!ELEMENT CrossReference (#PCDATA)>
+<!-- Multiple of which related to MeSH term-->
+<!ELEMENT RelatedHeadings (#PCDATA)>
+<!-- Unique Id for MeSH term-->
+<!ELEMENT UniqueIdentifier (#PCDATA)>
+<!--Entry Combinations-->
+<!-- Provide Cross Reference relative to a specific qualifier -->
+<!--code is 2 character associated qualifier (or subheading)  -->
+<!ELEMENT EntryCombinations (#PCDATA)>
+<!ATTLIST EntryCombinations
+            code CDATA #IMPLIED
+> 
+<!-- ========================================= -->
+<!--          Qualifier information                 -->
+<!-- ========================================= -->
+<!ELEMENT Qualifier (#PCDATA)>
+<!ATTLIST Qualifier
+            Code CDATA #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                          Display Information Within Header                                                                         -->
+<!--                              Fall 2007 added displaySection for Novelist products.                                                           -->
+<!-- ============================================================================== -->
+<!ELEMENT displayInfo (displayGroup)>
+<!ELEMENT displayGroup (displayRow*, displaySection*)>
+<!ATTLIST displayGroup
+ name NMTOKEN #IMPLIED
+ style NMTOKEN #IMPLIED
+ level CDATA #IMPLIED
+> 
+<!ELEMENT displayRow (#PCDATA | epkwic | field | link | displayList | icon | linkLabel)*>
+<!ATTLIST displayRow
+ name NMTOKEN #IMPLIED
+ level CDATA #IMPLIED
+ label CDATA #IMPLIED
+> 
+<!-- displaySection was first used for NoveList results 10/2007 -->
+<!-- style values as of 10/2007 are leftsectioninner, leftsectionouter, rightsectioninner, & rightsectionouter. -->
+<!ELEMENT displaySection (displaySection*, displayRow*)>
+<!ATTLIST displaySection
+            style (leftsectioninner | leftsectionouter | rightsectioninner | rightsectionouter) #IMPLIED
+            level CDATA #IMPLIED
+            label CDATA #IMPLIED
+> 
+<!-- linkLabel was first used for NAICS link on DisplayRow label 8/2002 -->
+<!ELEMENT linkLabel (#PCDATA | link)*>
+<!-- linkTargetAlt=`fullWithResults` - For BRC we needed navigation to "fullWithResults" (AKA 'the Landing page')instead of detail screen (linkTarget="FullText", AKA 516 form or full display). All interfaces without "fullWithResults" page will ignore this attribute. Forms will continue to pass @linkTarget="FullText" so we don't break other interfaces that may host b6h. For b6h title data, forms 501/502 pass linkTargetAlt=`fullWithResults` in addition to traditional linkTarget="fullText" if field 99 is present. -->
+<!ELEMENT link (#PCDATA | epkwic | field | icon)*>
+<!ATTLIST link
+            linkLimiter CDATA #IMPLIED
+            linkTargetAlt CDATA #IMPLIED
+            linkTarget CDATA #IMPLIED
+            linkType CDATA #IMPLIED
+            linkTerm CDATA #IMPLIED
+            linkTitle CDATA #IMPLIED
+            position CDATA #IMPLIED
+            linkDb CDATA #IMPLIED
+            linkWindow CDATA #IMPLIED
+> 
+<!-- type, for type of icon. Value "generic" when using a generic image & we do not have/need a product-specific internal path. @type needs to list before src=`*.gif.` For BRC 'Image Available' iconImage.gif 3/2009, /icon@type='generic' is passed to indicate that the camera icon is a generic/standard icon and that ehost can go directly to the EpImages folder. FTR, this is different from the hard-coding for 'Report Available' stGov.gif icon in RDK products like khh, but that handling may be able to use this for interface consolidation. -->
+<!ELEMENT icon EMPTY>
+<!ATTLIST icon
+            type (generic | other) #IMPLIED
+            src CDATA #REQUIRED
+            location NMTOKEN #IMPLIED
+            alt CDATA #REQUIRED
+            style (left | right | top | bottom | center) #IMPLIED
+            name NMTOKEN #IMPLIED
+            level CDATA #IMPLIED
+> 
+<!ELEMENT field (#PCDATA | epkwic | link | displayList)*>
+<!ATTLIST field
+            label CDATA #IMPLIED
+            name NMTOKEN #IMPLIED
+            level CDATA #IMPLIED
+            style (plain | strong | cite | sup | sub | uline | italic) "plain"
+            type CDATA #IMPLIED
+> 
+<!ELEMENT displayLine (#PCDATA | epkwic | field | link)*>
+<!ATTLIST displayLine
+            label CDATA #IMPLIED
+            name NMTOKEN #IMPLIED
+            level CDATA #IMPLIED
+            style (center) #IMPLIED
+> 
+<!ELEMENT displayList (displayLine)*>
+<!ATTLIST displayList
+            label CDATA #IMPLIED
+            name NMTOKEN #IMPLIED
+            level CDATA #IMPLIED
+            style (paragraph | ulist | olist | semicolon) "paragraph"
+> 
+<!-- ============================================================================== -->
+<!--                                          externalLinkInfo Section Within Header                                                                                                       -->
+<!-- ============================================================================== -->
+<!ELEMENT externalLinkInfo (externalLink+)>
+<!ELEMENT externalLink (#PCDATA)>
+<!ATTLIST externalLink
+            type (ilsLink | smartLink | other) #IMPLIED
+            URL CDATA #REQUIRED
+            newWindow (Y | N) #IMPLIED
+            windowProperties CDATA #IMPLIED
+            windowName CDATA #IMPLIED
+            linkText CDATA #IMPLIED
+            linkIcon CDATA #IMPLIED
+            mouseOverText CDATA #IMPLIED
+> 
+<!-- ============================================================================== -->
+<!--                                          marcInfo Section Within Header for the DDS-based Generic Z Gateway                                                                      -->
+<!-- ============================================================================== -->
+<!ELEMENT marcInfo (#PCDATA | controlfield | datafield | subfield | epfield)*>
+<!ELEMENT controlfield EMPTY>
+<!ATTLIST controlfield
+            tag CDATA #IMPLIED
+> 
+<!ELEMENT datafield EMPTY>
+<!ATTLIST datafield
+            tag CDATA #IMPLIED
+> 
+<!ELEMENT subfield EMPTY>
+<!ATTLIST subfield
+            code CDATA #IMPLIED
+> 
+<!ELEMENT epfield EMPTY>
+<!ATTLIST epfield
+            name CDATA #IMPLIED
+> 
+<!-- =================================================================== -->
+<!--            ENTITY FOR STANDALONE ATTRIBUTE                          -->
+<!-- =================================================================== -->
+<!ENTITY % img.atts " serverpath CDATA  #REQUIRED
+                     filepath   CDATA  #REQUIRED
+                     filename   CDATA  #REQUIRED
+                     alt        CDATA  #IMPLIED">
+<!-- ALT is used for image types.  Frequently used image types are:         
+photo (color | black and white ), graphic, diagram, chart, cartoon, map     
+                                                                         -->
+<!-- =================================================================== -->
+<!--            ENTITIES FOR COMMON ELEMENTS                             -->
+<!-- =================================================================== -->
+<!-- Inline elements:                                                       
+                         <bold> bold, <emph> italics, <uline> underline,    
+                         <sc> small caps, <sups> superscript, <subs>        
+                         subscript, <sline> single line, <dline> double line,
+                         <monospc> code fragments, <cn> center text, <rj>   
+                         right justify, <epkwic> KWIC highlighting       -->
+<!ENTITY % inline "bold
+                   | emph
+                   | uline
+                   | sc
+                   | sups
+                   | subs
+                   | sline
+                   | dline
+                   | cn
+                   | rj
+                                                   | epkwic
+                   | monospc">
+<!-- Add in linkage support:                                             -->
+<!ENTITY % paralink "%inline;
+                      | imglink
+                      | reflink
+                      | ulink
+                      | eplink
+                      | anchor">
+<!--                 Paragraph-level elements                            -->
+<!--                     Elements allowed at the same level as paragraph    
+                                                                         -->
+<!ENTITY % paralevel "p
+                      | %paralink;
+                      | ulist
+                      | olist
+                      | ct
+                      | ref">
+<!ELEMENT aug (au?, affil*, p?)*>
+<!--Article author -->
+<!ELEMENT au (#PCDATA | epkwic)*>
+<!ATTLIST au
+            id ID #IMPLIED
+            type (bkauthor | composer | corporate | editor | poet | pseudo | reviewer | writer | other) "writer" 
+> 
+<!--Article author Affiliation -->
+<!-- affil (added author affiliation for EIT usage of CINAHL products 8/2008. May not work for all products. ) -->
+<!ELEMENT affil (#PCDATA)*>
+<!-- =================================================================== -->
+<!--               Elements That Comprise Article Body                   -->
+<!-- =================================================================== -->
+<!ELEMENT abody (jsection?, et?, aseries?, title, sbt?, dl*, (hd | hd1 | sidebar | %paralevel; | aug*)*)>
+<!-- Journal section -->
+<!ELEMENT jsection (#PCDATA | %inline;)*>
+<!ATTLIST jsection
+            id ID #IMPLIED
+> 
+<!-- Eyebrow title -->
+<!ELEMENT et (#PCDATA | %inline;)*>
+<!ATTLIST et
+            id ID #IMPLIED
+> 
+<!-- Series -->
+<!ELEMENT aseries (#PCDATA | %inline;)*>
+<!ATTLIST aseries
+            id ID #IMPLIED
+> 
+<!-- Article title -->
+<!ELEMENT title (#PCDATA | %paralink;)*>
+<!ATTLIST title
+            id ID #IMPLIED
+> 
+<!-- Subtitle    -->
+<!ELEMENT sbt (#PCDATA | %inline;)*>
+<!ATTLIST sbt
+            id ID #IMPLIED
+> 
+<!-- Dateline -->
+<!ELEMENT dl (#PCDATA | %inline;)*>
+<!--  Heading    ..ST.-   -->
+<!ELEMENT hd (#PCDATA | %paralink;)*>
+<!ATTLIST hd
+            id ID #IMPLIED
+> 
+<!--  Heading1    ..BI.- -->
+<!ELEMENT hd1 (#PCDATA | %paralink;)*>
+<!ATTLIST hd1
+            id ID #IMPLIED
+> 
+<!-- Sidebar                                                             -->
+<!ELEMENT sidebar ((title | sbt)*, (aug | %paralevel; | hd | hd1)*)>
+<!ATTLIST sidebar
+            id ID #IMPLIED
+            xml-rendering (suppress | preserve) "preserve"
+> 
+<!-- =================================================================== -->
+<!--                     Paragraph-Level ELEMENTS                        -->
+<!--                                                                     -->
+<!ELEMENT p (#PCDATA | %inline; | imglink | reflink | ulink | eplink | anchor | aug)*>
+<!ATTLIST p
+            id ID #IMPLIED
+            align (left | center | right | justify) #IMPLIED
+> 
+<!--                    LISTS                                            -->
+<!-- Unordered list -->
+<!ELEMENT ulist (item+)>
+<!-- Ordered list -->
+<!ELEMENT olist (item+)>
+<!-- List item -->
+<!ELEMENT item (#PCDATA | %paralink;)*>
+<!--                       REFERENCE                                     -->
+<!ELEMENT ref (title, blist+)>
+<!ATTLIST ref
+            id ID #IMPLIED
+> 
+<!--                    TABLE                                            -->
+<!--               ..CT.-  Preformatted Text Style Table                 -->
+<!ELEMENT ct (#PCDATA | %inline; | imglink | reflink | ulink | eplink | anchor)*>
+<!ATTLIST ct
+            id ID #IMPLIED
+> 
+<!ELEMENT blist (bibl | bibtext | ulink)*>
+<!ATTLIST blist
+            id ID #IMPLIED
+> 
+<!ELEMENT bibl (#PCDATA | epkwic)*>
+<!ATTLIST bibl
+            id ID #IMPLIED
+            idref CDATA #IMPLIED
+            target CDATA #IMPLIED
+> 
+<!ELEMENT bibtext (#PCDATA | %paralink;)*>
+<!ATTLIST bibtext
+            id ID #IMPLIED
+> 
+<!-- ================== Phrase Level Elements ============================= 
+                                                                         -->
+<!--                    Image                                            -->
+<!--                        Image with or without file path and caption  -->
+<!ELEMENT imglink (#PCDATA | epkwic)*>
+<!ATTLIST imglink
+            %img.atts; 
+            id ID #IMPLIED
+            src ENTITY #IMPLIED
+            href ENTITY #IMPLIED
+            align (bottom | left | center | right | justify) #IMPLIED
+            text CDATA #IMPLIED
+> 
+<!--                      Internal Link                                  -->
+<!ELEMENT reflink (#PCDATA | epkwic)*>
+<!ATTLIST reflink
+            id ID #IMPLIED
+            idref CDATA #REQUIRED
+> 
+<!--                      External Link                                  -->
+<!ELEMENT ulink (#PCDATA | epkwic)*>
+<!ATTLIST ulink
+            href CDATA #REQUIRED
+> 
+<!--                      EP Search Link                                 -->
+<!ELEMENT eplink (#PCDATA | epkwic)*>
+<!ATTLIST eplink
+            linkfield CDATA #REQUIRED
+            linkkey CDATA #REQUIRED
+            offset CDATA #REQUIRED
+            dbname CDATA #REQUIRED
+            alt CDATA #IMPLIED
+> 
+<!ELEMENT anchor EMPTY>
+<!ATTLIST anchor
+            id ID #REQUIRED
+> 
+<!-- ================== Inline Elements =================================== 
+                                                                         -->
+<!-- bold -->
+<!-- ..BI.-  -->
+<!ELEMENT bold (#PCDATA | epkwic)*>
+<!-- italics -->
+<!ELEMENT emph (#PCDATA | epkwic)*>
+<!-- underline -->
+<!ELEMENT uline (#PCDATA | epkwic)*>
+<!-- draw a single line -->
+<!-- ..L1.- -->
+<!ELEMENT sline (#PCDATA | epkwic)*>
+<!-- draw a double line -->
+<!-- ..L2.- -->
+<!ELEMENT dline (#PCDATA | epkwic)*>
+<!-- subscript -->
+<!ELEMENT subs (#PCDATA | %inline;)*>
+<!-- superscript -->
+<!ELEMENT sups (#PCDATA | %inline;)*>
+<!-- small caps -->
+<!ELEMENT sc (#PCDATA | epkwic)*>
+<!--                       Center text                                   -->
+<!ELEMENT cn (#PCDATA | epkwic)*>
+<!--                       Right justify                                 -->
+<!ELEMENT rj (#PCDATA | %paralink;)*>
+<!--                       Code fragments                                -->
+<!ELEMENT monospc (#PCDATA | epkwic)*>
+<!--                       KWIC Highlighting                             -->
+<!ELEMENT epkwic (#PCDATA)>
+<!-- =========================== End of the EPDirect.DTD ========================= -->

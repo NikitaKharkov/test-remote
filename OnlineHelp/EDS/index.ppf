@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ppfml version="2.00" project="EDS" type="4">
+  <contextmap>
+    
+  </contextmap>
+  <topiclist defaulttopic="Explain_Files\Explain_Files_2.htm">
+    
+    <topic>
+      Explain_Files\Explain_Files_2.htm
+    </topic>
+    
+    <topic>
+      Database_Help\A-B\Business_Source_Complete.htm
+    </topic>
+    
+    <topic>
+      Database_Help\C-D\CINAHL_Complete.htm
+    </topic>
+    
+    <topic>
+      Explain_Files\Explain_Files_2.htm
+    </topic>
+    
+    <topic>
+      Database_Help\A-B\Business_Source_Complete.htm
+    </topic>
+    
+    <topic>
+      Database_Help\C-D\CINAHL_Complete.htm
+    </topic>
+    
+    <topic>
+      Database_Help\A-B\Busines_Source_Complete.htm
+    </topic>
+    
+  </topiclist>
+  <filenamemap>
+    <filenameentry moniker="wh_languagetype">
+      <filename>
+        en_US
+      </filename>
+    </filenameentry>
+    <filenameentry moniker="startpage">
+      <filename>
+        index.htm
+      </filename>
+    </filenameentry>
+        
+  </filenamemap>
+</ppfml>

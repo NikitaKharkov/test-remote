@@ -1,0 +1,22 @@
+Time: 2008-05-16 10:59:23
+Error: Could not connect to database: Unknown MySQL server host 'epsupport1' (1)
+CME Coordinator E-mail: support@thci.org
+Server: ftp://ftp.campus.thci.org
+Username: dc\cme_csv
+Filename: 2008-05-15.csv
+
+Time: 2008-05-16 11:00:19
+Error: Could not connect to database: Unknown MySQL server host 'epsupport1' (1)
+CME Coordinator E-mail: support@thci.org
+Server: ftp://ftp.campus.thci.org
+Username: dc\cme_csv
+Filename: 2008-05-15.csv
+
+Time: 2008-05-16 11:01:23
+CME data from 2008-05-15 for support@thci.org successfully uploaded.
+CME Coordinator E-mail: support@thci.org
+Server: ftp://ftp.campus.thci.org
+Username: dc\cme_csv
+Filename: 2008-05-15.csv
+Number of CME submissions: 26
+

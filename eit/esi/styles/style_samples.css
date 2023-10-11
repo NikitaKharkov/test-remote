@@ -1,0 +1,110 @@
+@CHARSET "ISO-8859-1";
+
+
+.infobox_green
+{
+	overflow: none;
+	text-align: left;
+	font-size: 12px;
+	
+	border: 1px solid #075622;
+	
+	background-color: #efffef;
+	
+	padding: 15px;
+	margin-bottom: 15px;
+}
+
+.infobox_light
+{
+	overflow: none;
+	text-align: left;
+	font-size: 12px;
+	
+	border: 1px solid #666680;
+	
+	background-color: #eaf3f9;
+	
+	padding: 15px;
+	
+	margin-bottom: 15px;
+}
+
+	
+.samples_box
+{
+	margin-top: 32px;
+	border: 1px solid #000000;
+	padding: 20px;
+	position: relative;
+}
+
+.navmenu
+{
+	margin: 0px;
+	padding: 0px;
+	
+	position: absolute;
+	top: -23px;
+	
+	list-style-type: none;
+}
+
+.navmenu_active
+{
+	height: 15px;
+	
+	margin: 0px;
+	padding: 3px;
+	
+	border: 1px solid #000000;
+	border-bottom: 1px solid #ffffff;
+	
+	float: left;
+	display: block;
+	
+	list-style-type: none;
+	
+	margin-right: 10px;
+}
+
+.navmenu_medical
+{
+	height: 15px;
+	
+	
+	border: 1px solid #000000;
+	
+	margin: 0px;
+	padding: 3px;
+	
+	float: left;
+	display: block;
+	
+	background-color: #efffea;
+	
+	list-style-type: none;
+	
+	margin-right: 10px;
+}
+
+
+.navmenu_library
+{
+	height: 15px;
+	
+	
+	border: 1px solid #000000;
+	
+	margin: 0px;
+	padding: 3px;
+	
+	float: left;
+	display: block;
+	
+	background-color: #eaf3f9;
+	
+	list-style-type: none;
+	
+	margin-right: 10px;
+}

@@ -1,0 +1,59 @@
+<!-- TOP BRANDING -->
+<link href="http://www.lh2cc.net/eds_demo_images/springfielduniversity/springfield-styles.css" rel="stylesheet" type="text/css" />
+<div class="enhanced-header">
+       <img class="header-logo" height="133" width="1001" src="http://www.lh2cc.net/eds_demo_images/springfielduniversity/headerLogo.jpg">
+       <div class="branding-toolbar clearfix">
+              <a href="#" class="home-link"><span class="link-text">Springfield University Home</span></a>
+              
+              <ul class="branding-links">
+                     <li><a class="site-map" href="#"><span class="link-text">Site Map</span></a></li>
+                     <li><a class="contact-us" href="#"><span class="link-text">Contact Us</span></a></li>
+              </ul>
+       </div>
+</div>
+<!-- END TOP BRANDING -->
+
+
+<!-- BOTTOM BRANDING -->
+<link href="http://www.lh2cc.net/eds_demo_images/springfielduniversity/springfield-styles.css" rel="stylesheet" type="text/css" />
+<div id="springfieldufooter" class="three-column">
+       <div class="column quick-links">
+              <h2 class="linklist-heading">Quick Links to Major Resources</h2>
+              <div class="two-column">
+                     <ul class="linklist column">
+                           <li><a href="#">Academic Search complete (EBSCOhost)</a></li>
+                           <li><a href="#">Business Source complete (EBSCOhost)</a></li>
+                           <li><a href="#">Dissertations & Teses (ProQuest)</a></li>
+                           <li><a href="#">JSTOR</a></li>
+                     </ul>
+                     
+                     <ul class="linklist column">
+                           <li><a href="#">Oxford English Dictionary</a></li>
+                           <li><a href="#">PsycINFO (EBSCOhost)</a></li>
+                           <li><a href="#">Scopus</a></li>
+                           <li><a href="#">Web of Science</a></li>
+                     </ul>
+              </div>
+       </div><!-- END Quick Links -->
+       
+       <div class="column">
+              <h2 class="linklist-heading">Research Help</h2>
+              <ul class="linklist">
+                     <li><a href="#">Ask a Librarian</a></li>
+                     <li><a href="#">Citation Style Guides</a></li>
+                     <li><a href="#">Research Guides</a></li>
+              </ul>
+       </div><!-- END Research Help -->
+       
+       <div class="column">
+              <h2 class="linklist-heading">Services</h2>
+              <ul class="linklist">
+                     <li><a href="#">For Faculty</a></li>
+                     <li><a href="#">For Graduate Students</a></li>
+                     <li><a href="#">For Undergraduates</a></li>
+                     <li><a href="#">Borrowing Privileges</a></li>
+                     <li><a href="#">Interlibrary Loan</a></li>
+              </ul>
+       </div><!-- END Services -->
+</div>
+<!-- END BOTTOM BRANDING -->

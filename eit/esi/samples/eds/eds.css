@@ -1,0 +1,379 @@
+@CHARSET "ISO-8859-1";
+
+*{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+
+body{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    text-align: center;
+    background-color: #FFFFFF;
+}
+
+
+#container {
+    width: 100%;
+    min-width: 900px;
+}
+    #container .popup_box {
+        background-color: #FFFFCC;
+        border: 1px solid #000000;
+        padding: 10px;
+        position: absolute;
+        visibility: hidden;
+        z-index: 200;
+        font-size: 11px;
+        margin: 10px;
+    }
+    
+    #container .popup_box td {
+        vertical-align: top;
+    }
+
+    /* Header Top Section */
+    #container #header .top {
+        background-image: url( 'images/green_header_top_back.png' );
+        background-repeat: repeat-x;
+        background-position: top left;
+        height: 19px;
+        padding: 5px;
+        font-size: 12px;
+        text-align: left;
+    }
+    
+    #container #header .top a {
+        color: #FFFFFF;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    #container #header .top a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Header Middle Section */
+    #container #header .middle {
+        height: 83px;
+        padding: 0px;
+        margin: 0px;
+        clear: right;
+        text-align: left;
+        margin-top: auto;
+        margin-bottom: 0px;
+        white-space: nowrap;
+    }
+    
+        /* Button Table Details */
+        
+        #container #header .middle table {
+            height: 100%;
+            margin: 0px;
+            border: 0px;
+            border-collapse: collapse;
+        }
+        
+        #container #header .middle td {
+            padding: 0px;
+            vertical-align: bottom;
+        }
+        
+        #container #header .inactive_button {
+            border: 1px solid #666666;
+            background-image: url( 'images/blue_bk.png' );
+            background-repeat: repeat-x;
+            background-position: top-left;
+            height: 18px;
+            padding-top: 3px;
+            padding-left: 7px;
+            padding-right: 5px;
+            margin-right: 7px;
+            color: #CCCCCC;
+            font-weight: bold; 
+            font-size: 12px;
+        }
+        
+        #container #header .active_button {
+            border: 1px solid #666666;
+            
+            background-image: url( 'images/blue_bk.png' );
+            background-repeat: repeat-x;
+            background-position: top-left;
+            height: 24px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 3px;
+            margin-right: 7px;
+            color: #FFFFFF;
+            font-weight: bold; 
+        }
+    
+    
+        #container #header .bottom {
+            background-image: url( 'images/blue_header_top_back.png' );
+            background-repeat: repeat-x;
+            background-position: top left;
+            height: 5px;
+        }
+    
+    #container #content {
+        min-height: 200px;
+        padding-top: 100px;
+        padding-bottom: 25px;
+        background-color:#FFFFFF;
+    }
+    
+        #container #content .box {
+            width: 500px;
+            min-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+            border: 1px solid #666666;
+            background-image: url( 'images/bg.gif' );
+            text-align: left;
+            font-size: 12px;
+        }
+        
+            #container #content .box p {
+                padding: 0px;
+                margin: 0px;
+                padding-top: 5px;
+            }
+        
+            #container #content .box a {
+                text-decoration: none;
+                color: #000000;
+            }
+            
+            #container #content .box a:hover {
+                text-decoration: underline;
+            }
+            
+        #container #content .search_options_off {
+            background-image: url( 'images/arrow_right.gif' );
+            background-repeat: no-repeat;
+            background-position: left center;
+            padding-left: 10px;
+        }	
+        
+        #container #content .search_options_on {
+            background-image: url( 'images/arrow_down.gif' );
+            background-repeat: no-repeat;
+            background-position: left center;
+            
+            padding-left: 10px;
+        }
+        
+        #container #content .search_options_box {
+            border: 1px solid  #666666;
+            background-color: #E6E6E6;
+            
+            padding: 5px;
+            margin: 0px;
+            margin-top: 5px;
+        }
+        
+    #container #search_content {
+        min-height: 200px;
+        padding-top: 40px;
+        padding-bottom: 25px;
+        background-color:#F0F0F0;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+        #container #search_content .box {
+            width: 100%;
+            min-width: 500px;
+            padding: 0px;
+        
+            border: 1px solid #666666;
+            background-color: #FFFFFF;
+            text-align: left;
+            font-size: 12px;
+        }
+        
+            #container #search_content .box table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            #container #search_content .box td {
+                padding: 0px;
+                padding-top: 15px;
+                vertical-align: top;
+            }
+        
+        #container #search_content .side_bar {
+            width: 220px;
+            margin: 10px;
+        
+            border: 1px solid #666666;
+            background-color: #CCE0FF;
+            
+            text-align: left;
+            font-size: 12px;
+            
+            float: left;
+        }
+        
+        #container #search_content .side_bar .white_area_top {
+            padding: 10px;
+            background-color: white;
+            border-bottom: 1px solid #666666;
+            text-align: center;
+        }
+        #container #search_content .side_bar .white_area_bottom {
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid #666666;
+            text-align: center;
+        }
+        
+        #container #search_content .side_bar .main {
+            padding: 5px;
+        }
+        
+        #container #search_content .results_box {
+            margin: 10px;
+            padding-top: 5px;
+            margin-left: 260px;
+            width: auto;
+            border: 1px solid #666666;
+            background-color: #e6e6e6;
+        }
+        
+        #container #search_content .results_area {
+            background-color: #FFFFFF;
+            border-top: 1px solid #666666;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        
+            #container #search_content .results_area li {
+                display: block;
+            }
+            
+            #container #search_content .results_area .title {
+                color: #0000FF;
+                font-weight: bold;
+                font-size: 14px;
+            }
+        
+    #container #footer {
+        background-image: url( 'images/blue_header_top_back.png' );
+        background-repeat: repeat-x;
+        background-position: top left;
+        height: 0px;
+        padding-top: 10px;
+    }
+    
+        #container #footer a {
+            text-decoration: underline;
+            color:#104E8B;
+            font-size: 10px;
+        }
+    
+.sprite {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -450px -120px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+    
+    
+.sprite_Book {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -144px -117px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Periodical {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -140px -30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Video {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -344px -30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Audio {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -545px -25px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Audio {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -545px -25px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.Journal {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -450px -120px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Review {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -450px -400px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_NEWSP {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -140px -30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}
+
+.sprite_Newspaper {
+    background-image: url( 'http://imageserver.ebscohost.com/ebscoimages/11.5.48.0/PubTypes/PT_Sprite.png' );
+    background-repeat: none;
+    background-position: -140px -30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 60px;
+}

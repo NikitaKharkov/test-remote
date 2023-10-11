@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+
+.widget_image
+{
+	float: left;
+	border: 1px solid #0000FF;
+}
+
+.widget_desc
+{
+	float: left;
+	margin-left: 10px;
+}
+
+.widget_comments
+{
+	clear: both;
+	padding-top: 10px;
+}
+
+pre
+{
+	border: 1px dashed #000000;
+	background-color: #f5ffff;
+	overflow-x: scroll;
+	overflow-y: scroll;
+	
+	width: 600px;
+	max-height: 200px;
+	padding: 5px;
+}

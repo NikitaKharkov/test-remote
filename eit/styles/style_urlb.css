@@ -1,0 +1,288 @@
+p {
+line-height:110%;
+}
+
+select, input[type='text'], input[type='checkbox'] {
+border:solid 1px #78B3E0;
+border-radius:4px;
+}
+
+.stepContainer {
+margin:24px 0px 12px 0px;
+border-top:dotted 1px #3366CC;
+}
+
+.selectContainer {
+display:block;
+margin:24px 0px 12px 0px;
+width:440px;
+text-align:right;
+}
+
+.selectContainer select{
+width:300px;
+}
+
+.selectContainer label{
+width:100px;
+}
+
+.radioContainer {
+display:block;
+margin:24px 0px 12px 12px;
+}
+
+#customerInfoDiv {
+padding:0px;
+display:block;
+margin:21px 0px 12px 0px;
+border-radius:4px;
+}
+
+#customerIdInputDiv {
+display:inline-block;
+margin:8px 0px 21px 0px;
+}
+
+#customerProfileInputDiv {
+margin-left:28px;
+display:inline-block;
+}
+
+.multiListContainer {
+position:relative;
+margin:12px 12px 12px 48px;
+border:solid 1px #D0D0BF;
+width:550px;
+max-height:300px;
+min-height:45px;
+overflow:auto;
+}
+
+.multiListContainer div{
+margin:8px;
+}
+
+.multiListContainer label{
+margin:0px 0px 0px 5px;
+}
+
+.boxLabel {
+position:relative;
+display:block;
+margin:-21px 0px 0px 12px;
+background-color:#FFFFFF;
+padding:4px;
+width:150px;
+}
+
+#AuthenticationMethodsDiv {
+position:relative;
+display:inline-block;
+margin:21px 12px 1px 0px;
+border:solid 1px #D0D0BF;
+width:650px;
+padding:8px;
+}
+
+#AuthenticationMethodsDiv h4{
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+font-weight:600;
+color:#333333;
+margin:0px 0px 0px 0px;
+padding-bottom:4px;
+border-bottom:solid 1px #D0D0BF;
+}
+
+#AuthenticationMethodsColumnOne {
+position:relative;
+display:inline-block;
+float:left;
+width:230px;
+margin:8px 8px 8px 12px;
+}
+
+#AuthenticationMethodsColumnOne input{
+margin:8px 8px 4px 0px;
+}
+
+
+#AuthenticationMethodsColumnTwo {
+position:relative;
+display:inline;
+float:left;
+width:320px;
+margin:8px 8px 8px 12px;
+}
+
+#AuthenticationMethodsColumnTwo h4{
+margin:0px 0px 0px 24px;
+border-bottom:solid 1px #D0D0BF;
+padding-bottom:4px;
+}
+
+#AuthenticationMethodsColumnTwo input{
+margin:8px 8px 4px 0px;
+}
+
+#authRadoButtonsDivOne{
+display:block;
+position:relative;
+float:left;
+margin:0px 0px 0px 24px;
+}
+
+#authRadoButtonsDivTwo{
+display:block;
+position:relative;
+float:left;
+margin:0px 0px 0px 24px;
+}
+
+#authRadoButtonsDivThree{
+display:block;
+position:relative;
+float:left;
+margin:0px 0px 0px 24px;
+}
+
+#input_ProxyPrefix {
+width:330px;
+margin:12px;
+}
+
+#outputDiv {
+position:relative;
+margin:12px 12px 4px 0px;
+border:solid 1px #D0D0BF;
+width:90%;
+height:180px;
+overflow:auto;
+color:#990000;
+}
+
+#outputDiv div{
+margin:7px 7px 7px 21px;
+color:#333333;
+}
+
+#invokeDiv input[type='button']{
+margin:12px 12px 0px 12px;
+}
+
+.helpButton img{
+display:inline-block;
+margin:0px 0px -3px 12px;
+}
+
+.floatingHelpDiv {
+z-index:1;
+position:absolute;
+max-width:320px;
+max-height:300px;
+overflow:auto;
+display:block;
+background-color:#EDFAFA;
+border:solid 1px #1079CA;
+padding:12px;
+border-radius:12px;
+box-shadow: 2px 3px 7px #AAAAAA;
+font-size:12px;
+color:#220022;
+}
+
+.helpCloser {
+color:#779999;
+font-size:14px;
+font-weight:600;
+position:relative;
+display:block;
+text-align:center;
+width:16px;
+padding:2px 3px 3px 3px;
+background-color:#FFFFFF;
+border:solid 1px #77BBDD;
+border-radius:12px;
+float:right;
+cursor:pointer;
+margin:-22px -12px 0px 0px;
+}
+
+.floatingHelpDiv div p{
+color:#444444;
+line-height:150%;
+}
+
+#floatingHelpDiv h4{
+font-family:Arial, Helvetica, sans-serif;
+font-size:14px;
+color:#1079CA;
+}
+
+.varPlaceHolder {
+color:#0033CC;
+}
+
+#outputDiv .errorMessage {
+color:#CC0000;
+font-weight:400;
+}
+
+.note {
+font-size:11px;
+color:#0033CC;
+}
+
+.authNote {
+clear:both;
+font-size:90%;
+margin:0px 0px 0px 18px;
+padding-top:12px;
+color:#CC0000;
+}
+
+.referenceNote {
+color:#CC0000;
+}
+
+.userInputPart {
+color:#009933;
+}
+
+#inputColorKeys {
+position:relative;
+margin:0px 0px 21px 0px;
+padding:0px;
+}
+
+#inputColorKeys label{
+position:relative;
+margin:0px 0px 54px 4px;
+padding:0px;
+text-align:left;
+}
+
+#UserInputColorKey {
+position:relative;
+display:inline-block;
+margin:0px 0px 0px 54px;
+padding:0px;
+width:10px;
+height:10px;
+background-color:#009933;
+}
+
+#ProgramInputColorKey {
+position:relative;
+display:inline-block;
+margin:0px 0px 0px 54px;
+padding:0px;
+width:10px;
+height:10px;
+background-color:#0033CC;
+}
+
+#radioDeselect {
+cursor:pointer;
+}

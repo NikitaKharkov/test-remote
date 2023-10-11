@@ -1,0 +1,19 @@
+* About to connect() to eds-api.ebscohost.com port 80 (#0)
+*   Trying 140.234.252.186...
+* connected
+* Connected to eds-api.ebscohost.com (140.234.252.186) port 80 (#0)
+> GET /edsapi/rest/CreateSession?profile=edsapi&org=&guest=y HTTP/1.1
+Host: eds-api.ebscohost.com
+Accept: */*
+x-authenticationToken: 0bc59d0f-fb27-4ce6-b0ec-8b57844886c5
+
+< HTTP/1.1 200 OK
+< Cache-Control: private
+< Content-Length: 279
+< Content-Type: application/xml; charset=utf-8
+< Server: Microsoft-IIS/7.5
+< X-AspNet-Version: 4.0.30319
+< X-Powered-By: ASP.NET
+< Date: Fri, 16 Nov 2012 16:28:02 GMT
+< 
+* Connection #0 to host eds-api.ebscohost.com left intact

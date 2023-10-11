@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Database_Help","type":"book","key":"toc1"},{"name":"Database Help Explain Files","type":"book","key":"toc2"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

@@ -1,0 +1,26 @@
+<credits>
+	<credit id="creditAMA">
+		<p><label class="check" for="creditAMA">
+		<input type="radio" id="creditAMA" name="credit" value="1" title="AMA PRA Category 1 Credit - 0.5 credits"/>
+		<span>AMA PRA Category 1 Credit  -  0.5 credits&#8482;</span>
+		</label></p>
+	</credit>
+	<credit id="creditAAFP">
+		<p><label class="check" for="creditAAFP">
+		<input type="radio" id="creditAAFP" name="credit" value="2" title="AAFP Prescribed Credit - 0.5 credits"/>
+		<span>AAFP Prescribed Credit  -  0.5 credits</span>
+		</label></p>
+	</credit>
+	<credit id="creditAANP">
+		<p><label class="check" for="creditAANP">
+		<input type="radio" id="creditAANP" name="credit" value="3" title="AANP Contact Hours - 0.5 Hours"/>
+		<span>AANP Contact Hours  -  0.5 Hours</span>
+		</label></p>
+	</credit>
+	<credit id="certificate">
+		<p><label class="check" for="certificate">
+		<input type="radio" id="certificate" name="credit" value="5" title="Certificate of Attendance"/>
+		<span>Certificate of Attendance</span>
+		</label></p>
+	</credit>
+</credits>

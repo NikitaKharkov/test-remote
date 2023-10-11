@@ -1,0 +1,110 @@
+/* Required for Paginator Class ------------------------------------- */
+
+.paginator {
+	border-collapse: separate;
+	margin: 24px auto 0px;
+	font: normal normal 11px/normal Arial, Helvetica, sans-serif;
+	text-align: center;
+	line-height: 24px;
+}
+	.paginator a, .paginator a:visited {
+		border: 1px solid #9BB0CB;
+		padding: 3px 6px;
+		margin: 0 1px 0 0;
+		text-decoration: none;
+		width: 50px;
+		font-weight: normal;
+	}
+	.paginator a:active, .paginator a:hover {
+		text-decoration: none;
+		color: #3D5262;
+		border: 1px solid #78899D;
+		background-color: #EEE;
+	}
+	.paginator .stats {
+		color:#333333;
+		margin-bottom:6px;
+	}
+		.paginator .stats strong {
+			font-size:1.1em;
+			color:#000000;
+		}
+	
+.page_direct a, .page_direct a:visited {
+	text-decoration:none;
+}
+	
+.page_relative a, .page_relative a:visited {
+	margin: 0 7px;
+	font-weight: bold;
+}
+.page_relative a:active, .page_relative a:hover {
+	text-decoration:none;
+}
+
+.page_relative_disabled {
+	font-size:.9em;
+	color: #ababab;
+}
+
+.page_highlighted a, .page_highlighted a:visited, .page_highlighted a:active, .page_highlighted a:hover {
+	padding: 3px 6px;
+	margin: 0 1px 0 0;
+	color: #FFF;
+	background-color: #5E9F00;
+	font-weight: normal;
+	border: 1px solid #5E9F00;
+}
+
+
+/*
+
+.page_walker {
+	border-collapse: separate;
+	margin: 24px auto 0px;
+	font: normal normal 11px/normal Arial, Helvetica, sans-serif;
+	text-align: center;
+	line-height: 24px;
+}
+
+	.page_walker a {
+		border: 1px solid #9BB0CB;
+		padding: 3px 6px;
+		margin: 0 1px 0 0;
+		text-decoration: none;
+		width: 50px;
+		font-weight: normal;
+	}
+	
+	.page_walker a:Hover {
+		text-decoration: none;
+		color: #3D5262;
+		border: 1px solid #78899D;
+		background-color: #EEE;
+	}
+	
+
+	.page_walker .pw_highlight {
+		padding: 3px 6px;
+		margin: 0 1px 0 0;
+		color: #FFF;
+		background-color: #5E9F00;
+		font-weight: normal;
+		border: 1px solid #5E9F00;
+	}
+	
+
+	.page_walker .pw_previous, .page_walker .pw_next {
+		margin: 0 7px;
+		font-weight: bold;
+	}
+	
+
+	.page_walker .pw_disabled {
+		color: #999;
+		font-weight: normal;
+		margin: 0 7px;
+		padding: 3px 6px;
+		border: 1px solid #DDD;
+	}
+*/

@@ -1,0 +1,35 @@
+<br />
+<table width="75%" align="center" border="0" bgcolor="white">
+	<tr>
+		<td align="left">
+			<font size="2">
+<b><u>Tasks to Perform</b></u>
+<br /><br />
+<b><i>Data Export, Delivery, and Location Lookup Table</b></i><br /><br />
+
+1. Please export your catalog in one of the supported MARC formats and, if you are able to, please include holdings fields in this export. 
+<br /><br />
+2. EBSCO's preferred mechanism for receiving your data export is through FTP. An account has been set up for your institution to use (authentication values are located within the accompanying email). Please follow the guidelines established in the FTP Procedures document and upload your data to the FTP site.
+<br /><br />
+FTP Procedures Document (also includes information on data Updates and Deletes): <a href="http://support.ebscohost.com/knowledge_base/detail.php?id=5017">
+http://support.ebscohost.com/knowledge_base/detail.php?id=5017</a>
+<br /><br />
+3. In order to display item/copy location information in user friendly form, EBSCO Discovery Service can expand coded location values in the holdings section of your MARC data via a lookup table. <b>Please create and send this location lookup table as a tab-delimited text file</b>. This location lookup table will include four columns: <i>Location_Code, Copy_Display, Facet_Display, and Limiter_Display</i>. <b>For instructions and examples, please visit</b>: <a href="http://support.ebscohost.com/knowledge_base/detail.php?id=5018">http://support.ebscohost.com/knowledge_base/detail.php?id=5018</a>
+<br /><br />
+<b>Additional Resources</b>
+<br /><br />
+Firewall and IP Address Information:
+<a href="http://support.ebscohost.com/knowledge_base/detail.php?id=966" target="_blank">http://support.ebscohost.com/knowledge_base/detail.php?id=966</a>
+<br /><br />
+FTP Procedure:
+<a href="http://support.ebscohost.com/knowledge_base/detail.php?id=5017" target="_blank">http://support.ebscohost.com/knowledge_base/detail.php?id=5017</a>
+<br /><br />
+Location Lookup Table Instructions:
+<a href="http://support.ebscohost.com/knowledge_base/detail.php?id=5018" target="_blank">http://support.ebscohost.com/knowledge_base/detail.php?id=5018</a>
+<br /><br />
+MARC Fields We Utilize:
+<a href="http://support.ebscohost.com/knowledge_base/detail.php?id=5030">http://support.ebscohost.com/knowledge_base/detail.php?id=5030</a>
+<br /><br /></font>
+		</td>
+	</tr>
+</table>

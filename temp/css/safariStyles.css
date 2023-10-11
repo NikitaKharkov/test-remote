@@ -1,0 +1,13 @@
+/*
+Sometimes in Safari divs with a specified height and overflow:auto take up more 
+space "interactively" than they do visually. In other words they have a 
+scrollbar and their height is constrained visually, but you can't click elements 
+directly below them since Safari ignores the presence of scrollbars in terms of 
+clickable area. Instead  idcalculating clickable area as though height:auto had 
+been set and the div had extended to its complete height. 
+I'm fixing this bug by giving all elements in the form a z-index of 2, then 
+giving the offending divs a z-index of 1. This causes the other elements to be 
+"above" the offending divs so the user can click them despite the Safari bug. 
+*/
+form>* { position: relative; z-index: 2 }
+#sections { z-index: 1 }

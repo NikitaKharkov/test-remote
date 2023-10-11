@@ -1,0 +1,269 @@
+<?
+/**
+ * Copyright 2007, iMarc <info@imarc.net>
+ * 
+ * @author   Jeff Turcotte [jt] <jeff@imarc.net>
+ */
+class KbController extends Controller
+{
+	/**
+	 * finds KbPage IDs
+	 * 
+	 * @param string order_by
+	 * @param string kb_page_ids
+	 * @param string kb_interface_id
+	 * @param string kb_topic_id
+	 * @param string language_id
+	 * @param mixed status
+	 * @param string document_type
+	 * @param string keywords
+	 * @param string ebsco_database_id
+	 * @return array
+	 */
+	public function findKbPages($order_by=NULL, $kb_page_ids=NULL, $kb_interface_id=NULL, $kb_topic_id=NULL, $language_id=NULL, $status=NULL, $document_type=NULL, $keywords=NULL, $ebsco_database_id=NULL, $top=NULL, $limit=NULL)
+	{
+		$order_by = parse_order_by($order_by);
+		
+		$sql = "SELECT DISTINCT(kbp.kb_page_id)
+					FROM ";
+		if( $keywords!=NULL ){
+			$sql .= "(
+					SELECT * FROM (
+						SELECT kb_page_id, 
+						((MATCH (title) AGAINST ('$keywords')) *8 + (MATCH (content) AGAINST ('$keywords')) *4) AS score
+						FROM kb_pages_search 
+					) A WHERE score>0
+				) S INNER JOIN kb_pages AS kbp ON S.kb_page_id=kbp.kb_page_id LEFT JOIN ";
+		}else{
+			$sql .= " kb_pages AS kbp LEFT JOIN ";
+		}
+		
+		$sql .= " kb_pages_kb_interfaces AS kbi ON kbi.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_pages_kb_topics AS kbt ON kbt.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_pages_ebsco_databases AS kbed ON kbed.kb_page_id = kbp.kb_page_id
+					WHERE 1 = 1  ";
+					
+		$status = (($status) && !is_array($status)) ? array($status) : $status;
+		$kb_page_ids = (($kb_page_ids) ? explode(" ", $kb_page_ids) : NULL);
+		
+		if( $keywords==NULL ){
+			$sql .= ($keywords)        ? " AND " . $this->createLikeClause(array('kbp.title', 'kbp.content'), $keywords) . " " : '';
+		}
+			
+		$sql .= ($kb_page_ids)     ? " AND kbp.kb_page_id IN ('" . join("', '", $kb_page_ids) . "') " : '';
+		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('${kb_interface_id}') " : '';
+		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('${kb_topic_id}') " : '';
+		$sql .= ($language_id)     ? " AND kbp.language_id = '${language_id}' " : '';
+		$sql .= ($status)          ? " AND kbp.status IN ('" . join("', '", $status) . "') " : '';
+		$sql .= ($document_type)   ? " AND kbp.document_type = '${document_type}' " : '';
+		$sql .= ($ebsco_database_id) ? " AND kbed.ebsco_database_id = '${ebsco_database_id}' " : '';
+    	$sql .= ($top)             ? " AND kbp.top = '1' " : '';
+		
+		//adding "score DESC"
+		if( $keywords!=NULL ){
+			$sql .= " ORDER BY score DESC " . ($order_by ? ", kbp." . $order_by . " " : '');
+		}else{
+			$sql .= " ORDER BY kbp.top DESC " . ($order_by ? ", kbp." . $order_by . " " : '');
+		}
+		
+		$sql .= ($limit) ? " LIMIT ${limit} " : "";
+	
+		return $this->performSql($sql, 'KbPage');
+	}
+	public function findKbPagesMultiInterface($order_by=NULL, $kb_page_ids=NULL, $kb_interface_ids=NULL, $kb_topic_id=NULL, $language_id=NULL, $status=NULL, $document_type=NULL, $keywords=NULL, $ebsco_database_id=NULL, $top=NULL, $limit=NULL)
+	{
+		$order_by = parse_order_by($order_by);
+		
+		$sql = "SELECT DISTINCT(kbp.kb_page_id)
+					FROM ";
+		if( $keywords!=NULL ){
+			$sql .= "(
+					SELECT * FROM (
+						SELECT kb_page_id, 
+						((MATCH (title) AGAINST ('$keywords')) *8 + (MATCH (content) AGAINST ('$keywords')) *4) AS score
+						FROM kb_pages_search 
+					) A WHERE score>0
+				) S INNER JOIN kb_pages AS kbp ON S.kb_page_id=kbp.kb_page_id LEFT JOIN ";
+		}else{
+			$sql .= " kb_pages AS kbp LEFT JOIN ";
+		}
+		
+		$sql .= " kb_pages_kb_interfaces AS kbi ON kbi.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_pages_kb_topics AS kbt ON kbt.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_pages_ebsco_databases AS kbed ON kbed.kb_page_id = kbp.kb_page_id
+					WHERE 1 = 1  ";
+					
+		$status = (($status) && !is_array($status)) ? array($status) : $status;
+		$kb_page_ids = (($kb_page_ids) ? explode(" ", $kb_page_ids) : NULL);
+		
+		if( $keywords==NULL ){
+			$sql .= ($keywords)        ? " AND " . $this->createLikeClause(array('kbp.title', 'kbp.content'), $keywords) . " " : '';
+		}
+		
+		//For each interface id in the array create a comma separated quoted list of the interface ids
+		$interface_ids = "";
+		if ($kb_interface_ids != null)
+		{
+			$count = count($kb_interface_ids);
+			if ($count > 0)
+			{
+				$interface_ids .= "'".$kb_interface_ids[0]."'";
+			}
+			for ($i = 1; $i < $count; $i++) 
+			{
+				$interface_ids .= ",'".$kb_interface_ids[$i]."'";
+			}	
+		}
+		
+		$sql .= ($kb_page_ids)     ? " AND kbp.kb_page_id IN ('" . join("', '", $kb_page_ids) . "') " : '';
+		$sql .= ($kb_interface_ids) ? " AND kbi.kb_interface_id IN ($interface_ids) " : '';
+		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('${kb_topic_id}') " : '';
+		$sql .= ($language_id)     ? " AND kbp.language_id = '${language_id}' " : '';
+		$sql .= ($status)          ? " AND kbp.status IN ('" . join("', '", $status) . "') " : '';
+		$sql .= ($document_type)   ? " AND kbp.document_type = '${document_type}' " : '';
+		$sql .= ($ebsco_database_id) ? " AND kbed.ebsco_database_id = '${ebsco_database_id}' " : '';
+    	$sql .= ($top)             ? " AND kbp.top = '1' " : '';
+		
+		//adding "score DESC"
+		if( $keywords!=NULL ){
+			$sql .= " ORDER BY score DESC " . ($order_by ? ", kbp." . $order_by . " " : '');
+		}else{
+			$sql .= " ORDER BY kbp.top DESC " . ($order_by ? ", kbp." . $order_by . " " : '');
+		}
+		
+		$sql .= ($limit) ? " LIMIT ${limit} " : "";
+	
+		return $this->performSql($sql, 'KbPage');
+	}
+	
+	/**
+	 * finds KbPage IDs Procedurally
+	 * 
+	 * @param string order_by
+	 * @param string kb_page_id
+	 * @param string kb_interface_id
+	 * @param string kb_topic_id
+	 * @param string language_id
+	 * @param mixed status
+	 * @param string document_type
+	 * @param string keywords
+	 * @return array
+	 */
+	public function findKbPagesProcedurally($order_by=NULL, $kb_page_id=NULL, $kb_interface_id=NULL, $kb_topic_id=NULL, $language_id=NULL, $status=NULL, $document_type=NULL, $keywords=NULL)
+	{
+		$order_by = parse_order_by($order_by);
+	
+		$sql = "SELECT kbp.kb_page_id, 
+					   kbp.title, 
+					   kbp.status, 
+					   kbp.last_updated,
+					   kbp.top,
+					   kbi.name AS kb_interface_name,
+					   kbt.name AS kb_topic_name,
+					   edb.name AS ebsco_database_name
+					FROM kb_pages AS kbp LEFT JOIN
+						 kb_pages_kb_interfaces AS kbpkbi ON kbpkbi.kb_page_id = kbp.kb_page_id LEFT JOIN 
+						 kb_pages_kb_topics AS kbpkbt ON kbpkbt.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_pages_ebsco_databases AS kbpedb ON kbpedb.kb_page_id = kbp.kb_page_id LEFT JOIN
+						 kb_interfaces AS kbi ON kbi.kb_interface_id = kbpkbi.kb_interface_id LEFT JOIN
+						 kb_topics AS kbt ON kbt.kb_topic_id = kbpkbt.kb_topic_id LEFT JOIN
+						 ebsco_databases AS edb ON edb.ebsco_database_id = kbpedb.ebsco_database_id";
+						
+		$status = ($status && !is_array($status)) ? array($status) : $status;
+
+		
+		$sql .= " WHERE 1 = 1 ";
+		
+		$sql .= ($keywords)        ? " AND " . $this->createLikeClause(array('kbp.title', 'kbp.content'), $keywords) . " " : '';
+		$sql .= ($kb_page_id)      ? " AND kbp.kb_page_id = '${kb_page_id}' " : '';
+		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('${kb_interface_id}') " : '';
+		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('${kb_topic_id}') " : '';
+		$sql .= ($language_id)     ? " AND kbp.language_id = '${language_id}' " : '';
+		$sql .= ($status)          ? " AND kbp.status IN ('" . join("', '", $status) . "') " : '';
+		$sql .= ($document_type)   ? " AND kbp.document_type = '${document_type}' " : '';
+	
+		$sql .= " ORDER BY kbp.top DESC" . ($order_by ? ", kbp." . $order_by . " " : '');
+
+		$objects = Objects::getInstance();
+		
+		$result = $objects->Database->query($sql);
+		if (!$objects->Database->numRows($result)) {
+			throw new NoResultsException('No KB Pages could be found.');
+		}
+		
+		$output = array();
+
+		while ($row = $objects->Database->getRow($result)) {
+			if (!isset($output[$row['kb_page_id']])) {
+				$output[$row['kb_page_id']] = array(
+					'title'        => $row['title'],
+					'status'       => $row['status'],
+					'last_updated' => $row['last_updated'],
+					'top'          => $row['top']					
+				);
+				$output[$row['kb_page_id']]['kb_interface_names'] = array();
+				$output[$row['kb_page_id']]['kb_topic_names'] = array();
+				$output[$row['kb_page_id']]['ebsco_database_names'] = array();
+			} else {
+				if ($row['kb_interface_name'] && !in_array($row['kb_interface_name'], $output[$row['kb_page_id']]['kb_interface_names'])) { 
+					$output[$row['kb_page_id']]['kb_interface_names'][] = $row['kb_interface_name']; 
+				}
+				if ($row['kb_topic_name'] && !in_array($row['kb_topic_name'], $output[$row['kb_page_id']]['kb_topic_names'])) {
+					$output[$row['kb_page_id']]['kb_topic_names'][] = $row['kb_topic_name']; 
+				}
+				if ($row['ebsco_database_name'] && !in_array($row['ebsco_database_name'], $output[$row['kb_page_id']]['ebsco_database_names'])) { 
+					$output[$row['kb_page_id']]['ebsco_database_names'][] = $row['ebsco_database_name']; 
+				}
+			}
+		}
+		
+		return $output;
+	}
+	
+	
+	/**
+	 * finds KbInterface IDs
+	 * 
+	 * @param string order_by
+	 * @return array
+	 */
+	public function findKbInterfaces($order_by=NULL, $status=NULL)
+	{
+		$order_by = parse_order_by($order_by);
+		
+		$sql = "SELECT kb_interface_id FROM kb_interfaces WHERE 1 = 1 ";
+		
+		$sql .= ($status) ? " AND status = '${status}' " : '';
+		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
+		
+		return $this->performSql($sql);
+	}
+	
+	/**
+	 * finds KbTopic IDs
+	 * 
+	 * @param string order_by
+	 * @return array
+	 */
+	public function findKbTopics($order_by=NULL, $kb_interface_id=NULL)
+	{
+		$order_by = parse_order_by($order_by);
+		
+		$sql = "SELECT DISTINCT(t.kb_topic_id) FROM 
+					kb_topics AS t LEFT JOIN
+					kb_pages_kb_topics AS pt ON t.kb_topic_id = pt.kb_topic_id LEFT JOIN
+					kb_pages AS p ON pt.kb_page_id = p.kb_page_id LEFT JOIN
+					kb_pages_kb_interfaces AS pi ON p.kb_page_id = pi.kb_page_id LEFT JOIN
+					kb_interfaces AS i ON pi.kb_interface_id = i.kb_interface_id
+				WHERE 1 = 1 ";
+		
+		$sql .= ($kb_interface_id) ? " AND i.kb_interface_id = '${$kb_interface_id}' " : '';
+		
+		$sql .= ($order_by) ? " ORDER BY t." . $order_by . " " : " ";
+		
+		return $this->performSql($sql);
+	}
+	
+	
+}
+?>

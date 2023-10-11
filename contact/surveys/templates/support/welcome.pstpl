@@ -1,0 +1,14 @@
+<table width="100%">
+	<tr bgcolor='#2F5376'>
+		<td> 
+		<div align="center">
+			<font style="font-family: Verdana; font-size: 14px;" color='#FFFFFF'><b>{SURVEYNAME}</b></font><br />
+			<font color='#FFFFFF'>{SURVEYDESCRIPTION}</font>
+		</div>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>

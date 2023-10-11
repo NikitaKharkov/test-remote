@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script type="text/javascript" language="JavaScript">
+  //<![CDATA[
+  function reDo() {
+    if (innerWidth != origWidth || innerHeight != origHeight)
+      location.reload();
+  }
+  if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+    origWidth = innerWidth;
+    origHeight = innerHeight;
+    onresize = reDo;
+  }
+  onerror = null;
+  //]]>
+</script>
+<style type="text/css">/*<![CDATA[*/
+
+  <!-- div.WebHelpPopupMenu {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 4;
+    visibility: hidden;
+  }
+
+  p.WebHelpNavBar {
+    text-align: right;
+  }
+
+  -->
+
+/*]]>*/</style>
+
+<script type="text/javascript">//<![CDATA[
+
+  gRootRelPath = ".";
+  gCommonRootRelPath = ".";
+  gTopicId = "0_3";
+
+//]]></script>
+
+<script type="text/javascript" src="./template/scripts/rh.min.js"></script>
+<script type="text/javascript" src="./template/scripts/common.min.js"></script>
+<script type="text/javascript" src="./template/scripts/topic.min.js"></script>
+<script type="text/javascript" src="./template/scripts/topicwidgets.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./template/styles/topic.min.css"/>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="Adobe RoboHelp 2019"/>
+  <title>Customize Publication Finderin EBSCOadmin</title>
+  <meta name="topic-status" content="Draft"/>
+  <link rel="stylesheet" type="text/css" href="assets/css/default.css"/>
+</head>
+<body>
+  <h1>Customizing Publication Finder in EBSCO<span style="font-style:italic;">admin</span></h1>
+  <p>The new Publication Finder is customizable by making changes to the code found in the Bottom Branding settings in EBSCO<i>admin</i>.</p>
+  <p><b>Note</b>: HTML code will not work in the Bottom Branding field for <i>Publication Finder</i> profiles.</p>
+  <p><b>To customize <i>Publication Finder</i>:</b></p>
+  <ol>
+    <li>
+      <p>Log into EBSCO<i>admin</i> at: <a href="https://eadmin.ebscohost.com">https://eadmin.ebscohost.com</a>.</p>
+    </li>
+    <li>
+      <p>Select the <i>Publication Finder</i> profile you would like to modify from the <strong>Choose Profile</strong> drop-down menu.</p>
+    </li>
+    <li>
+      <p>Click the <strong>Branding</strong> sub-tab.</p>
+    </li>
+    <li>
+      <p>Under <strong>Bottom Branding</strong>, click the <strong>Modify</strong> link.</p>
+    </li>
+    <li>
+      <p>Click the <strong>Add New Branding</strong> link.</p>
+    </li>
+    <li>
+      <p>Enter a <strong>Branding Version Name</strong>.</p>
+    </li>
+    <li>
+      <p>Select the appropriate <strong>Type of Text</strong> radio button to indicate the format for the custom text (either HTML or Plain Text.)</p>
+    </li>
+    <li>
+      <p>In <strong>Enter Custom Text </strong>field, note the customization code that has been entered for your profile.</p>
+      <p>See the Customization table below to learn where to make your changes.</p>
+    </li>
+  </ol>
+  <h3><b>Customization Settings and Explanations</b></h3>
+  <p>The values you can customize to configure Publication Finder are highlighted in <span style="color: #ff0000;">red</span>.</p>
+  <table border="1" cellpadding="1" cellspacing="1">
+    <tbody>
+      <tr>
+        <th colspan="1" rowspan="1">Branding Configuration Code</th>
+        <th colspan="1" rowspan="1">Details</th>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;Locale&quot;: &quot;<span style="color: #FF0000;">en</span>&quot;,</td>
+        <td colspan="1" rowspan="1">Set locale to configure the Publication Finder interface for various regions/languages. For example, setting locale to &quot;ar&quot; configures the interface for Arabic.</td>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;PfSearchOptions&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;SearchFieldDefault&quot;: &quot;<span style="color: #FF0000;">titlename</span>&quot;,<br/>
+          &quot;ShowSearchFieldControl&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;SearchTypeDefault&quot;: &quot;<span style="color: #FF0000;">contains</span>&quot;,<br/>
+          &quot;ShowSearchTypeControl&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;SubjectSchema&quot;: &quot;<span style="color: #ff0000;">tli</span>&quot;<br/>
+          }</td>
+        <td colspan="1" rowspan="1">
+          <p>This section configures the various search parameters.</p>
+          <ul>
+            <li>
+              <p>If &quot;<b>ShowComponent</b>&quot; is set to true, then the search box is shown on Publication Finder. If &quot;ShowComponent&quot; is set to false, then the search box is not shown.</p>
+            </li>
+            <li>
+              <p><b>SearchFieldDefault</b>: This value can be used to set to the default selection for the search field drop-down menu. Enter one of the following values: &quot;titlename&quot; &quot;subject&quot; &quot;isxn&quot; &quot;publisher&quot;</p>
+            </li>
+            <li>
+              <p><b>ShowSearchFieldControl</b>: If this is set to true, the search field drop-down menu will be shown on Publication Finder. If it is set to false, the search field drop-down menu will not be shown on the interface.</p>
+            </li>
+            <li>
+              <p><b>SearchTypeDefault</b>: This value can be used to set the default selection for the search type drop-down menu. Enter one of the following values: &quot;Any&quot; &quot;Contains&quot; &quot;Proxmity&quot; &quot;Exact Phrase&quot; &quot;Exact Match&quot;</p>
+            </li>
+            <li>
+              <p><b>ShowSearchTypeControl</b>: If this is set to true, the search type drop-down menu is shown on Publication Finder. If it is set to false, the search type drop-down menu is not shown on the interface.</p>
+            </li>
+            <li>
+              <p><b>SubjectSchema</b>: This is to set the subject scheme. Valid Values are tli/medical/lc.</p>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;PfResults&quot;: {<br/>
+          &quot;SortByCoverage&quot;: <span style="color: #FF0000;">true</span><br/>
+          }</td>
+        <td colspan="1" rowspan="1">
+          <p>This is to configure how Full Texts results are sorted.</p>
+          <ul>
+            <li>
+              <p>If <b>SortByCoverage</b> is set to true, then Full Texts links for a given record set will be sorted by coverage date.</p>
+            </li>
+            <li>
+              <p>If <b>SortByCoverage</b> is set to false, then Full Texts links for a given record set will be sorted by the Package Name.</p>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;PfStyleOptions&quot;: {<br/>
+          &quot;PrimaryColor&quot;: &quot;#<span style="color: #FF0000;">228B22</span>&quot;<br/>
+          }</td>
+        <td colspan="1" rowspan="1">
+          <p>This value is used to set the background color of the Publication Finder user interface. <b>Note</b>: This value does not customize the color of the result list view.</p>
+          <p>The Google <a href="https://www.google.com/search?q=color+picker" target="_blank">Color Picker Tool</a> can help you find a color code to use in this field.</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;PfFacets&quot;: {<br/>
+          &quot;PfAlpha&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;ShowSubMenu&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;AlphaMenuLanguage&quot;: &quot;<span style="color: #FF0000;">en</span>&quot;<br/>
+          },<br/>
+          &quot;PfResource&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span><br/>
+          },<br/>
+          &quot;PfSubject&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;EnableSearch&quot;: <span style="color: #FF0000;">true</span><br/>
+          },<br/>
+          &quot;PfDatabase&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;EnableSearch&quot;: <span style="color: #FF0000;">true</span><br/>
+          },<br/>
+          &quot;PfPeerReview&quot;: {<br/>
+          &quot;ShowComponent&quot;: <span style="color: #FF0000;">true</span><br/>
+          }<br/>
+          }</td>
+        <td colspan="1" rowspan="1">
+          <p>This is to configure what facets to show and hide. The Publication Finder user interface supports following facets:</p>
+          <ul>
+            <li><b>PfAlpha</b> = Alphamenu
+              <ul>
+                <li>If <b>showsubmenu</b> is set to true, the submenu will be shown. If it is set to false, the submenu will not be shown.</li>
+                <li><b>AlphaMenuLanguage</b> is used to set the language for the alphamenu. For example, the value &quot;ja&quot; would display the Japanese language alphamenu.</li>
+              </ul>
+            </li>
+            <li><b>PfResource</b> = Resource Types facet
+              <ul>
+                <li>If <b>ShowComponent</b> is set to true, the Resource Type facet will be shown under Filters in the result list view. If ShowComponent is set to false, the Resource Type facet will not be shown in the result list view.</li>
+                <li>If <b>EnableSearch</b> is set to true, the user can search for facet values inside the Resource Type facet. For example, if EnableSearch is set to false, the search capability for this facet will not be shown.</li>
+              </ul>
+            </li>
+            <li><b>PfSubject</b> = Subject facet
+              <ul>
+                <li>If <b>ShowComponent</b> is set to true, the Subject facet will be shown in the result list view. If ShowComponent is set to false, the subject facet will not be shown in the result list view.</li>
+                <li>If <b>EnableSearch</b> is set to true, the user can search for facet values inside the Subject facet. For example, if EnableSearch is set to false, the search capability for this facet will not be shown.</li>
+              </ul>
+            </li>
+            <li><b>PfDatabase</b> = Database facet
+              <ul>
+                <li>If <b>ShowComponent</b> is set to true, the Database facet will be shown in the result list view. If ShowComponent is set to false, the Database facet will not be shown in the result list view.</li>
+                <li>If <b>EnableSearch</b> is set to true, the user can search for facet values inside the database facet. For example, if EnableSearch is set to false, the search capability for this facet will not be shown.</li>
+              </ul>
+            </li>
+            <li><b>PfPeerReview</b> = Peer reviewed facet
+              <ul>
+                <li>If <b>ShowComponent</b> is set to true, the Peer Reviewed facet will be shown in the result list view. If ShowComponent is set to false, the Peer Reviewed facet will not be shown in the result list view.</li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="1" rowspan="1">&quot;PfBrowseOptions&quot;: {<br/>
+          &quot;ShowDatabases&quot;: <span style="color: #FF0000;">true</span>,<br/>
+          &quot;ShowSubjects&quot;: <span style="color: #FF0000;">true</span><br/>
+          }</td>
+        <td colspan="1" rowspan="1">
+          <p>This section of code enables you to show or hide the Database and Subject browse components of Publication Finder.</p>
+          <ul>
+            <li>
+              <p>If <b>ShowDatabase</b> is set to true, the &quot;Browse Database&quot; feature is shown on Publication Finder. If ShowDatabase is set to false, the &quot;Browse Database&quot; feature is NOT displayed.</p>
+            </li>
+            <li>
+              <p>If <b>ShowSubjects</b> is set to true, the &quot;Browse Subject&quot; feature is shown on Publication Finder. If it is set to false, the &quot;Browse Subject&quot; feature is NOT displayed.</p>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</body></html>

@@ -1,0 +1,197 @@
+@charset "utf-8";
+
+h3
+{
+	margin: 0px;
+	
+}
+
+#links a
+{
+	color: #004C00;
+}
+
+#links a:hover
+{
+	color: #004C00;
+	text-decoration: underline;
+}
+
+.description_box
+{
+	width: 210px;
+	padding: 5px;
+	margin-right: 20px;
+	border: 1px dashed #666666;
+	font-size: 11px;
+	float: left;
+	
+	min-height: 210px;
+}
+
+.description_box_other
+{
+	width: 660px;
+	padding: 5px;
+	padding-left: 30px;
+	margin-right: 20px;
+	font-size: 11px;
+	float: left;
+	
+	min-height: 150px;
+}
+.description_box_separator
+{
+	 clear: both;
+	 height: 10px;
+}
+
+	.feature_ourl_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -23px -11px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	
+	.feature_z3950_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -151px -11px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+
+	.feature_ws_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -450px -274px;
+		
+		float: left;
+		margin-right: 10px;		
+	}
+	
+	.feature_edsapi_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -450px -140px;
+		
+		float: left;
+		margin-right: 10px;		
+	}
+		
+	.feature_rss_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -23px -137px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	
+	.feature_widgets_image
+	{
+		width: 95px;
+		height: 100px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -420px -8px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	
+	.feature_sp_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -152px -137px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+
+	.feature_lms_image
+	{
+		width: 135px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -286px -137px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+
+	.feature_esi_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -23px -274px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	.feature_pl_image
+	{
+		width: 105px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -150px -274px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	
+	.feature_sbb_image
+	{
+		width: 110px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -285px -274px;
+		
+		float: left;
+		margin-right: 10px;	
+	}
+	
+	
+	
+	.feature_z3950_image
+	{
+		width: 95px;
+		height: 95px;
+	
+		background-image: url('../img/sprite_icons.png');
+		background-position: -151px -11px;
+		
+		float: left;
+		margin-right: 10px;
+	}
+
+.support
+{
+	width: 450px;
+}

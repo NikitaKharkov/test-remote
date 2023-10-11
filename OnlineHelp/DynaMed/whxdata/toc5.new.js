@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Citing DynaMed Information","type":"item","url":"Citations/Citing_DynaMed_Information.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

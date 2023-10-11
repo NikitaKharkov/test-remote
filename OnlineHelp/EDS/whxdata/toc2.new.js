@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Databases A through B","type":"book","key":"toc3"},{"name":"Databases C through D","type":"book","key":"toc5"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

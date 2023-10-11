@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":" Creating a Personal Account","type":"item","url":"Personal_Account/Creating_Personal_Account.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

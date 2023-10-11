@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ppfml version="2.00" project="Pub Finder" type="4">
+  <contextmap>
+    
+  </contextmap>
+  <topiclist defaulttopic="First_Topic.htm">
+    
+    <topic>
+      First_Topic.htm
+    </topic>
+    
+    <topic>
+      Browsing_Publication_Finder.htm
+    </topic>
+    
+    <topic>
+      Customize_Publication_Finderin_EBSCOadmin.htm
+    </topic>
+    
+    <topic>
+      First_Topic.htm
+    </topic>
+    
+    <topic>
+      Browsing_Publication_Finder.htm
+    </topic>
+    
+    <topic>
+      Customize_Publication_Finderin_EBSCOadmin.htm
+    </topic>
+    
+  </topiclist>
+  <filenamemap>
+    <filenameentry moniker="wh_languagetype">
+      <filename>
+        en_US
+      </filename>
+    </filenameentry>
+    <filenameentry moniker="startpage">
+      <filename>
+        index.htm
+      </filename>
+    </filenameentry>
+        
+  </filenamemap>
+</ppfml>

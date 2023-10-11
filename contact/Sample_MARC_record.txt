@@ -1,0 +1,28 @@
+ Leader: 01571nas  22003492a 4500
+ 003: EBZ
+ 006: m        d  ||||||
+ 007: cr|unu||||||||
+ 008: 031118c19979999sp ar  ss     0    0eng d
+ 022: __$a1137-5019
+ 035: __$aZZZ(EBZ)ebs143192e
+ 040: __$aOAU $dEBZ
+ 042: __$alcd-m
+ 050: _4$aZ699.A1 
+ 222: _0$aCybermetrics [electronic resource] : CM. 
+ 245: 00$aCybermetrics$h[electronic resource]$bCM.
+ 246: 30$aCM
+ 260: __$aMadrid, Spain :$bCentro de Informaci�on y Documentaci�on Cient�ifica of the Consejo Superior de Investigaciones Cient�ificas,$c1997-
+ 310: __$aAnnual
+ 362: 0_$aVol. 1, issue 1 (1997)-
+ 500: __$aTitle from journal homepage (viewed Nov. 18, 2003).
+ 500: __$a"International journal of scientometrics, informetrics and bibliometrics."
+ 500: __$aLatest issue consulted: Vol. 9, issue 1 (2005) (publisher's website, viewed Dec. 15, 2005).
+ 515: __$aSome numbers issued combined.
+ 538: __$aMode of access: World Wide Web.
+ 650: _0$aCommunication in learning and scholarship$xElectronic information resources$vPeriodicals.
+ 650: _0$aScholarly electronic publishing$vPeriodicals.
+ 710: 2_$aCentro de Informaci�on y Documentaci�on Cient�ifica (Spain)
+ 710: 2_$aConsejo Superior de Investigaciones Cient�ificas (Spain)
+ 773: 0_$tEBSCO Open Access Journals $dEBSCO Open Access Lists
+ 776: 1_$tCybermetrics$x1137-5019 $wocm534531285$w  2005249205 
+ 856: 40$3FTCoverageNote

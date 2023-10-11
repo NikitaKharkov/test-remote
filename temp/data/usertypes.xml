@@ -1,0 +1,57 @@
+<!-- MAKE SURE VALUES ARE UNIQUE -->
+<users>
+	<user type="Tufts">
+			<p><label class="check" for="prof_physician">
+			<input type="radio" id="prof_physician" name="userType" value="1" title="Physician"/>
+			<span>Physician</span>
+			</label></p>
+	</user>
+	<user type="Tufts">
+			<p><label class="check" for="prof_nursePractitioner">
+			<input type="radio" id="prof_nursePractitioner" name="userType" value="5" title="Nurse Practitioner"/>
+			<span>Nurse Practitioner</span>
+			</label></p>
+	</user>
+	<user type="Tufts">
+			<p><label class="check" for="prof_nurse">
+			<input type="radio" id="prof_nurse" name="userType" value="4" title="Nurse"/>
+			<span>Nurse</span>
+			</label></p>
+	</user>
+	<user type="Tufts">
+			<p><label class="check" for="prof_physicianAssistant">
+			<input type="radio" id="prof_physicianAssistant" name="userType" value="6" title="Physician Assistant"/>
+			<span>Physician Assistant</span>
+			</label></p>
+	</user>
+	<user type="Tufts">
+			<p><label class="check" for="prof_pharmacist">
+			<input type="radio" id="prof_pharmacist" name="userType" value="2" title="Pharmacist"/>
+			<span>Pharmacist</span>
+			</label></p>
+	</user>
+	<user type="Tufts">
+			<p><label class="check" for="prof_other">
+			<input type="radio" id="prof_other" name="userType" value="3" title="Other HC Professional"/>
+			<span>Other HC Professional</span>
+			</label></p>
+	</user>
+	<user type="Baycare">
+			<p><label class="check" for="prof_SJH">
+			<input type="radio" id="prof_SJH" name="userType" value="7" title="SJH"/>
+			<span>SJH</span>
+			</label></p>
+	</user>
+	<user type="Baycare">
+			<p><label class="check" for="prof_SAH">
+			<input type="radio" id="prof_SAH" name="userType" value="8" title="SAH"/>
+			<span>SAH</span>
+			</label></p>
+	</user>
+	<user type="Baycare">
+			<p><label class="check" for="prof_MPM">
+			<input type="radio" id="prof_MPM" name="userType" value="9" title="MPM"/>
+			<span>MPM</span>
+			</label></p>
+	</user>
+</users>

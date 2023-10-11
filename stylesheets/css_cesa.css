@@ -1,0 +1,115 @@
+.block{display:block;}
+.hide{display:none;}
+.inline{display:inline;}
+.inline-block{display:inline-block;}
+
+.clearfix:before, .clearfix:after{content:" ";display:table;}
+.clearfix:after{clear:both;}
+.clearfix{*zoom:1;}
+.pull-l{float:left;}
+.pull-r{float:right;}
+
+.relative{position:relative;}
+.absolute{position:absolute;}
+.fixed{position:fixed;}
+.center{margin:0 auto;}
+.full-width{width:100%;}
+.img-responsive{display:block;max-width:100%;height:auto;}
+.img-rounded{border-radius:6px;}
+.img-circle{border-radius:50%;}
+
+.text-left{text-align:left;}
+.text-right{text-align:right;}
+.text-center{text-align:center;}
+.bold{ font-weight: bold; }
+
+.nav-h{clear:both;margin:0;padding:0;display:inline-block;}
+.nav-h li{list-style:none;float:left;}
+.no-border{border:none!important;}
+.pointer{cursor:pointer;}
+.btn{cursor:pointer;display:inline-block;}
+
+.page, .page-tab, .footer, .ui-widget {font-family:Helvetica; font-size: 14px; color: #000; }
+.input-text{ font-family:Helvetica; font-size: 14px; color: #000; background: url(http://www.cesa.edu.co/assetsHome/img/campo_txt.png) no-repeat; background-size: 100% 100%; border: none;}
+.ui-widget { font-size: 2.5em; }
+h1{ font-size:30px; margin-bottom: 12px; }
+h2{ font-size: 24px; }
+h6{ font-size: 11px; font-weight: bold; }
+/*p{ text-align:justify; }*/
+a{ text-decoration: none; color: #000;}
+.subtitle { font-size: 12px; font-weight: normal; font-style: italic; vertical-align: baseline; color: #000; text-transform: none; }
+
+
+body, html {
+  color:#000;
+  margin:0;
+  padding:0;
+  height: 100%;
+  width: 100%;
+  font-family:Helvetica;
+}
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.modulo{
+  width: 100%;
+  display: block;
+  margin:0;
+}
+
+.contenedor{
+  width: 990px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+#header_gen{
+  background: rgba(0,0,0,0.9);
+  background-image: url(http://www.cesa.edu.co/assetsHome/img/bk_Negro.png)\0/;
+  height: 128px;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+#header_gen_int{
+  background: rgba(0,0,0,0.9);
+  background-image: url(http://www.cesa.edu.co/assetsHome/img/bk_Negro.png)\0/;
+  height: 128px;
+  padding: 10px 0;
+  top: 0;
+  z-index: 1000;
+}
+
+#menuh_top li{
+  padding: 0 10px 0 5px;
+  font-size: 11px;
+  font-family: 'trade_gothic_lt_stdBdCnno20';
+  border-right: 1px solid #707070;
+  margin-right: 10px;
+}
+
+#menuh_top a, #search_content a{
+  color: #FFF;
+}
+
+#menuh_top a:hover{
+  color: #707070;
+}
+
+#search_content a{
+  font-size: 11px;
+  font-family: 'trade_gothic_lt_stdBdCnno20';
+  border-left: 1px solid #7D7D7D; 
+  padding-left: 10px;
+}
+
+#logo_cesa{ margin-top: 20px; }
+
+#logo_marcapais{ margin-top: 30px; }

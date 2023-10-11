@@ -1,0 +1,70 @@
+# Go Away All
+User-agent: *
+Disallow: /admin
+Disallow: /archives
+Disallow: /contact
+Disallow: /custsupport
+Disallow: /downloads
+Disallow: /dynamed
+Disallow: /DynaMedCME
+Disallow: /DynaMedCME_bak
+Disallow: /ehis_openpreview
+Disallow: /ehis_preview
+Disallow: /ehost
+Disallow: /eit_staging
+Disallow: /training/flash_videos/EIS
+Disallow: /help
+Disallow: /hrc
+Disallow: /images
+Disallow: /images_bak
+Disallow: /javascripts
+Disallow: /knowledge_base
+Disallow: /knowledge_base-bak
+Disallow: /login
+Disallow: /lrc
+Disallow: /mobile
+Disallow: /peri
+Disallow: /podcasts
+Disallow: /rss
+Disallow: /sasli
+Disallow: /scirc
+Disallow: /search
+Disallow: /stylesheets
+Disallow: /support_news
+Disallow: /temp
+Disallow: /xhrs
+Disallow: /uploads
+Disallow: /eit/samples/eds
+
+Disallow: /library/backup
+Disallow: /library/cache
+Disallow: /library/classes
+Disallow: /library/functions
+Disallow: /library/scripts
+Disallow: /library/init.php
+Disallow: /library/templates/admin
+Disallow: /library/templates/columns
+Disallow: /library/templates/ebscohost2
+Disallow: /library/templates/site/backup
+Disallow: /library/templates/site/header.php-prerate
+
+# Hidden FAQs
+Disallow: /knowledge_base/detail.php?id=5134
+Disallow: /knowledge_base/detail.php?id=5217
+Disallow: /knowledge_base/detail.php?id=4805
+Disallow: /knowledge_base/detail.php?id=4806
+Disallow: /knowledge_base/detail.php?id=5886
+Disallow: /knowledge_base/detail.php?id=5016
+Disallow: /knowledge_base/detail.php?topic=945&id=6705&page=1
+Disallow: /knowledge_base/detail.php?id=6710
+Disallow: /knowledge_base/detail.php?id=6703
+Disallow: /knowledge_base/detail.php?id=6705
+Disallow: /knowledge_base/detail.php?id=6604
+Disallow: /knowledge_base/detail.php?id=6683
+Disallow: /knowledge_base/detail.php?id=6834
+Disallow: /knowledge_base/detail.php?id=6835
+Disallow: /knowledge_base/detail.php?topic=999&id=6925
+Disallow: /knowledge_base/detail.php?id=6929
+
+User-Agent: W3C-checklink
+Disallow:

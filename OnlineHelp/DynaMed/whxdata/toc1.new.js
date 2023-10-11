@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"Searching DynaMed","type":"item","url":"Searching/Searching.htm"},{"name":"Browsing DynaMed by Specialty","type":"item","url":"Searching/Browsing_DynaMed.htm"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();

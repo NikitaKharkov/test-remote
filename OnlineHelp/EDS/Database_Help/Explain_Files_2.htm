@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script type="text/javascript" language="JavaScript">
+  //<![CDATA[
+  function reDo() {
+    if (innerWidth != origWidth || innerHeight != origHeight)
+      location.reload();
+  }
+  if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+    origWidth = innerWidth;
+    origHeight = innerHeight;
+    onresize = reDo;
+  }
+  onerror = null;
+  //]]>
+</script>
+<style type="text/css">/*<![CDATA[*/
+
+  <!-- div.WebHelpPopupMenu {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 4;
+    visibility: hidden;
+  }
+
+  p.WebHelpNavBar {
+    text-align: right;
+  }
+
+  -->
+
+/*]]>*/</style>
+
+<script type="text/javascript">//<![CDATA[
+
+  gRootRelPath = "..";
+  gCommonRootRelPath = "..";
+  gTopicId = "1.0_2";
+
+//]]></script>
+
+<script type="text/javascript" src="../template/scripts/rh.min.js"></script>
+<script type="text/javascript" src="../template/scripts/common.min.js"></script>
+<script type="text/javascript" src="../template/scripts/topic.min.js"></script>
+<script type="text/javascript" src="../template/scripts/topicwidgets.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../template/styles/topic.min.css"/>
+
+  <title>Database Explain Files</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>/*<![CDATA[*/
+
+  
+body {
+	font-family: Calibri;
+	background-color: #ffffff;
+}
+  
+  
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-family: Calibri;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  font-family: Calibri;
+  background-color: #2980B9;
+}
+
+.dropdown {
+  font-family: Calibri;
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  font-family: Calibri;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+/*]]>*/</style>
+</head>
+<body>
+
+<h2>Database Explain Files</h2>
+<p>Click on the button to select an Explain File to view.</p>
+
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Clicky</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="http://support.epnet.com/Robo/explainfiles/aph.html">Academic Search Premier</a>
+    <a href="http://support.epnet.com/Robo/explainfiles/bth.html">Business Source Complete</a>
+    <a href="http://support.epnet.com/Robo/explainfiles/ccm.html">CINAHL Complete</a>
+  </div>
+</div>
+
+<script>//<![CDATA[
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+//]]></script>
+
+
+
+</body></html>

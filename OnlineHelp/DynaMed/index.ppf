@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ppfml version="2.00" project="DynaMed" type="4">
+  <contextmap>
+    
+  </contextmap>
+  <topiclist defaulttopic="Searching\Welcome.htm">
+    
+    <topic>
+      Searching\Welcome.htm
+    </topic>
+    
+    <topic>
+      Searching\Getting_Started_Kit.htm
+    </topic>
+    
+    <topic>
+      Searching\Searching.htm
+    </topic>
+    
+    <topic>
+      Searching\Browsing_DynaMed.htm
+    </topic>
+    
+    <topic>
+      Continuing_Education\What_is_CME.htm
+    </topic>
+    
+    <topic>
+      Continuing_Education\Claiming_CME_Credits.htm
+    </topic>
+    
+    <topic>
+      Features\Following_a_DynaMed_Topic.htm
+    </topic>
+    
+    <topic>
+      Features\Persistent_Links.htm
+    </topic>
+    
+    <topic>
+      Features\Sharing_a_DynaMed_Topic.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Creating_Personal_Account.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Reauthorizing_Your_Personal_Account.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Affiliating_with_Multiple_Institutions.htm
+    </topic>
+    
+    <topic>
+      Citations\Citing_DynaMed_Information.htm
+    </topic>
+    
+    <topic>
+      Searching\Welcome.htm
+    </topic>
+    
+    <topic>
+      Searching\Getting_Started_Kit.htm
+    </topic>
+    
+    <topic>
+      Searching\Searching.htm
+    </topic>
+    
+    <topic>
+      Searching\Browsing_DynaMed.htm
+    </topic>
+    
+    <topic>
+      Continuing_Education\What_is_CME.htm
+    </topic>
+    
+    <topic>
+      Continuing_Education\Claiming_CME_Credits.htm
+    </topic>
+    
+    <topic>
+      Features\Following_a_DynaMed_Topic.htm
+    </topic>
+    
+    <topic>
+      Features\Persistent_Links.htm
+    </topic>
+    
+    <topic>
+      Features\Sharing_a_DynaMed_Topic.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Creating_Personal_Account.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Reauthorizing_Your_Personal_Account.htm
+    </topic>
+    
+    <topic>
+      Personal_Account\Affiliating_with_Multiple_Institutions.htm
+    </topic>
+    
+    <topic>
+      Citations\Citing_DynaMed_Information.htm
+    </topic>
+    
+  </topiclist>
+  <filenamemap>
+    <filenameentry moniker="wh_languagetype">
+      <filename>
+        en_US
+      </filename>
+    </filenameentry>
+    <filenameentry moniker="startpage">
+      <filename>
+        index.htm
+      </filename>
+    </filenameentry>
+        
+  </filenamemap>
+</ppfml>

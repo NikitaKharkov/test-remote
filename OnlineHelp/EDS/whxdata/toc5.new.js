@@ -1,0 +1,1 @@
+(function() {    var toc =  [{"name":"CINAHL Complete","type":"item","url":"Database_Help/C-D/CINAHL_Complete.htm"},{"name":"Dentistry and Oral Sciences Source","type":"remoteitem","url":"http://support.epnet.com/Robo/explainfiles/ddh.html","key":"toc6"}];    window.rh.model.publish(rh.consts('KEY_TEMP_DATA'), toc, { sync:true });    })();
