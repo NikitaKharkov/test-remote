@@ -421,7 +421,7 @@ class BasicFileFilter extends FileFilter {
 	}
 
 	function _fnmatch($pattern, $file) {
-		return ereg($this->_fnmatch2regexp($pattern), $file);
+		return preg_match('#'.$this->_fnmatch2regexp($pattern).'#', $file);
 	}
 
 	function _fnmatch2regexp($str) {

@@ -3,7 +3,7 @@
 $data = $_POST;
 foreach ($data as &$item) {
 	$item = urldecode($item);
-	if (eregi("(\r|\n)", $item)) {
+	if (preg_match("#(\r|\n)#i", $item)) {
 		die("Invalid characters in submitted input, please go back and try again.");
 	}
 	$item = htmlspecialchars($item);
