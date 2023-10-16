@@ -293,7 +293,7 @@ for ($i=0; $i < $num_results; $i++) {
 		//if ($i==0) { echo "Field: $fieldno - Dati: ";var_dump($fields[$fieldno]);echo "\n"; }
 		if ($fields[$fieldno]["type"]=="DATETIME20.0"){
 			#convert mysql  datestamp (yyyy-mm-dd hh:mm:ss) to SPSS datetime (dd-mmm-yyyy hh:mm:ss) format
-			list( $year, $month, $day, $hour, $minute, $second ) = split( '([^0-9])', $row[$fieldno] );
+			list( $year, $month, $day, $hour, $minute, $second ) = preg_split('#([^0-9])#', $row[$fieldno] );
 			if ($year != "" && (int)$year >= 1970) 
 			{
 				echo "'".date("d-m-Y H:i:s", mktime( $hour, $minute, $second, $month, $day, $year ) )."' ";

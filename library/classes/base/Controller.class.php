@@ -117,7 +117,7 @@ abstract class Controller extends Foundation
 	    }	
 	
 	    // Break up the search terms by spaces
-	    $terms_array = split(' ', addslashes($terms));
+	    $terms_array = explode(' ', addslashes($terms));
 		    
 		if ($this->Database->getDatabaseType() == 'mysql' || $this->Database->getDatabaseType() == 'mssql') {
 		    $like = "LIKE";

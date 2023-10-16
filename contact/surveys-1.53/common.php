@@ -1398,7 +1398,7 @@ function returnquestiontitlefromfieldcode($fieldcode)
 
 function getsidgidqid($fieldcode)
 {
-	list($fsid, $fgid, $fqid) = split("X", $fieldcode);
+	list($fsid, $fgid, $fqid) = explode("X", $fieldcode);
 	//$legitqs=getLegitQids($fsid);
 	if (!$fqid) {$fqid=0;}
 	/*$oldfqid=$fqid;

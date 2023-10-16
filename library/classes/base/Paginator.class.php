@@ -550,14 +550,14 @@ class Paginator
 					$parameters = array();
                     
                     if (strlen($attributes) > 0) {
-						$attribute_array = split(' ', trim($attributes));
+						$attribute_array = explode(' ', trim($attributes));
 
 						/* make sub-array of options */
 						if (@sizeof($attribute_array)) {
 
 							for ($j = 0; $j < sizeof($attribute_array); ++$j) {
 								$attribute_array[$j]   = str_replace('"', '', $attribute_array[$j]);
-								$pair                  = split('=', trim($attribute_array[$j]));
+								$pair                  = explode('=', trim($attribute_array[$j]));
 								$parameters[$pair[0]]  = $pair[1];
 							}
 						}

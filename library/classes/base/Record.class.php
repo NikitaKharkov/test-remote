@@ -2139,7 +2139,7 @@ abstract class Record extends Foundation
                     $this->child_objects[$child_table][$i]->$child_field_method($value);
                     $this->child_objects[$child_table][$i]->validate($check_child_and_foreign_keys);    
                 } catch (Exception $e) {
-                    $errors = split("\n", $e->getMessage());
+                    $errors = explode("\n", $e->getMessage());
                     foreach ($errors as $child_error) {
                         if (!empty($child_error)) {
                             $this->error .= $object_name . ' ' . ($i+1) . ': ' . $child_error . "\n"; 
@@ -2391,7 +2391,7 @@ abstract class Record extends Foundation
 							} elseif ($child_error_flagged != get_class($e)) {
 								$child_error_flagged = TRUE;	
 							}
-                            $errors = split("\n", $e->getMessage());
+                            $errors =explode("\n", $e->getMessage());
                             foreach ($errors as $child_error) {
                                 if (!empty($child_error)) {
                                     $this->error .= $object_name . ' ' . ($k+1) . ': ' . $child_error . "\n"; 
