@@ -718,7 +718,7 @@ class Spreadsheet_Excel_Writer_Parser extends PEAR
         $class = 2; // as far as I know, this is magick.
 
         // Split the ref at the ! symbol
-        list($ext_ref, $range) = ('!', $token);
+        list($ext_ref, $range) = explode('!', $token);
 
         // Convert the external reference part (different for BIFF8)
         if ($this->_BIFF_version == 0x0500) {

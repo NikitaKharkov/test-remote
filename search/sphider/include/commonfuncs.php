@@ -669,6 +669,7 @@ function get_dir_contents($dir) {
 	*/
 	function cvc($str)
 	{
+		global $regex_consonant, $regex_vowel;
 		$c = $regex_consonant;
 		$v = $regex_vowel;
 
