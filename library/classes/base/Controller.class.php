@@ -351,7 +351,7 @@ abstract class Controller extends Foundation
         // Handle dates
         } elseif ($type == 'date') {
             if ($value) {
-                return convert_date(trim($value), 'mysqli_date');
+                return convert_date(trim($value), 'mysql_date');
             } else {
                 return NULL;
             }    
@@ -359,7 +359,7 @@ abstract class Controller extends Foundation
         // Handles datetimes
         } elseif ($type == 'datetime') {
             if ($value) {
-                return convert_date(trim($value), 'mysqli_datetime');
+                return convert_date(trim($value), 'mysql_datetime');
             } else {
                 return NULL;
             }
