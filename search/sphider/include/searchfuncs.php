@@ -1,4 +1,4 @@
-<?php 
+<?php /** @noinspection ALL */
 /*******************************************
 * Sphider Version 1.3.x
 * This program is licensed under the GNU GPL.
@@ -49,7 +49,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function makeboollist($a) {
-		global $entities, $stem_words;
+		global $mysql_connection, $entities, $stem_words;
 		while ($char = each($entities)) {
 			$a = preg_replace('#'.$char[0].'#', $char[1], $a);
 		}
@@ -131,9 +131,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function ignoreword($word) {
-		global $common;
-		global $min_word_length;
-		global $index_numbers;
+		global $mysql_connection, $common, $min_word_length, $index_numbers;
 		if ($index_numbers == 1) {
 			$pattern = "[a-z0-9]+";
 		} else {
@@ -147,10 +145,11 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function search($searchstr, $category, $start, $per_page, $type, $domain) {
-		global $length_of_link_desc,$mysql_table_prefix, $show_meta_description, $merge_site_results, $stem_words, $did_you_mean_enabled ;
+		global $mysql_connection, $length_of_link_desc, $mysql_table_prefix, $show_meta_description, $merge_site_results,
+			   $stem_words, $did_you_mean_enabled ;
 		
 		$possible_to_find = 1;
-		$result = mysqli_query("select domain_id from ".$mysql_table_prefix."domains where domain = '$domain'");
+		$result = mysqli_query($mysql_connection, "select domain_id from ".$mysql_table_prefix."domains where domain = '$domain'");
 		if (mysqli_num_rows($result)> 0) {
 			$thisrow = mysqli_fetch_array($result);
 			$domain_qry = "and domain = ".$thisrow[0];
@@ -175,7 +174,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 
             $query1 = "SELECT link_id from ".$mysql_table_prefix."link_keyword$wordmd5, ".$mysql_table_prefix."keywords where ".$mysql_table_prefix."link_keyword$wordmd5.keyword_id= ".$mysql_table_prefix." keywords.keyword_id and keyword='$searchword'";
 
-			$result = mysqli_query($query1);
+			$result = mysqli_query($mysql_connection, $query1);
 
 			while ($row = mysqli_fetch_row($result)) {
 				$notlist[$not_words]['id'][$row[0]] = 1;
@@ -191,8 +190,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 			$searchword = addslashes($wordarray[$phrase_words]);
 			$query1 = "SELECT link_id from ".$mysql_table_prefix."links where fulltxt like '% $searchword%'";
-			echo mysqli_error();
-			$result = mysqli_query($query1);
+			echo mysqli_error($mysql_connection);
+			$result = mysqli_query($mysql_connection, $query1);
 			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				$possible_to_find = 0;
@@ -209,8 +208,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 			$allcats = get_cats($category);
 			$catlist = implode(",", $allcats);
 			$query1 = "select link_id from ".$mysql_table_prefix."links, ".$mysql_table_prefix."sites, ".$mysql_table_prefix."categories, ".$mysql_table_prefix."site_category where ".$mysql_table_prefix."links.site_id = ".$mysql_table_prefix."sites.site_id and ".$mysql_table_prefix."sites.site_id = ".$mysql_table_prefix."site_category.site_id and ".$mysql_table_prefix."site_category.category_id in ($catlist)";
-			$result = mysqli_query($query1);
-			echo mysqli_error();
+			$result = mysqli_query($mysql_connection, $query1);
+			echo mysqli_error($mysql_connection);
 			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				$possible_to_find = 0;
@@ -233,8 +232,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 			}
 			$wordmd5 = substr(md5($searchword), 0, 1);
 			$query1 = "SELECT distinct link_id, weight, domain from ".$mysql_table_prefix."link_keyword$wordmd5, ".$mysql_table_prefix."keywords where ".$mysql_table_prefix."link_keyword$wordmd5.keyword_id= ".$mysql_table_prefix."keywords.keyword_id and keyword='$searchword' $domain_qry order by weight desc";
-			echo mysqli_error();
-			$result = mysqli_query($query1);
+			echo mysqli_error($mysql_connection);
+			$result = mysqli_query($mysql_connection, $query1);
 			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				if ($type != "or") {
@@ -325,7 +324,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 			reset ($searchstr['+']);
 			foreach ($searchstr['+'] as $word) {
 				$word = addslashes($word);
-				$result = mysqli_query("select keyword from ".$mysql_table_prefix."filteredKeywords");
+				$result = mysqli_query($mysql_connection, "select keyword from ".$mysql_table_prefix."filteredKeywords");
 				$max_distance = 100;
 				$near_word ="";
 				while ($row=mysqli_fetch_row($result)) {
@@ -401,8 +400,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 		$query1 = "SELECT distinct link_id, url, title, description,  $fulltxt, size FROM ".$mysql_table_prefix."links WHERE link_id in ($inlist)";
 
-		$result = mysqli_query($query1);
-		echo mysqli_error();
+		$result = mysqli_query($mysql_connection, $query1);
+		echo mysqli_error($mysql_connection);
 
 		$i = 0;
 		while ($row = mysqli_fetch_row($result)) {
@@ -414,7 +413,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 				$res[$i]['fulltxt'] = $row[4];
 			$res[$i]['size'] = $row[5];
 			$res[$i]['weight'] = $result_array[$row[0]];
-			$dom_result = mysqli_query("select domain from ".$mysql_table_prefix."domains where domain_id='".$domains[$row[0]]."'");
+			$dom_result = mysqli_query($mysql_connection, "select domain from ".$mysql_table_prefix."domains where domain_id='".$domains[$row[0]]."'");
 			$dom_row = mysqli_fetch_row($dom_result);
 			$res[$i]['domain'] = $dom_row[0];
 			$i++;
@@ -427,7 +426,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 		} else {
 			usort($res, "cmp"); 	
 		}
-		echo mysqli_error();
+		echo mysqli_error($mysql_connection);
 		$res['maxweight'] = $maxweight;
 		$res['results'] = $results;
 		return $res;
@@ -435,7 +434,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 function get_search_results($query, $start, $category, $searchtype, $results, $domain) {
-	global $sph_messages, $results_per_page,
+	global $mysql_connection, $sph_messages, $results_per_page,
 		$links_to_next,
 		$show_query_scores,
 		$mysql_table_prefix,

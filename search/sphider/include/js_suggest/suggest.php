@@ -1,6 +1,5 @@
-<?
+<?php
 error_reporting(0); // Any notices/warnings will cause errors in suggest javascript
-
 
 require_once('../../settings/database.php'); 
 require_once('../../settings/conf.php');
@@ -37,7 +36,7 @@ if (!strpos($_GET['q'],' '))
 
 if ($suggest_history && $_GET['q']!='"')
 {
-	$result = mysqli_query($sql = "
+	$result = mysqli_query($mysql_connection, $sql = "
 	SELECT 	query as keyword, max(results) as results
 	FROM {$mysql_table_prefix}query_log 
 	WHERE results > 0 AND (query LIKE '{$_GET['q']}%' OR query LIKE '\"{$_GET['q']}%') 
@@ -63,7 +62,7 @@ if ($suggest_phrases)
 	$_GET['q'] = strtolower( str_replace('"','',$_GET['q'] ));
 	$_words = substr_count($_GET['q'],' ') + 1; 
 	
-	$result = mysqli_query($sql = "
+	$result = mysqli_query($mysql_connection, $sql = "
 	SELECT count(link_id) as results, SUBSTRING_INDEX(SUBSTRING(fulltxt,LOCATE('{$_GET['q']}',LOWER(fulltxt))), ' ', '$_words') as keyword FROM {$mysql_table_prefix}links where fulltxt like '%{$_GET['q']}%' 
 	GROUP BY SUBSTRING_INDEX( SUBSTRING( fulltxt, LOCATE( '{$_GET['q']}', LOWER(fulltxt) ) ) , ' ', '$_words' ) LIMIT $suggest_rows
 	");
@@ -85,7 +84,7 @@ elseif ($suggest_keywords)
 {
 	for ($i=0;$i<=15; $i++) {
 		$char = dechex($i);
-		$result = mysqli_query($sql = "
+		$result = mysqli_query($mysql_connection, $sql = "
 		SELECT keyword, count(keyword) as results 
 		FROM {$mysql_table_prefix}keywords INNER JOIN {$mysql_table_prefix}link_keyword$char USING (keyword_id) 
 		WHERE keyword LIKE '{$_GET['q']}%'  

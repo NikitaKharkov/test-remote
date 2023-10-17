@@ -33,9 +33,9 @@ This is necessary since our PHP settings require absolute paths be passed to the
 file function.
 
 2. Replace the following line in searchfuncs.php:
-	$result = mysqli_query("select keyword from ".$mysql_table_prefix."keywords where soundex(keyword) = soundex('$word')");
+	$result = mysqli_query($mysql_connection, "select keyword from ".$mysql_table_prefix."keywords where soundex(keyword) = soundex('$word')");
 With this line:
-	$result = mysqli_query("select keyword from ".$mysql_table_prefix."filteredKeywords");
+	$result = mysqli_query($mysql_connection, "select keyword from ".$mysql_table_prefix."filteredKeywords");
 
 Replace these lines in the same file:
 	$distance = levenshtein($row[0], $word);
