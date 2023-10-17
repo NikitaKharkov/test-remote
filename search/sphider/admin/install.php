@@ -13,7 +13,7 @@ $settings_dir = "../settings";
 include "$settings_dir/database.php";
 
 $error = 0;
-mysqli_query("create table `".$mysql_table_prefix."sites`(
+mysqli_query($mysql_connection, $mysql_connection, "create table `".$mysql_table_prefix."sites`(
 	site_id int auto_increment not null primary key,
 	url varchar(255),
 	title varchar(255),
@@ -23,13 +23,13 @@ mysqli_query("create table `".$mysql_table_prefix."sites`(
 	required text,
 	disallowed text,
 	can_leave_domain bool)");
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
-mysqli_query("create table `".$mysql_table_prefix."links` (
+mysqli_query($mysql_connection, $mysql_connection, "create table `".$mysql_table_prefix."links` (
 	link_id int auto_increment primary key not null,
 	site_id int,
 	url varchar(255) not null,
@@ -44,28 +44,28 @@ mysqli_query("create table `".$mysql_table_prefix."links` (
 	visible int default 0, 
 	level int)");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
-mysqli_query("create table `".$mysql_table_prefix."keywords`	(
+mysqli_query($mysql_connection, $mysql_connection, "create table `".$mysql_table_prefix."keywords`	(
 	keyword_id int primary key not null auto_increment,
 	keyword varchar(30) not null,
 	unique kw (keyword),
 	key keyword (keyword(10)))");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
 for ($i=0;$i<=15; $i++) {
 	$char = dechex($i);
-	mysqli_query("create table `".$mysql_table_prefix."link_keyword$char` (
+	mysqli_query($mysql_connection, $mysql_connection, "create table `".$mysql_table_prefix."link_keyword$char` (
 		link_id int not null,
 		keyword_id int not null,
 		weight int(3),
@@ -73,53 +73,53 @@ for ($i=0;$i<=15; $i++) {
 		key linkid(link_id),
 		key keyid(keyword_id))");
 
-	if (mysqli_errno() > 0) {
+	if (mysqli_errno($mysql_connection) > 0) {
 		print "Error: ";
-		print mysqli_error();
+		print mysqli_error($mysql_connection);
 		print "<br>\n";
-		$error += mysqli_errno();
+		$error += mysqli_errno($mysql_connection);
 	}
 }
 
-mysqli_query("create table `".$mysql_table_prefix."categories` (
+mysqli_query($mysql_connection, $mysql_connection, "create table `".$mysql_table_prefix."categories` (
 	category_id integer not null auto_increment primary key, 
 	category text,
 	parent_num integer
 	)");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
-mysqli_query("create table `".$mysql_table_prefix."site_category` (
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."site_category` (
 	site_id integer,
 	category_id integer
 	)");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
-mysqli_query("create table `".$mysql_table_prefix."temp` (
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."temp` (
 	link varchar(255),
 	level integer,
 	id varchar (32)
 	)");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
-mysqli_query("create table `".$mysql_table_prefix."pending` (
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."pending` (
 	site_id integer,
 	temp_id varchar(32),
 	level integer,
@@ -127,36 +127,36 @@ mysqli_query("create table `".$mysql_table_prefix."pending` (
 	num integer
 )");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
-mysqli_query("create table `".$mysql_table_prefix."query_log` (
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."query_log` (
 	query varchar(255),
 	time timestamp(14),
 	elapsed float(2),
 	results int, 
 	key query_key(query))");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
-mysqli_query("create table `".$mysql_table_prefix."domains` (
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."domains` (
 	domain_id int auto_increment primary key not null,	
 	domain varchar(255))");
 
-if (mysqli_errno() > 0) {
+if (mysqli_errno($mysql_connection) > 0) {
 	print "Error: ";
-	print mysqli_error();
+	print mysqli_error($mysql_connection);
 	print "<br>\n";
-	$error += mysqli_errno();
+	$error += mysqli_errno($mysql_connection);
 }
 
 

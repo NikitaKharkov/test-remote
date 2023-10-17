@@ -69,8 +69,7 @@ function checkAll(theForm, cName, allNo_stat) {
   </tr>
  <?php
 
-
-		$stats  = mysqli_query ("SHOW TABLE STATUS FROM $dbname LIKE '$dbprefix%'");
+		$stats = mysqli_query($mysql_connection, "SHOW TABLE STATUS FROM $dbname LIKE '$dbprefix%'");
 		$num_tables = mysqli_num_rows($stats);
 		if ($num_tables==0) {
 			echo("ERROR: Database contains no tables");
@@ -152,8 +151,9 @@ if (isset($file) && $del==0) {
 	set_time_limit(1000);
 	$file_temp=fread(fopen($backup_path.$file, "r"), filesize($backup_path.$file));
 	$query=explode(";#%%\n",$file_temp);
+    mysqli_select_db($mysql_connection, $dbname);
 	for ($i=0;$i < count($query)-1;$i++) {
-		mysqli_db_query($dbname,$query[$i]) or die(mysqli_error());
+        mysqli_query($mysql_connection, $query[$i]) or die(mysqli_error($mysql_connection));
 	}
 	unlink($backup_path.$file);
 	echo "<table width=\"94%\"><tr><td><b>Your restore 
@@ -212,4 +212,5 @@ if (isset($file) && $del==1) {
 	</TR>
 	
   </TABLE>
+</FORM>
 </CENTER>

@@ -18,9 +18,10 @@
 	* @return array|null massiiv
 	 */
 	function sql_fetch_all($query) {
-		$result = mysqli_query($query);
-		if($mysql_err = mysqli_errno()) {
-			print $query.'<br>'.mysqli_error();
+		global $mysql_connection;
+		$result = mysqli_query($mysql_connection, $query);
+		if($mysql_err = mysqli_errno($mysql_connection)) {
+			print $query.'<br>'.mysqli_error($mysql_connection);
 		} else {
 			while($row=mysqli_fetch_array($result)) {
 				$data[]=$row;
@@ -53,10 +54,10 @@
 	}
 
 	function get_cats($parent) {
-		global $mysql_table_prefix;
+		global $mysql_table_prefix, $mysql_connection;
 		$query = "SELECT * FROM ".$mysql_table_prefix."categories WHERE parent_num=$parent";
-		echo mysqli_error();
-		$result = mysqli_query($query);
+		$result = mysqli_query($mysql_connection, $query);
+		echo mysqli_error($mysql_connection);
 		$arr[] = $parent;
 		if (mysqli_num_rows($result) <> '') {
 			while ($row = mysqli_fetch_array($result)) {
