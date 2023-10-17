@@ -45,7 +45,7 @@ $mysql['id'] = mysqli_real_escape_string( $_POST['q'] );
 $mysql['rating'] =  mysqli_real_escape_string( $_POST['rating'] );
 $mysql['comment'] = mysqli_real_escape_string( $_POST['comment'] );
 $sql = "INSERT INTO comments ( id,rating,comment,date ) VALUES ( '{$mysql['id']}','{$mysql['rating']}','{$mysql['comment']}', NOW() )"; 
-mysqli_query( $sql );
+mysqli_query($rating_conn, $sql);
 
 //echo "Thank you for your feedback!";
 header('Location: /knowledge_base/thanku.php', true, 302);

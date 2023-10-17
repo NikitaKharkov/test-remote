@@ -90,7 +90,8 @@ function random_string($length, $characters='alphanumeric')
 	$character_map = array('alphanumeric' => '0123456789ABCDEFGHIJKLMNPOQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
                            'alpha'        => 'ABCDEFGHIJKLMNPOQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
                            'numeric'      => '0123456789');
-    if (!isset($character_map[$characters])) { $characters = @array_shift(array_keys($character_map)); }
+    $keys = array_keys($character_map);
+    if (!isset($character_map[$characters])) { $characters = @array_shift($keys); }
     
     srand((double) microtime() * intval(rand(1,1000000)));
 	$chars = $character_map[$characters];

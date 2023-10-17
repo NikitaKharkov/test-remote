@@ -5,9 +5,7 @@
 	$mysql_host = "localhost";
 	$mysql_table_prefix = "";
 
-
-
-	$success = mysqli_pconnect ($mysql_host, $mysql_user, $mysql_password);
+	$success = mysqli_connect ('p:'.$mysql_host, $mysql_user, $mysql_password);
 	if (!$success)
 		die ("<b>Cannot connect to database, check if username, password and host are correct.</b>");
 	$success = mysqli_select_db ($database);

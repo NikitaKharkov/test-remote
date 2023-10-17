@@ -24,15 +24,15 @@ if (!$static) {$static = FALSE;}
 $id = preg_replace("/[^0-9]/","",$id);
 
 // get votes, values, ips for the current rating bar
-//$query=mysqli_query("SELECT total_votes, total_value, used_ips FROM $rating_dbname.$rating_tableName WHERE id='$id' ")or die(" Error: ".mysqli_error());
+//$query=mysqli_query($rating_conn, "SELECT total_votes, total_value, used_ips FROM $rating_dbname.$rating_tableName WHERE id='$id' ")or die(" Error: ".mysqli_error($rating_conn));
 
-$query=mysqli_query("SELECT kb_page_id FROM support_epnet.kb_pages WHERE kb_page_id ='$id' ")or die(" Error: ".mysqli_error());
+$query=mysqli_query($rating_conn, "SELECT kb_page_id FROM support_epnet.kb_pages WHERE kb_page_id ='$id' ")or die(" Error: ".mysqli_error($rating_conn));
 
 // insert the id in the DB if it doesn't exist already
 // see: http://www.masugadesign.com/the-lab/scripts/unobtrusive-ajax-star-rating-bar/#comment-121
 if (mysqli_num_rows($query) == 1) {
 $sql = "INSERT INTO $rating_dbname.$rating_tableName (`id`,`total_votes`, `total_value`, `used_ips`) VALUES ('$id', '0', '0', '')";
-$result = mysqli_query($sql);
+$result = mysqli_query($rating_conn, $sql);
 }
 
 $numbers=mysqli_fetch_assoc($query);
@@ -46,7 +46,7 @@ $current_rating=$numbers['total_value']; //total number of rating added together
 $tense=($count==1) ? "vote" : "votes"; //plural form votes/vote
 
 // determine whether the user has voted, so we know how to draw the ul/li
-//$voted=mysqli_num_rows(mysqli_query("SELECT used_ips FROM $rating_dbname.$rating_tableName WHERE used_ips LIKE '%".$ip."%' AND id='".$id."' "));
+//$voted=mysqli_num_rows(mysqli_query($rating_conn, "SELECT used_ips FROM $rating_dbname.$rating_tableName WHERE used_ips LIKE '%".$ip."%' AND id='".$id."' "));
 	
 if ( $_COOKIE[ "rater_$id" ] )  {
  $voted=$_COOKIE[ "rater_$id" ];
