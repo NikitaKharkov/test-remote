@@ -10,7 +10,7 @@ dbInsert(
 	$data["userType"], $userTypeString, //2009-03-12
 	$data["yourEmail"], $data["CC"], 
 	$data["title"], $data["type"], $data["searching"], 
-	$selectedSections, $data["found"], $selectedLearningsIDs, $selectedLearningsStrings, $data["date"], 
+	$selectedSections, $data["found"], $selectedLearningsIDs, $selectedLearningsStrings ?? '', $data["date"],
 	$data["credit"], $creditString, //2009-03-12
 	$data["feedback"],
 	$data["yourPhone_areaCode"].$data["yourPhone_group1"].$data["yourPhone_group2"], //2009-12-05
@@ -46,9 +46,9 @@ function dbInsert(
 
 	// Open DB connection
 	$db = mysqli_connect($dbServer, $dbUsername, $dbPassword)
-    OR die("Could not connect to database: ".mysqli_error());
-	mysqli_select_db($dbSchema, $db)
-		OR die ("Could not connect to database: ".mysqli_error());
+    OR die("Could not connect to database: ".mysqli_errno($db));
+	mysqli_select_db($db, $dbSchema)
+		OR die ("Could not connect to database: ".mysqli_errno($db));
 	
 	// Convert submitted arrays into strings
 	$sections = join($selectedSections, ";");
@@ -57,30 +57,30 @@ function dbInsert(
 	
 	
 	// Sanitize user-provided data - helps prevent security holes
-	$custID = mysqli_real_escape_string($custID);
-	$cmeEmail = mysqli_real_escape_string($cmeEmail);
-	$firstName = mysqli_real_escape_string($firstName);
-	$lastName = mysqli_real_escape_string($lastName);
-	$userEmail = mysqli_real_escape_string($userEmail);
-	$userTypeID = mysqli_real_escape_string($userTypeID);//added 2009-03-12, tufts only
-	$userType = mysqli_real_escape_string($userType);//added 2009-03-12, tufts only
-	$ccEmail = mysqli_real_escape_string($ccEmail);
-	$type = mysqli_real_escape_string($type);
-	$title = mysqli_real_escape_string($title);
-	$searching = mysqli_real_escape_string($searching);
-	$sections = mysqli_real_escape_string($sections);
-	$found = mysqli_real_escape_string($found);
-	$learningID = mysqli_real_escape_string($learningID); //added 2009-03-13
-	$learning = mysqli_real_escape_string($learning);
-	$date = mysqli_real_escape_string($date);
-	$creditTypeID = mysqli_real_escape_string($creditTypeID);//added 2009-03-12
-	$creditType = mysqli_real_escape_string($creditType);
-	$feedback = mysqli_real_escape_string($feedback);
-	$phoneNumber = mysqli_real_escape_string($phoneNumber);//added 2009-12-05
-	$address = mysqli_real_escape_string($address);
-	$city = mysqli_real_escape_string($city);
-	$state = mysqli_real_escape_string($state);
-	$zip = mysqli_real_escape_string($zip);
+	$custID = mysqli_real_escape_string($db, $custID);
+	$cmeEmail = mysqli_real_escape_string($db, $cmeEmail);
+	$firstName = mysqli_real_escape_string($db, $firstName);
+	$lastName = mysqli_real_escape_string($db, $lastName);
+	$userEmail = mysqli_real_escape_string($db, $userEmail);
+	$userTypeID = mysqli_real_escape_string($db, $userTypeID);//added 2009-03-12, tufts only
+	$userType = mysqli_real_escape_string($db, $userType);//added 2009-03-12, tufts only
+	$ccEmail = mysqli_real_escape_string($db, $ccEmail);
+	$type = mysqli_real_escape_string($db, $type);
+	$title = mysqli_real_escape_string($db, $title);
+	$searching = mysqli_real_escape_string($db, $searching);
+	$sections = mysqli_real_escape_string($db, $sections);
+	$found = mysqli_real_escape_string($db, $found);
+	$learningID = mysqli_real_escape_string($db, $learningID); //added 2009-03-13
+	$learning = mysqli_real_escape_string($db, $learning);
+	$date = mysqli_real_escape_string($db, $date);
+	$creditTypeID = mysqli_real_escape_string($db, $creditTypeID);//added 2009-03-12
+	$creditType = mysqli_real_escape_string($db, $creditType);
+	$feedback = mysqli_real_escape_string($db, $feedback);
+	$phoneNumber = mysqli_real_escape_string($db, $phoneNumber);//added 2009-12-05
+	$address = mysqli_real_escape_string($db, $address);
+	$city = mysqli_real_escape_string($db, $city);
+	$state = mysqli_real_escape_string($db, $state);
+	$zip = mysqli_real_escape_string($db, $zip);
 	
 	
 	// Convert the submitted date into a format MySQL understands
@@ -98,11 +98,12 @@ function dbInsert(
 		$fields .= ", phoneNumber";
 		$values .= ", '$phoneNumber'";
 	}
-	if($address != "" && city != "" && state != "" &zip != "") {
+    // @todo very strange that "city" and other was used as const... Check the commit. Maybe just a mistake.
+	if($address != "" && $city != "" && $state != "" &$zip != "") {
 		$fields .= ", address, city, state, zip";
 		$values .= ", '$address', '$city', '$state', '$zip'";
 	}
-	if($userTypeID != "" && userType != "") {
+	if($userTypeID != "" && $userType != "") {
 		$fields .= ", userTypeID, userType";
 		$values .= ", '$userTypeID', '$userType'";
 	}
@@ -111,8 +112,8 @@ function dbInsert(
 			
 	
 	// Execute Query
-	mysqli_query($insert)
-		OR die ("Could not insert to the database: ".mysqli_error());
+	mysqli_query($db, $insert)
+		OR die ("Could not insert to the database: ".mysqli_errno($db));
 	
 	// Close DB connection
 	mysqli_close($db);
