@@ -12,7 +12,7 @@
 	verifyAccess($mcImageManagerConfig);
 
 	$rootpath = removeTrailingSlash(getRequestParam("rootpath", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.rootpath'))));
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootPath);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootPath);
 
 	$file =& $fileFactory->getFile($path);
 	$config = $file->getConfig();

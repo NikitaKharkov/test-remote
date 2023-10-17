@@ -4,7 +4,7 @@
  *
  * @package MCImageManager.pages
  * @author Moxiecode
- * @copyright Copyright © 2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2006, Moxiecode Systems AB, All rights reserved.
  */
 
 	require_once("includes/general.php");
@@ -20,8 +20,8 @@
 	$msg = getRequestParam("msg", "");
 
 	$rootpath = toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.rootpath'));
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootpath);
-	$targetFile =& $fileFactory->getFile($path);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootpath);
+	$targetFile = $fileFactory->getFile($path);
 	$config = $targetFile->getConfig();
 	$wwwroot = removeTrailingSlash(toUnixPath(getWWWRoot($config)));
 

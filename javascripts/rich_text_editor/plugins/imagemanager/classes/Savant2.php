@@ -1005,7 +1005,7 @@ class Savant2 {
 			! is_a($this->_resource['plugin'][$name], $class)) {
 			
 			// instantiate it
-			$this->_resource['plugin'][$name] =& new $class($conf);
+			$this->_resource['plugin'][$name] = new $class($conf);
 			
 			// add a Savant reference if requested
 			if ($savantRef) {
@@ -1173,7 +1173,7 @@ class Savant2 {
 			! is_a($this->_resource['filter'][$name], $class)) {
 			
 			// instantiate it
-			$this->_resource['filter'][$name] =& new $class($conf);
+			$this->_resource['filter'][$name] = new $class($conf);
 			
 			// add a Savant reference if requested
 			if ($savantRef) {
@@ -1312,7 +1312,7 @@ class Savant2 {
 		}
 		
 		// instantiate and return the error class
-		$err =& new $class($conf);
+		$err = new $class($conf);
 		return $err;
 	}
 	

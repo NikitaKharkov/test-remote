@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -182,7 +182,7 @@ class BaseFile {
 	 * @param MCE_FileFilter &$filter MCE_FileFilter instance to filter files by.
 	 * @return Array array of MCE_File instances based on the specified filter instance.
 	 */
-	function listFilesFiltered(&$filter) {
+	function listFilesFiltered($filter) {
 	}
 
 	/**
@@ -190,7 +190,7 @@ class BaseFile {
 	 *
 	 * @param MCE_FileTreeHandler &$file_tree_handler MCE_FileTreeHandler to invoke on each file.
 	 */
-	function listTree(&$file_tree_handler) {
+	function listTree($file_tree_handler) {
 	}
 
 	/**

@@ -7,8 +7,8 @@
 	verifyAccess($mcImageManagerConfig);
 	$path = getRequestParam("path", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.path')));
 	$rootpath = getRequestParam("rootpath", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.rootpath')));
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootpath);
-	$targetFile =& $fileFactory->getFile($path);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootpath);
+	$targetFile = $fileFactory->getFile($path);
 	$targetFolder = $targetFile =& $targetFile->getParentFile();
 	$config = $targetFile->getConfig();
 
@@ -20,7 +20,7 @@
 	addFileEventListeners($fileFactory);
 
 	// Get filtered files
-	$fileFilter =& new BasicFileFilter();
+	$fileFilter = new BasicFileFilter();
 	$fileFilter->setIncludeDirectoryPattern($config['filesystem.include_directory_pattern']);
 	$fileFilter->setExcludeDirectoryPattern($config['filesystem.exclude_directory_pattern']);
 	$fileFilter->setIncludeFilePattern($config['filesystem.include_file_pattern']);

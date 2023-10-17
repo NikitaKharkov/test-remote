@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 require_once(getAbsPath("../classes/FileSystems/BaseFile.php"));
@@ -81,7 +81,7 @@ class LocalFileImpl extends BaseFile {
 	 * @return File parent files File instance or false if there is no more parents.
 	 */
 	function &getParentFile() {
-		$file =& new LocalFileImpl($this->_fileFactory, $this->getParent());
+		$file = new LocalFileImpl($this->_fileFactory, $this->getParent());
 		return $file;
 	}
 
@@ -355,7 +355,7 @@ class LocalFileImpl extends BaseFile {
 	 * @param FileFilter &$filter FileFilter instance to filter files by.
 	 * @return Array array of File instances based on the specified filter instance.
 	 */
-	function &listFilesFiltered(&$filter) {
+	function &listFilesFiltered($filter) {
 	 	$dir = $this->_absPath;
 	 	$files = array();
 		$fileArray = array();
@@ -381,7 +381,7 @@ class LocalFileImpl extends BaseFile {
 
 			// Build object filearray
 			foreach($fileArray as $afile) {
-				$file =& new LocalFileImpl($this->_fileFactory, $afile);
+				$file = new LocalFileImpl($this->_fileFactory, $afile);
 
 				if (!$filter->accept($file))
 					continue;
@@ -398,7 +398,7 @@ class LocalFileImpl extends BaseFile {
 	 *
 	 * @param FileTreeHandler &$file_tree_handler FileTreeHandler to invoke on each file.
 	 */
-	function listTree(&$file_tree_handler) {
+	function listTree($file_tree_handler) {
 		$this->_listTree($this, $file_tree_handler, new DummyFileFilter(), 0);
 	}
 
@@ -499,7 +499,7 @@ class LocalFileImpl extends BaseFile {
 	/**
 	 * Lists files recursive, and places the files in the specified array.
 	 */
-	function _listTree($file, &$file_tree_handler, &$file_filter, $level) {
+	function _listTree($file, $file_tree_handler, $file_filter, $level) {
 		$state = $file_tree_handler->CONTINUE;
 
 		if ($file_filter->accept($file)) {
@@ -553,7 +553,7 @@ class LocalFileImpl extends BaseFile {
 				$file =& $file->getParentFile();
 
 			while ($file->exists() && $file->getAbsolutePath() != "/") {
-				$accessFile =& new LocalFileImpl($this->_fileFactory, $file->getAbsolutePath(), $globalConf["filesystem.local.access_file_name"]);
+				$accessFile = new LocalFileImpl($this->_fileFactory, $file->getAbsolutePath(), $globalConf["filesystem.local.access_file_name"]);
 				if ($accessFile->exists())
 					$accessFiles[] = $accessFile;
 

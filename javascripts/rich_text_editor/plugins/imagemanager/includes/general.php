@@ -4,7 +4,7 @@
  *
  * @package MCImageManager.includes
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 // * * Get site root absolute path
@@ -64,7 +64,7 @@ if (isset($mcImageManagerConfig['authenticator']) && $mcImageManagerConfig['auth
  */
 function verifyAccess(&$config) {
 	// Store away rootpaths
-	$rootPaths =& getRootPaths($config["filesystem.rootpath"], false);
+	$rootPaths = getRootPaths($config["filesystem.rootpath"], false);
 	$hasVariables = strpos($config["filesystem.rootpath"], '${') !== false;
 	$auth = null;
 
@@ -75,7 +75,7 @@ function verifyAccess(&$config) {
 
 	// Execute authenticator
 	if (isset($config['authenticator'])) {
-		$auth =& new $config['authenticator']();
+		$auth = new $config['authenticator']();
 		$auth->init($config);
 	}
 
@@ -86,7 +86,7 @@ function verifyAccess(&$config) {
 	}
 
 	// Verify rootpaths specified by authenticator but not when they contain variables
-	$newRootPaths =& getRootPaths($config["filesystem.rootpath"]);
+	$newRootPaths = getRootPaths($config["filesystem.rootpath"]);
 	if (!$hasVariables) {
 		foreach ($newRootPaths as $newRootPath) {
 			if (!isChildPath($rootPaths, $newRootPath)) {
@@ -112,7 +112,7 @@ function verifyAccess(&$config) {
 		if (strpos($_SESSION["mc_javascript_rootpath"], '${') !== false)
 			trigger_error("Paths containing variables in JavaScript paths is not supported becurse of possible security issues.", FATAL);
 
-		$newRootPaths =& getRootPaths($_SESSION["mc_javascript_rootpath"]);
+		$newRootPaths = getRootPaths($_SESSION["mc_javascript_rootpath"]);
 
 		foreach ($newRootPaths as $newRootPath) {
 			if (!isChildPath($rootPaths, $newRootPath)) {
@@ -193,7 +193,7 @@ function verifyAccess(&$config) {
 
 	// If only renamed rootpath
 	if (strpos($config["filesystem.rootpath"], '=') > 0) {
-		$rootPaths =& getRootPaths($config["filesystem.rootpath"]);
+		$rootPaths = getRootPaths($config["filesystem.rootpath"]);
 		$keys = array_keys($rootPaths);
 		$config["filesystem.rootpath"] = $rootPaths[$keys[0]];
 		$config["filesystem.rootname"] = $keys[0];
@@ -347,7 +347,7 @@ function addFileEventListeners(&$file_factory) {
 
 		 foreach ($listenerNames as $listenerName) {
 			if ($listenerName != "") {
-				$listener =& new $listenerName();
+				$listener = new $listenerName();
 
 				$listener->init($mcImageManagerConfig);
 
@@ -430,14 +430,14 @@ function loadLanguagePack($config) {
 	$language = $config['general.language'];
 	$languageDefault = "en";
 
-	$langReader =& new LanguageReader();
+	$langReader = new LanguageReader();
 	$langReader->loadXML(realpath("langs/". $language .".xml"));
 
 	$foreignLanguage = $langReader->_items;
 
 	// Load default language and merge arrays
 	if ($language != $languageDefault) {
-		$defaultLangReader =& new LanguageReader();
+		$defaultLangReader = new LanguageReader();
 		$defaultLangReader->loadXML(realpath("langs/". $languageDefault .".xml"));
 		$defaultLanguage = $defaultLangReader->_items;
 
@@ -468,7 +468,7 @@ function renderPage($template, $data, $config = -1) {
 	global $mcImageManagerConfig, $rootPath, $mcLanguage;
 
 	// Savant Integration
-	$savant = & new Savant2();
+	$savant =  new Savant2();
 
 	// Assign smarty items
 	$savant->assign('langCode', $mcImageManagerConfig['general.language']);
@@ -493,12 +493,12 @@ function renderPage($template, $data, $config = -1) {
  */
 function cleanFilename($filename) {
 	$charLookup = array(
-		"å" => "a", 
-		"ä" => "a", 
-		"ö" => "o",
-		"Å" => "a", 
-		"Ä" => "a", 
-		"Ö" => "o",
+		"ï¿½" => "a", 
+		"ï¿½" => "a", 
+		"ï¿½" => "o",
+		"ï¿½" => "a", 
+		"ï¿½" => "a", 
+		"ï¿½" => "o",
 		" " => "_"
 	);
 

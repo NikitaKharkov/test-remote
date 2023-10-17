@@ -25,7 +25,7 @@
 	verifyAccess($mcImageManagerConfig);
 
 	$rootpath = removeTrailingSlash(getRequestParam("rootpath", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.rootpath'))));
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootPath);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootPath);
 
 
 	addFileEventListeners($fileFactory);
@@ -77,7 +77,7 @@
 				$orgFile->delete();
 
 			// Setup first filter
-			$fileFilterA =& new BasicFileFilter();
+			$fileFilterA = new BasicFileFilter();
 			$fileFilterA->setIncludeFilePattern($config['filesystem.include_file_pattern']);
 			$fileFilterA->setExcludeFilePattern($config['filesystem.exclude_file_pattern']);
 			$fileFilterA->setIncludeExtensions($config['filesystem.extensions']);

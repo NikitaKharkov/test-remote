@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.pages
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 	require_once("includes/general.php");
@@ -17,7 +17,7 @@
 	$path = getRequestParam("path", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.path')));
 	$numfiles = getRequestParam("numfiles", "0");
 	$rootpath = getRequestParam("rootpath", toUnixPath(getRealPath($mcImageManagerConfig, 'filesystem.rootpath')));
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootpath);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootpath);
 	$targetFile =& $fileFactory->getFile($path);
 	$config = $targetFile->getConfig();
 
@@ -98,7 +98,7 @@
 			$ext = array_pop($ar);
 		}
 
-		$file =& new LocalFileImpl($fileFactory, $path, $filename . "." . $ext);
+		$file = new LocalFileImpl($fileFactory, $path, $filename . "." . $ext);
 
 		if (is_uploaded_file($_FILES['file' . $i]['tmp_name'])) {
 			// Exists?
@@ -121,7 +121,7 @@
 			$file->importFile();
 
 			// Setup first filter
-			$fileFilterA =& new BasicFileFilter();
+			$fileFilterA = new BasicFileFilter();
 			$fileFilterA->setIncludeFilePattern($config['filesystem.include_file_pattern']);
 			$fileFilterA->setExcludeFilePattern($config['filesystem.exclude_file_pattern']);
 			$fileFilterA->setIncludeExtensions($config['filesystem.extensions']);
@@ -133,7 +133,7 @@
 			}
 
 			// Setup second filter
-			$fileFilterB =& new BasicFileFilter();
+			$fileFilterB = new BasicFileFilter();
 			$fileFilterB->setIncludeFilePattern($config['upload.include_file_pattern']);
 			$fileFilterB->setExcludeFilePattern($config['upload.exclude_file_pattern']);
 			$fileFilterB->setIncludeExtensions($config['upload.extensions']);

@@ -4,7 +4,7 @@
  *
  * @package MCImageManager.pages
  * @author Moxiecode
- * @copyright Copyright © 2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2006, Moxiecode Systems AB, All rights reserved.
  */
 
 	require_once("includes/general.php");
@@ -29,7 +29,7 @@
 			trigger_error("Must configure at least one rootpath, check the <a href=\"docs\" target=\"_blank\">documentation</a> for more info.", FATAL);
 	}
 
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootpath);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootpath);
 	$rootFile =& $fileFactory->getFile($rootpath);
 	if (!$rootFile->exists())
 		trigger_error("Could not find the defined root path.", FATAL);
@@ -92,12 +92,12 @@
 		$dirList = unserialize($_SESSION['dropdown']);
 	} else {
 		// Get filtered dirs, deep
-		$fileFilter =& new BasicFileFilter();
+		$fileFilter = new BasicFileFilter();
 		$fileFilter->setIncludeDirectoryPattern($rootconfig['filesystem.include_directory_pattern']);
 		$fileFilter->setExcludeDirectoryPattern($rootconfig['filesystem.exclude_directory_pattern']);
 		$fileFilter->setOnlyDirs(true);
 
-		$treeHandler =& new ConfigFilteredFileTreeHandler();
+		$treeHandler = new ConfigFilteredFileTreeHandler();
 		$treeHandler->setOnlyDirs(true);
 
 		$rootFile->listTree($treeHandler);
@@ -176,7 +176,7 @@
 	$dirsFiltered = array();
 
 	// Get filtered files
-	$fileFilter =& new BasicFileFilter();
+	$fileFilter = new BasicFileFilter();
 	$fileFilter->setIncludeDirectoryPattern($config['filesystem.include_directory_pattern']);
 	$fileFilter->setExcludeDirectoryPattern($config['filesystem.exclude_directory_pattern']);
 	$fileFilter->setIncludeFilePattern($config['filesystem.include_file_pattern']);
