@@ -8,7 +8,8 @@
 * 
 */
 
-if ( !isset($title) || !isset($pages) || !is_array($navigation) ) {
+// didn't find the var $navigation
+if ( !isset($title) || !isset($pages) || !is_array($navigation ?? null) ) {
 	echo "Unable to display";
 	return false;
 }

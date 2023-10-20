@@ -454,8 +454,8 @@ class Validator
 				$this->addErrorField($fields[$i]);
 				$error_message .= $names[$i] . ' is too long - ' . $this->field_info[$table][$fields[$i]]['length'] . " characters maximum\n";
 			
-			// If the value is supposed to be an enum, check the valid values
-			} elseif ($this->field_info[$table][$fields[$i]]['type'] == 'enum' && !in_array($values[$i], $this->field_info[$table][$fields[$i]]['valid_values']) && ($value !== NULL || !isset($this->field_info[$table][$fields[$i]]['default']))) {
+			// If the value is supposed to be an enum, check the valid values                                                            very suspicion; just make provide "null" as default to not break the code;
+			} elseif ($this->field_info[$table][$fields[$i]]['type'] == 'enum' && !in_array($values[$i], $this->field_info[$table][$fields[$i]]['valid_values']) && ($value ?? null !== NULL || !isset($this->field_info[$table][$fields[$i]]['default']))) {
 				$this->addErrorField($fields[$i]);
 				$error_message .= $names[$i] . " is not a valid value\n";
 			

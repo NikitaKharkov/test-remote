@@ -10,7 +10,7 @@ dbInsert(
 	$data["userType"], $userTypeString, //2009-03-12
 	$data["yourEmail"], $data["CC"], 
 	$data["title"], $data["type"], $data["searching"], 
-	$selectedSections, $data["found"], $selectedLearningsIDs, $selectedLearningsStrings ?? '', $data["date"],
+	$selectedSections, $data["found"], $selectedLearningsIDs, $selectedLearningsStrings, $data["date"],
 	$data["credit"], $creditString, //2009-03-12
 	$data["feedback"],
 	$data["yourPhone_areaCode"].$data["yourPhone_group1"].$data["yourPhone_group2"], //2009-12-05

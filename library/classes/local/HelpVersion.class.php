@@ -75,6 +75,7 @@ class HelpVersion extends Record
 		
 		$code = '$temp_file = $this->get' . $this->camelCase($field, TRUE) . '();';
 		eval($code);
+        /** @var $temp_file - eval() function code */
 		$file = $temp_file;
 		if (!isset($this->old_file_name[$field]) && $this->existing) {
 			$temp_file = '';
@@ -86,7 +87,8 @@ class HelpVersion extends Record
 		eval($code);
 		
 		static $number = 1;
-		
+
+        /** @var $file_with_dir - eval() function result */
 		if (trim($file_with_dir) && !is_dir($_SERVER['DOCUMENT_ROOT'] . $file_with_dir) && file_exists($_SERVER['DOCUMENT_ROOT'] . $file_with_dir)) {
 			echo '<span class="current_file">';
 			echo 'Current: <a href="' . $file_with_dir . '">' . $file . '</a>';

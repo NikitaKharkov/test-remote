@@ -41,7 +41,7 @@ function getIgnoredWords($search_results) {
 }
 
 function getResultsReport($search_results) {
-	if ($search_results['total_results'] != 0 && $from <= $to) {
+	if ($search_results['total_results'] != 0 && $search_results['from'] <= $search_results['to']) {
 		$firstResult = $search_results['from'];
 		$numResults = $search_results['num_of_results'];
 		$lastResult = $firstResult + $numResults - 1;

@@ -33,7 +33,7 @@ class LocalFileImpl extends BaseFile {
 	 * @param String $child_name Name of child file (Optional).
 	 * @param String $type Optional file type.
 	 */
-	function LocalFileImpl(&$file_factory, $absolute_path, $child_name = "", $type = MC_IS_FILE) {
+	function LocalFileImpl($file_factory, $absolute_path, $child_name = "", $type = MC_IS_FILE) {
 		$this->_fileFactory =& $file_factory;
 		$this->_type = $type;
 
@@ -272,7 +272,7 @@ class LocalFileImpl extends BaseFile {
 	 * @param File $dest File to copy to.
 	 * @return boolean true - success, false - failure
 	 */
-	function copyTo(&$dest) {
+	function copyTo($dest) {
 		if ($dest->exists())
 			return false;
 
@@ -281,6 +281,8 @@ class LocalFileImpl extends BaseFile {
 			return false;
 
 		if ($this->isDirectory()) {
+
+            /** @var $handle_as_add_event - afraid to put something; @todo */
 			$treeHandler = new _LocalCopyDirTreeHandler($this->_fileFactory, $this, $dest, $handle_as_add_event);
 
 			$this->listTree($treeHandler);
@@ -406,10 +408,10 @@ class LocalFileImpl extends BaseFile {
 	 * Lists the file as an tree and calls the specified FileTreeHandler instance on each file
 	 * if the file filter accepts the file.
 	 *
-	 * @param FileTreeHandler &$file_tree_handler FileTreeHandler to invoke on each file.
-	 * @param FileTreeHandler &$file_filter FileFilter instance to filter files by.
+	 * @param FileTreeHandler $file_tree_handler FileTreeHandler to invoke on each file.
+	 * @param FileTreeHandler $file_filter FileFilter instance to filter files by.
 	 */
-	function listTreeFiltered(&$file_tree_handler, &$file_filter) {
+	function listTreeFiltered($file_tree_handler, $file_filter) {
 		$this->_listTree($this, $file_tree_handler, $file_filter, 0);
 	}
 
@@ -441,7 +443,7 @@ class LocalFileImpl extends BaseFile {
 	 * @param File $dest File to rename/move to.
 	 * @return boolean true- success, false - failure
 	 */
-	function renameTo(&$dest) {
+	function renameTo($dest) {
 		// Copy in to your self?
 		if (strpos($dest->getAbsolutePath(), $this->getAbsolutePath()) === 0)
 			return false;
@@ -735,7 +737,7 @@ class _LocalCopyDirTreeHandler extends FileTreeHandler {
 	var $_fileFactory;
 	var $_handle_as_add_event;
 
-	function _LocalCopyDirTreeHandler(&$file_factory, $from_file, $dest_file, $handle_as_add_event) {
+	function _LocalCopyDirTreeHandler($file_factory, $from_file, $dest_file, $handle_as_add_event) {
 		$this->_fileFactory = $file_factory;
 		$this->_fromFile = $from_file;
 		$this->_destFile = $dest_file;
@@ -771,7 +773,7 @@ class _LocalDeleteDirTreeHandler extends FileTreeHandler {
 	var $_dir;
 	var $_files;
 
-	function _LocalDeleteDirTreeHandler(&$file_factory, $dir) {
+	function _LocalDeleteDirTreeHandler($file_factory, $dir) {
 		$this->_fileFactory = $file_factory;
 		$this->_dir = $dir;
 		$this->_files = array();

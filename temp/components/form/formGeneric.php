@@ -5,22 +5,21 @@
 
 	<form method="post" id="mainForm" action="submit.php">
 
-		<?
+		<?php
 		/* Pass along required fields */
-		require('components/form/form_hiddenFields.php');
-		
-		require('components/form/form_title.php');
+		require('form_hiddenFields.php');
+		require('form_title.php');
 		
 		//form sections
-		require('components/form/form_whatYouNeedToFind.php');
-		require('components/form/form_whatYouFound.php');
-		require('components/form/form_whatYouLearned.php');
-		require('components/form/form_feedback.php');
-		require('components/form/form_identifyingInformation.php');
-		require('components/form/form_typeOfCreditNeeded.php');
+		require('form_whatYouNeedToFind.php');
+		require('form_whatYouFound.php');
+		require('form_whatYouLearned.php');
+		require('form_feedback.php');
+		require('form_identifyingInformation.php');
+		require('form_typeOfCreditNeeded.php');
 		
 		/* Set up section to display errors */
-		require('components/form/form_submit.php');
+		require('form_submit.php');
 		?>
 
 	</form>

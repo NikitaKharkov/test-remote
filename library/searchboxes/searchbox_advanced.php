@@ -49,6 +49,8 @@
 						<select id="topic" name="topic">
 							<? 
 							try {
+                                // @todo check that this is working. Didn't find where it is.
+                                /** @var string $kbt_id_filter */
 								print_option($kbt_id_filter, '', 'All Topics');
 								$kb_topics = $kb_controller->listKbTopics('list_order_asc');
 								foreach($kb_topics as $kb_topic_id => $kb_topic) {

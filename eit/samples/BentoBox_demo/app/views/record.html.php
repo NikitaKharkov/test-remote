@@ -226,6 +226,7 @@ $paramsUrl = http_build_query($params);
               </tr>
                 </table>
            </div>
+            <?php /** @var string $version - @see eit/samples/BentoBox_demo/record.php */ ?>
             <div class="version"><?php echo $version ?></div>
         </div>
         </div>

@@ -235,6 +235,8 @@ abstract class Controller extends Foundation
             $code .= ');';   
         }
         eval($code);
+
+        /** @var $return eval() function result */
         return $return;
     }
     
@@ -306,7 +308,8 @@ abstract class Controller extends Foundation
 	        
 	        $code  = '$return = $this->createObjects(\'' . $type . '\', $ids);';
 	        eval($code);
-	        
+
+            /** @var $return - eval() function result */
 	        return $return;     
 		} else {
 			throw new FatalException('list' . $plural_type . '() needs a method find' . $plural_type . '() to be defined to work properly');	

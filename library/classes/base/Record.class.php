@@ -907,7 +907,8 @@ abstract class Record extends Foundation
         }
         $code .= ');';
         eval($code);
-        
+
+        /** @var $return - eval() function result */
         return $return;
     }
     
@@ -1872,6 +1873,7 @@ abstract class Record extends Foundation
 	        if (!empty($child_key['on_delete']) && $child_key['on_delete'] == 'cascade') {
 	            $code = '$children = $this->create' . $this->camelCase($child_key['child_table'], TRUE) . '(0, 1, FALSE);';
                 eval($code);
+                /** @var $children - eval() function result */
                 foreach ($children as $child) {
                     $child->cascadeDeleteAllFiles();
 				}    
@@ -1903,6 +1905,7 @@ abstract class Record extends Foundation
 		
 		$code = '$temp_file = $this->get' . $this->camelCase($field, TRUE) . '();';
 		eval($code);
+        /** @var $temp_file -- eval() function code */
 		$file = $temp_file;
 		if (!isset($this->old_file_name[$field]) && $this->existing) {
 			$temp_file = '';
@@ -1914,7 +1917,8 @@ abstract class Record extends Foundation
 		eval($code);
 		
 		static $number = 1;
-		
+
+        /** @var $file_with_dir - eval() function result */
 		if (trim($file_with_dir) && !is_dir($_SERVER['DOCUMENT_ROOT'] . $file_with_dir) && file_exists($_SERVER['DOCUMENT_ROOT'] . $file_with_dir)) {
 			echo '<span class="current_file">';
 			echo 'Current: <a href="' . $file_with_dir . '">' . $file . '</a>';
@@ -2509,6 +2513,7 @@ abstract class Record extends Foundation
 	            if (!empty($child_key['on_delete']) && $child_key['on_delete'] == 'cascade') {
 	            	$code = '$children = $this->create' . $this->camelCase($child_key['child_table'], TRUE) . '(0, 1, FALSE);';
 	            	eval($code);
+                    /** @var $children - eval() function result */
                     $this->child_objects[$child_key['child_table']] = $children;
 	            	foreach ($children as $child) {
 						$child->load();
@@ -3062,13 +3067,14 @@ abstract class Record extends Foundation
                 $where_field = $field;    
             }    
 			foreach($this->unique_keys as $unique_constraint) {
-				
+                $where_sql = '';
 				// Handle unique constraints with multiple fields
 				if (in_array($field, $unique_constraint) && sizeof($unique_constraint) > 1) {
 					foreach($unique_constraint as $field_name) {
-						
-						
-																	
+
+
+
+
 						// If there is a value to check, check it
 						if (isset($this->values[$field_name]) && $this->values[$field_name] !== NULL) {
 						    $where_sql .= " AND " . $field_name . " = '" . $this->values[$field_name] . "'";

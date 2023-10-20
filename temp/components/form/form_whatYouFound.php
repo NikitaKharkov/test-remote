@@ -1,4 +1,8 @@
 		<h2>What You Found</h2>
+        <?php
+            # see ./temp/objects.php
+            /** @var array $sectionOptions */
+        ?>
 		<?if($sectionOptions) { //Display available sections for this article type ?>
 			<h3><b>DynaMed content evaluated:</b> DynaMed content for 
 			<i><?=$_REQUEST["title"]?></i> was found in the following sections:</h3>
