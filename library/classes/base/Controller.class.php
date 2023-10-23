@@ -202,7 +202,7 @@ abstract class Controller extends Foundation
      * @param  array $arguments     The arguments passed to the method
      * @return mixed  The return value of the helper method called
      */
-    protected function __call($method_name, $arguments)
+    public function __call($method_name, $arguments)
     {
         $underscore_method_name = $this->underscoreNotation($method_name);   
         list($method, $type) = explode('_', $underscore_method_name, 2); 

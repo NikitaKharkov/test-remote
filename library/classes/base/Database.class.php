@@ -1,4 +1,5 @@
-/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection *//** @noinspection ALL *//** @noinspection ALL */<?php
+<?php
+/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection *//** @noinspection ALL *//** @noinspection ALL */
   /**
    * Database - Database Abstraction Layer
    *
@@ -176,7 +177,7 @@
                   }
                   if (($this->database_type == 'mysql')) {
                           $connect = $this->prefix . 'connect';
-                          $this->connection = @$connect($this->database_host, $this->database_user, $this->database_password, TRUE);
+                          $this->connection = @$connect($this->database_host, $this->database_user, $this->database_password);
                           // mysqli_query("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
                           if (!$this->connection) {
                                   die('We are so sorry, but we had a problem connecting to the database server: ' . $this->database_host);

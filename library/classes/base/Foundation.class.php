@@ -374,7 +374,7 @@ abstract class Foundation
         } elseif (!$upper && (strtolower($string) != $string || strpos($string, '_') === FALSE)) {
         	return $string;	
 		}
-        return preg_replace('/(_([a-z0-9]))/e', 'strtoupper("\2")', $string);    
+        return preg_replace('/(_([a-z0-9]))/', 'strtoupper("\2")', $string);
     }
     
     
