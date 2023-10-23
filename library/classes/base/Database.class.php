@@ -1,5 +1,4 @@
-
-  <?php
+/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection *//** @noinspection ALL *//** @noinspection ALL */<?php
   /**
    * Database - Database Abstraction Layer
    *
@@ -60,7 +59,7 @@
       /**
            * Database connection
            *
-           * @var resource
+           * @var resource|mysqli|
            */
       private $connection;
 
@@ -172,7 +171,10 @@
                   }
 
                   // Connect to the database
-                  if (($this->database_type == 'mysql') || ($this->database_type == 'mssql')) {
+                  if ($this->database_type == 'mssql') {
+                      die('MsSQL didn\'t support since moving from PHP 5.x version');
+                  }
+                  if (($this->database_type == 'mysql')) {
                           $connect = $this->prefix . 'connect';
                           $this->connection = @$connect($this->database_host, $this->database_user, $this->database_password, TRUE);
                           // mysqli_query("SET NAMES 'utf8' COLLATE 'utf8_unicode_ci'");
@@ -180,7 +182,7 @@
                                   die('We are so sorry, but we had a problem connecting to the database server: ' . $this->database_host);
                           } else {
                                   $select_db = $this->prefix . 'select_db';
-                                  if (!@$select_db($this->database_name, $this->connection)) {
+                                  if (!@$select_db($this->connection, $this->database_name)) {
                                           die('We are so, so sorry, but we had a problem connecting to the database'. $this->database_password);
                                   }
                           }
@@ -458,59 +460,70 @@
            * @param  string $sql  SQL statement
            * @return mixed  false if no result; resource if there is a result
            */
-          public function query($sql='')
-          {
-                  $this->sql = $sql;
-                  $start_time = microtime(TRUE);
+      public function query($sql = '')
+      {
+          $this->sql = $sql;
+          $start_time = microtime(true);
           $this->affected_rows = 0;
 
-                  if (!is_string($this->sql) || empty($this->sql)) {
-                          $this->error = 'No SQL passed to query()';
-                          return FALSE;
-                  } else {
+          if (!is_string($this->sql) || empty($this->sql)) {
+              $this->error = 'No SQL passed to query()';
 
-                          if ($this->database_type == 'mysql') {
-                                  $result = @mysqli_query($this->sql, $this->connection);
+              return false;
+          } else {
+              if ($this->database_type == 'mysql') {
+                  $result = @mysqli_query($this->connection, $this->sql);
               } elseif ($this->database_type == 'mssql') {
-                  $result = @mssql_query($this->sql, $this->connection);
-                          } elseif ($this->database_type == 'pgsql') {
-                                  $result = @pg_query($this->connection, $this->sql);
-                          }
+                  die('MsSQL didn\'t support since moving from PHP 5.x version');
+//                  $result = @mssql_query($this->sql, $this->connection);
+              } elseif ($this->database_type == 'pgsql') {
+                  $result = @pg_query($this->connection, $this->sql);
+              }
 
-                          if (!$result) {
-                                  if ($this->database_type == 'mysql') {
-                      $this->error = mysqli_errno($this->connection) . ': ' . mysqli_error($this->connection);
+              if (!$result) {
+                  if ($this->database_type == 'mysql') {
+                      $this->error = mysqli_errno($this->connection).': '.mysqli_error($this->connection);
                   } elseif ($this->database_type == 'mssql') {
-                      $this->error = mssql_get_last_message();
-                                  } elseif ($this->database_type == 'pgsql') {
-                                          // As of PHP 5.1 we can get the SQL STATE (error number) from pgsql
-                                          $prepend = '';
-                                          if (function_exists("pg_result_error_field")) {
-                                                  $prepend = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE) . ': ';
-                                          }
-                                          $this->error = $prepend . pg_last_error();
-                                  }
+                      die('MsSQL didn\'t support since moving from PHP 5.x version');
+//                      $this->error = mssql_get_last_message();
+                  } elseif ($this->database_type == 'pgsql') {
+                      // As of PHP 5.1 we can get the SQL STATE (error number) from pgsql
+                      $prepend = '';
+                      if (function_exists("pg_result_error_field")) {
+                          $prepend = pg_result_error_field($result, PGSQL_DIAG_SQLSTATE).': ';
+                      }
+                      $this->error = $prepend.pg_last_error();
+                  }
 
-                                  $this->printDebug("The following query failed:\n" . $this->error . "\n" . $this->sql, TRUE);
+                  $this->printDebug("The following query failed:\n".$this->error."\n".$this->sql, true);
 
-                                  return NULL;
-                          } else {
-                                  $this->error = '';
-                                  if ($this->database_type == 'mysql') {
+                  return null;
+              } else {
+                  $this->error = '';
+                  if ($this->database_type == 'mysql') {
                       $this->affected_rows = @mysqli_affected_rows($this->connection);
                   } elseif ($this->database_type == 'mssql') {
-                      $this->affected_rows = @mssql_rows_affected($this->connection);
-                                  } elseif ($this->database_type == 'pgsql') {
-                                          $this->affected_rows = @pg_affected_rows($result);
-                                  }
-
-                                  $this->debug_time += microtime(TRUE) - $start_time;
-                                  $this->printDebug('The following query took ' . (number_format((microtime(TRUE)-$start_time), 5, '.', ',')) . " seconds:\n" . $this->sql, TRUE);
-
-                                  return $result;
-                          }
+                      die('MsSQL didn\'t support since moving from PHP 5.x version');
+//                      $this->affected_rows = @mssql_rows_affected($this->connection);
+                  } elseif ($this->database_type == 'pgsql') {
+                      $this->affected_rows = @pg_affected_rows($result);
                   }
+
+                  $this->debug_time += microtime(true) - $start_time;
+                  $this->printDebug(
+                      'The following query took '.(number_format(
+                          (microtime(true) - $start_time),
+                          5,
+                          '.',
+                          ','
+                      ))." seconds:\n".$this->sql,
+                      true
+                  );
+
+                  return $result;
+              }
           }
+      }
 
 
 
@@ -584,11 +597,12 @@
                   if ($this->database_type == 'mysql') {
               $last_id = mysqli_insert_id($this->connection);
                   } elseif ($this->database_type == 'mssql') {
-                          $result = mssql_query("SELECT @@IDENTITY AS 'the_unique_id'");
-                          if (is_resource($result)) {
-                                  $row = mssql_fetch_array($result);
-                                  $last_id = $row['the_unique_id'];
-                          }
+                      die('MsSQL didn\'t support since moving from PHP 5.x version');
+//                      $result = mssql_query("SELECT @@IDENTITY AS 'the_unique_id'");
+//                      if (is_resource($result)) {
+//                              $row = mssql_fetch_array($result);
+//                              $last_id = $row['the_unique_id'];
+//                      }
                   } elseif ($this->database_type == 'pgsql') {
                           $result = pg_query($this->connection, 'SELECT lastval()');
                           if (is_resource($result)) {
@@ -626,10 +640,11 @@
                   if ($this->database_type == 'mysql') {
               mysqli_data_seek($result, $row);
           } elseif ($this->database_type == 'mssql') {
-              mssql_data_seek($result, $row);
-                  } elseif ($this->database_type == 'pgsql') {
-                          pg_result_seek($result, $row);
-                  }
+              die('MsSQL didn\'t support since moving from PHP 5.x version');
+//              mssql_data_seek($result, $row);
+          } elseif ($this->database_type == 'pgsql') {
+                  pg_result_seek($result, $row);
+          }
                   return TRUE;
           }
 
@@ -1271,7 +1286,7 @@
               } elseif ($this->database_type == 'pgsql') {
 
                               $sql  = "SELECT
-                                   c.relname AS table,
+                                   c.relname AS 'table',
                                    a.attname AS field,
                                    rt.relname AS foreign_table,
                                    rf.attname AS foreign_field,
@@ -1289,8 +1304,9 @@
                                    END AS on_delete
                                FROM
                                    pg_attribute AS a INNER JOIN
-                                   pg_class AS c ON a.attrelid = c.oid INNER JOIN
-                                   pg_constraint AS co ON (a.attnum = ANY (co.conkey) AND co.conrelid = c.oid) LEFT JOIN
+                                   pg_class AS c ON a.attrelid = c.oid 
+                                       INNER JOIN pg_constraint AS co ON (a.attnum = ANY (co.conkey) AND co.conrelid = c.oid)
+                                       LEFT JOIN
                                    pg_class AS rt ON co.confrelid = rt.oid LEFT JOIN
                                    pg_attribute AS rf ON (rf.attnum = ANY (co.confkey) AND rt.oid = rf.attrelid)
                                WHERE
