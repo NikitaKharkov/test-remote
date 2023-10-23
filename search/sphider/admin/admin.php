@@ -1160,9 +1160,9 @@ function addcatform($parent) {
 				showsites($message);
 		break;
 		case 2:
-			showsites();
+			showsites('');
 		break;
-		case edit_site:
+		case 'edit_site':
 			editsiteform($site_id);
 		break;
 		case 4:
@@ -1178,9 +1178,9 @@ function addcatform($parent) {
 		break;
 		case 5:
 			deletesite ($site_id);
-			showsites();
+			showsites('');
 		break;
-		case add_cat:
+		case 'add_cat':
 			if (!isset($parent))
 				$parent = "";
 			addcatform ($parent);
@@ -1192,10 +1192,10 @@ function addcatform($parent) {
 			$message = addcat ($category, $parent);
 			list_cats (0, 0, "white", $message);
 		break;
-		case categories:
+		case 'categories':
 			list_cats (0, 0, "white", "");
 		break;
-		case edit_cat;
+		case 'edit_cat';
 			editcatform($cat_id);
 		break;
 		case 10;
@@ -1204,9 +1204,9 @@ function addcatform($parent) {
 		break;
 		case 11;
 			deletecat($cat_id);
-			list_cats (0, 0, "white");
+			list_cats (0, 0, "white", '');
 		break;
-		case index;
+		case 'index';
 			if (!isset($url))
 				$url = "";
 			if (!isset($reindex))
@@ -1216,10 +1216,10 @@ function addcatform($parent) {
 			}
 			indexscreen($url, $reindex);
 		break;
-		case add_site;
+		case 'add_site';
 			addsiteform();
 		break;
-		case clean;
+		case 'clean';
 			cleanForm();
 		break;
 
@@ -1234,7 +1234,7 @@ function addcatform($parent) {
 			cleanTemp();
 		break;
 
-		case statistics;
+		case 'statistics';
 			if (!isset($type))
 				$type = "";
 			statisticsForm($type);
@@ -1244,7 +1244,7 @@ function addcatform($parent) {
 			siteStats($site_id);
 		break;
 		case 20;
-			siteScreen($site_id);
+			siteScreen($site_id, '');
 		break;
 		case 21;
 			if (!isset($start))
@@ -1273,18 +1273,18 @@ function addcatform($parent) {
 			session_destroy();
 			header("Location: admin.php");
 		break;
-		case database;
+		case 'database';
 			include "db_main.php";
 		break;
-		case settings;
+		case 'settings';
 			include('configset.php');
 		break;
-		case delete_log;
+		case 'delete_log';
 			unlink($log_dir."/".$file);
 			statisticsForm('spidering_log');
 		break;
 		case '':
-			showsites();
+			showsites('');
 		break;
 	}
 	$stats = getStatistics();
