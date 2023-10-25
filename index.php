@@ -1,10 +1,5 @@
-
 <?php
-header("HTTP/1.1 301 Moved Permanently");
-header( 'Location: https://connect.ebsco.com' ) ;
-?>
 
-<?
 include($_SERVER['DOCUMENT_ROOT'] . '/library/init.php');
 
 $page_function = page_function(
@@ -39,7 +34,7 @@ $template->printHeaderMT();
 			</div>
 
 
-				<?
+            <?php
 				try {
 					$news_items = $news_item_controller->listNewsItems('display_date_desc', 'Support News', array('public'), 3);
 
@@ -55,19 +50,19 @@ $template->printHeaderMT();
 							<?= $short_description; ?>
 							<a href="<?= $link; ?>" class="green">More</a>
 						</div>
-						<?
+                        <?php
 						}
 				} catch (Exception $e) {
 					?>
 					<div class="left_articles">
 						No top stories available. <em>Please check back soon...</em>
 					</div>
-					<?
+                    <?php
 					}
 				?>
 
 
-				<?
+            <?php
 			try {
 				$news_items = $news_item_controller->listNewsItems('display_date_desc', 'Release Notes', array('public'), 1);
 
@@ -91,7 +86,7 @@ $template->printHeaderMT();
 
 
 
-				<?
+                    <?php
 						}
 				} catch (Exception $e) {
 					?>
@@ -104,7 +99,7 @@ $template->printHeaderMT();
                 </form>
 						</div>
 					<div class="sysalertsbottom"></div>
-					<?
+                <?php
 					}
 				?>
 
@@ -194,7 +189,7 @@ $template->printHeaderMT();
 		<div class="topfaqs">
 		<img src="images/topfaqs.gif" />
 
-				<?
+            <?php
 				try {
 					$kb_pages = $kb_controller->listKbPages('last_updated_desc', NULL, NULL, NULL, NULL, array('public','private'), NULL, NULL, NULL, TRUE, 5);
 
@@ -202,7 +197,7 @@ $template->printHeaderMT();
 					?>
 
 
-					<?
+                    <?php
 					foreach($kb_pages as $kbp_id => $kbp) {
 
 						$link = "/knowledge_base/detail.php?id=" . $kbp_id . "&amp;t=h";
@@ -218,12 +213,12 @@ $template->printHeaderMT();
 
 
 
-						<?
+                        <?php
 						$c++;
 					}
 					?>
 
-					<?
+                    <?php
 				} catch (Exception $e) {}
 				?>
 

@@ -79,7 +79,7 @@ if ($page_function == "search") {
 			<div class="rnd_content_results"> 
 
 				<div class="right-element_results">
-				<?= ${total_kb_page_ids}." Results"?> <?= ($keyword) ? ' for: <em>' . $keyword . '</em>' : '' ?>			
+				<?= $total_kb_page_ids." Results"?> <?= ($keyword) ? ' for: <em>' . $keyword . '</em>' : '' ?>
 				</div>		
 			
 			</div>

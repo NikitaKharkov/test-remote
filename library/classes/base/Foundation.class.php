@@ -377,7 +377,7 @@ abstract class Foundation
         	if (strtolower($string) != $string) { 
             	return $string;
 			}
-			$string{0} = strtoupper($string{0});
+			$string = ucfirst($string);
         } elseif (!$upper && (strtolower($string) != $string || strpos($string, '_') === FALSE)) {
         	return $string;	
 		}
