@@ -884,7 +884,7 @@ class Database
                                 $output[$row['Field']]['default'] = ($row['Default']) ? true : false;
                             }
 
-                        } elseif (stripos($row['Type'], 'int(') !== false) {
+                        } elseif (stripos($row['Type'], 'int') !== false) {
                             $output[$row['Field']]['type'] = 'integer';
                             if ($row['Default'] === null) {
                                 $output[$row['Field']]['default'] = null;
