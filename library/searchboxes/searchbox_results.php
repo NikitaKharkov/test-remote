@@ -14,8 +14,8 @@
 							try {
 								print_option($kb_interface_id, '', 'All Services');
 								$kb_interfaces = $kb_controller->listKbInterfaces('name_asc', 'live');
-								foreach($kb_interfaces as $kb_interface_id => $kb_interface) {
-									print_option($kb_interface, $kb_interface_id, $kb_interface->getName());
+								foreach($kb_interfaces as $kb_id => $kb_interface) {
+									print_option($kb_interface_id, $kb_id, $kb_interface->getName());
 								}
 							} catch (Exception $e) {}
 							?>
