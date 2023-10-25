@@ -3,7 +3,7 @@
  * Objects - A dynamic class initializer. Classes are initialized when called using preset constructor arguments.
  *        
  * Copyright 2006, iMarc <info@imarc.net>
- * 
+ *
  * @version  2.0.0
  *
  * @author   William Bond [wb] <will@imarc.net>
@@ -12,6 +12,13 @@
  * @changes  1.1.1  added isset() to _get() method to prevent getting undefined variable notice [pm, 2006-09-25]
  * @changes  1.1.0  Allow aliasing of class names (for instance to extend a class but have all other code reference it like the base class) [wb, 2006-09-22]
  * @changes  1.0.0  Initial implementation [wb, 2006-07-20]
+ *
+ * @property Inflector $Inflector
+ * @property Database $Database
+ * @property Session $Session
+ * @property Validator $Validator
+ * @property Cache $Cache
+ * @property FileUpload $FileUpload
  */
 class Objects
 {
