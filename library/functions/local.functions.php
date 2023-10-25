@@ -210,7 +210,10 @@ function print_labeled_select($name, $value, $valid_values, $display_name, $add_
 209   * @return string  The converted string
 210   */
 function wordify($string) {
-  return preg_replace('/([^\w\']id($|[^\w\'])|(^|[^\w\'])[\w\'])/e', 'strtoupper("\1")', str_replace('_', ' ', $string));
+  return preg_replace_callback(
+      '/([^\w\']id($|[^\w\'])|(^|[^\w\'])[\w\'])/',
+      function ($m) { return strtoupper($m[1]);  },
+      str_replace('_', ' ', $string));
 }
 
 

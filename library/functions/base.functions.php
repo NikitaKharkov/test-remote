@@ -409,12 +409,18 @@ function link_maker($text='', $limit=0)
 	$limit = (((int) $limit) < 1) ? 0 : (int) $limit;
 	
 	// Set up an array of regular expressions for preg_replace
-	$regex_array = array("#([\n ])((?:[a-z]+?)://(?:[^,\t \n\r\<\>]+))#ie",                      /* (1) http://xx.yyy/path (URLs)   	*/
-						 "#([\n ])(www\.(?:[a-z0-9\-]+(?:\.[a-z]+)+)(?:/[^,\t \n\r\<\>]*)?)#ie", /* (2) www.xx.yyy/path (web addresses) */
-						 "#([\n ])((?:[a-z0-9\-_.]+?)@(?:[\w\-]+\.(?:[\w\-\.]+\.)?[\w]+))#ie"    /* (3) name@xx.yyy (email addresses)   */
+	$regex_array = array("#([\n ])((?:[a-z]+?)://(?:[^,\t \n\r\<\>]+))#i",                      /* (1) http://xx.yyy/path (URLs)   	*/
+						 "#([\n ])(www\.(?:[a-z0-9\-]+(?:\.[a-z]+)+)(?:/[^,\t \n\r\<\>]*)?)#i", /* (2) www.xx.yyy/path (web addresses) */
+						 "#([\n ])((?:[a-z0-9\-_.]+?)@(?:[\w\-]+\.(?:[\w\-\.]+\.)?[\w]+))#i"    /* (3) name@xx.yyy (email addresses)   */
 						);
 	$text = ' ' . $text;
-	$text = preg_replace($regex_array, "link_maker_callback('$1', '$2', " . $limit . ")", $text);
+	$text = preg_replace_callback(
+        $regex_array,
+        function ($m) use ($limit) {
+            link_maker_callback($m[1], $m[2], $limit);
+        },
+        $text
+    );
 	return substr($text, 1);
 }
 
@@ -646,7 +652,7 @@ function xhtmlify($text, $addslashes=FALSE)
 
 	// Pass the code through the html to xhtml convertor
 	$regexp = "<\s*\/?\s*[\w:]+(?:\s+[\w:]+(?:\s*=\s*(?:\"[^\"]*?\"|'[^']*?'|[^'\">\s]+))?)*\s*\/?\s*>";
-	$text = preg_replace('/' . $regexp . '/ie', "convert_tag_to_xhtml('$0')", $text);
+	$text = preg_replace_callback('/' . $regexp . '/i', function ($m) {convert_tag_to_xhtml($m[0]); }, $text);
 
 	// Ignore html tags and entities in the form &#*; where * represents one or more digits
 	$pattern = "<\s*\/?\s*[\w:]+(?:\s+[\w:]+(?:\s*=\s*(?:\"[^\"]*?\"|'[^']*?'|[^'\">\s]+))?)*\s*\/?\s*>|&(?:#\d+|\w+);";
@@ -1344,12 +1350,12 @@ function print_dom_js($html, $add_to_body=FALSE)
                     foreach ($styles as $style) {
                         if (!trim($style)) { continue; }
                         list ($selector, $value) = explode(':', $style);
-                        echo 'tag' . $tag_number . ".style." . preg_replace('/(-([a-z0-9]))/e', 'strtoupper("\2")', $selector) . " = " . $attribute[2] . trim($value) . $attribute[2] . ";\n";
+                        echo 'tag' . $tag_number . ".style." . preg_replace_callback('/(-([a-z0-9]))/', function ($m) { return strtoupper($m[2]); }, $selector) . " = " . $attribute[2] . trim($value) . $attribute[2] . ";\n";
                     }    
                     
                 // Handle everything else
                 } else {
-                    echo 'tag' . $tag_number . ".setAttribute('" . $attribute[1] . "', " . $attribute[2] .  preg_replace('/(&.*?;)/e', 'html_entity_to_js_unicode("\\1")', $attribute[3]) . $attribute[2] . ");\n";
+                    echo 'tag' . $tag_number . ".setAttribute('" . $attribute[1] . "', " . $attribute[2] .  preg_replace_callback('/(&.*?;)/', function ($m) { return html_entity_to_js_unicode($m[1]); }, $attribute[3]) . $attribute[2] . ");\n";
                 }      
             }
             
@@ -1373,7 +1379,7 @@ function print_dom_js($html, $add_to_body=FALSE)
             if (trim($match[0])) {
                 $text = preg_replace('/^\s+|\s+$/', ' ', $match[0]);
                 $text = str_replace("\n", ' ', str_replace("'", "\\'", $text));
-                $text = preg_replace('/(&.*?;)/e', 'html_entity_to_js_unicode("\\1")', $text);
+                $text = preg_replace_callback('/(&.*?;)/', function ($m) { return html_entity_to_js_unicode($m[1]); }, $text);
                 echo 'tag' . $tag_stack[0] . ".appendChild(document.createTextNode('" . $text . "'));\n";
             }    
         }
@@ -1519,22 +1525,16 @@ function request_value($field, $type='', $default=NULL)
 		if (is_string($return) && strpos($return, ',') !== FALSE) {
 			$return = explode(',', $return);
 		}
-		if (get_magic_quotes_gpc() && is_array($return)) {
-			$return = array_map('stripslashes', $return);
-		} elseif (get_magic_quotes_gpc() && !empty($return)) {
-            $return = stripslashes($return);            
-        }
 	} else {
 		if ($type == 'bool' || $type == 'boolean') {
 			$return = (strtolower($return) == 'false' || strtolower($return) == 'f' || !$return) ? FALSE : TRUE;
 		}
-		if (get_magic_quotes_gpc()) {
-			$return = stripslashes($return);
-		}
 	}
+
 	if ($type) {
 		settype($return, $type);
 	}
+
 	return $return;
 }
 
