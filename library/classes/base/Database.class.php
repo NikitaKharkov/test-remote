@@ -549,7 +549,7 @@ class Database
      */
     public function numRows($result)
     {
-        if (!is_resource($result)) {
+        if (!is_resource($result) && $this->database_type !== 'mysql') {
             $this->error = 'Invalid result resource passed to numRows()';
 
             return false;
@@ -572,7 +572,7 @@ class Database
      */
     public function getRow($result)
     {
-        if (!is_resource($result)) {
+        if (!is_resource($result) && $this->database_type !== 'mysql' ) {
             $this->error = 'Invalid result resource passed to getRow()';
 
             return false;
