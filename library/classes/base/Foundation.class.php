@@ -24,6 +24,13 @@
  * @changes  1.0.2   Fixed boundary bugs with underscoreNotation() and camelCase() [wb + fl, 2007-01-03]
  * @changes  1.0.1   Fixed underscoreNotation() bug [wb+pm, 2006-12-01]
  * @changes  1.0.0   Initial implementation [wb, 2006-11-16]
+ *
+ * @property Inflector $Inflector
+ * @property Database $Database
+ * @property Session $Session
+ * @property Validator $Validator
+ * @property Cache $Cache
+ * @property FileUpload $FileUpload
  */
 abstract class Foundation
 {
@@ -374,7 +381,12 @@ abstract class Foundation
         } elseif (!$upper && (strtolower($string) != $string || strpos($string, '_') === FALSE)) {
         	return $string;	
 		}
-        return preg_replace('/(_([a-z0-9]))/', 'strtoupper("\2")', $string);
+
+        return preg_replace_callback(
+            '/(_([a-z0-9]))/',
+            function ($m) { return strtoupper($m[2]); },
+            $string
+        );
     }
     
     
@@ -454,11 +466,24 @@ abstract class Foundation
     {
         if (is_array($string)) {
             foreach ($string as &$temp) {
-                $temp = preg_replace('/(\b(id|swf|pdf|url|css)\b|\b\w)/e', 'strtoupper("\1")', str_replace('_', ' ', $temp)); 
+                $temp = preg_replace_callback(
+                    '/(\b(id|swf|pdf|url|css)\b|\b\w)/',
+                    function ($m) {
+                        return strtoupper($m[1]);
+                    },
+                    str_replace('_', ' ', $temp)
+                );
             }    
         } else {
-            $string = preg_replace('/(\b(id|swf|pdf|url|css)\b|\b\w)/e', 'strtoupper("\1")', str_replace('_', ' ', $string)); 
+            $string = preg_replace_callback(
+                '/(\b(id|swf|pdf|url|css)\b|\b\w)/',
+                function ($m) {
+                    return strtoupper($m[1]);
+                },
+                str_replace('_', ' ', $string)
+            );
         }
+
         return $string;    
     }
     
