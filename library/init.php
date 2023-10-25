@@ -36,6 +36,7 @@ $objects->configureClass('Cache', $_SERVER['DOCUMENT_ROOT'] . '/uploads/cache/ca
 $objects->configureClass('FileUpload');
 
 $objects->Inflector->addCustomRule('toc', 'tocs');
+$objects->Inflector->addCustomRule('database', 'databases');
 
 $inflector = $objects->Inflector;
 
