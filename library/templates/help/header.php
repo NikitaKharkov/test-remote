@@ -75,7 +75,7 @@
 <body onload="frontage();">
 
 <?
-$logo = (strlen($this->getData('interface_logo'))) ? $this->getData('interface_logo') : _DEFAULT_HELP_LOGO;
+$logo = (strlen($this->getData('interface_logo') ?? '')) ? $this->getData('interface_logo') : _DEFAULT_HELP_LOGO;
 ?>
 
 <div id="header">

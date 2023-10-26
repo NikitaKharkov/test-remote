@@ -5,24 +5,13 @@ ob_start();
 error_reporting(E_ALL | E_STRICT);
 date_default_timezone_set('America/New_York');
 
-// prod config
-define('DATABASE_HOST', 'supportdb102.epnet.com');
-define('DATABASE_NAME', 'support_epnet');
-define('DATABASE_USER', 'supportUser');
-define('DATABASE_PASS', 'kn0wl3dge2g@1n$');
-
-// dev config
-//define('DATABASE_HOST', 'db');
-//define('DATABASE_NAME', 'support_epnet');
-//define('DATABASE_USER', 'admin');
-//define('DATABASE_PASS', 'admin');
-
 define('DATE_FORMAT', 'M j, Y');
 define('DATETIME_FORMAT', 'M j, Y g:ia');
 
 define('_PERSONAL_SEARCH_DICTIONARY', '/srv/www/support.epnet.com/knowledge_base/search_custom.pws'); // use the personal dictionary
 define('_DEFAULT_HELP_LOGO', '/images/logo_support.gif');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/env.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/base.functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/local.functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/debug.functions.php');

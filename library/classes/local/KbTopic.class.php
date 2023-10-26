@@ -31,7 +31,7 @@ class KbTopic extends LoggedRecord
 					kb_pages AS p ON pt.kb_page_id = p.kb_page_id LEFT JOIN
 					kb_pages_kb_interfaces AS pi ON p.kb_page_id = pi.kb_page_id LEFT JOIN
 					kb_interfaces AS i ON pi.kb_interface_id = i.kb_interface_id
-				WHERE t.kb_topic_id = '" . $this->getPrimaryKey() . "' AND i.kb_interface_id = '${$kb_interface_id}' ";
+				WHERE t.kb_topic_id = '" . $this->getPrimaryKey() . "' AND i.kb_interface_id = '{$$kb_interface_id}' ";
 		
 		$result = $this->Database->query($sql);
 		if ($this->Database->numRows($result)) {

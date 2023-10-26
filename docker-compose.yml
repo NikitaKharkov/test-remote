@@ -17,7 +17,7 @@ services:
         container_name: support-app
         build: .docker/
         volumes:
-            - ./httpd.local.conf:/etc/apache2/apache2.conf
+#            - ./.docker/apache2.conf:/etc/apache2/conf-enabled/apache2.conf
             - ./:/var/www/html
         ports:
             - "3000:80"

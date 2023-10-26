@@ -18,8 +18,8 @@ class FeatureController extends Controller
 		
 		$sql = "SELECT feature_id FROM features WHERE 1 = 1";
 		
-		$sql .= ($help_interface_id) ? " AND help_interface_id = '${help_interface_id}' " : '';
-		$sql .= ($ebsco_code) ? " AND ebsco_code = '${ebsco_code}' " : '';
+		$sql .= ($help_interface_id) ? " AND help_interface_id = '{$help_interface_id}' " : '';
+		$sql .= ($ebsco_code) ? " AND ebsco_code = '{$ebsco_code}' " : '';
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
 		
 		return $this->performSql($sql);

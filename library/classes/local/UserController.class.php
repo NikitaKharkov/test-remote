@@ -31,7 +31,7 @@ class UserController extends Controller
 	 */
 	public function findUserIdByLoginPassword($login=NULL, $password=NULL)
 	{
-		$sql = "SELECT user_id FROM users WHERE login = '${login}' AND password = '${password}'";
+		$sql = "SELECT user_id FROM users WHERE login = '{$login}' AND password = '{$password}'";
 		
 		try {
 			$results = $this->performSql($sql);

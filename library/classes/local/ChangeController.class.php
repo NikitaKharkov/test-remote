@@ -14,7 +14,7 @@ class ChangeController extends Controller
 	 * @param string order_by
 	 * @return array
 	 */
-	public function findChanges($order_by=NULL, $tables_affected, $user_ids, $actions, $start_date, $end_date)
+	public function findChanges($tables_affected, $user_ids, $actions, $start_date, $end_date, $order_by=NULL)
 	{
 		$order_by = parse_order_by($order_by);
 		
@@ -25,7 +25,7 @@ class ChangeController extends Controller
 		$sql .= " AND c.table_affected IN ('" . join("','", $tables_affected). "') ";
 		$sql .= " AND c.user_id IN ('" . join("','", $user_ids) . "') ";
 		$sql .= " AND c.action IN ('"  . join("','", $actions) . "') ";
-		$sql .= " AND c.change_date BETWEEN '${start_date}' AND '${end_date}' ";
+		$sql .= " AND c.change_date BETWEEN '{$start_date}' AND '{$end_date}' ";
 		
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
 		
@@ -165,9 +165,9 @@ class ChangeController extends Controller
 		foreach($count_report_columns as $columns) {
 			$sql = "SELECT count(c.change_id) from changes AS c WHERE 1 = 1 ";
 			foreach($columns as $name => $val) {
-				$sql .= " AND c.${name} = '${val}' ";
+				$sql .= " AND c.{$name} = '{$val}' ";
 			}
-			$sql .= " AND c.change_date BETWEEN '${start_date}' AND '${end_date}'";
+			$sql .= " AND c.change_date BETWEEN '{$start_date}' AND '{$end_date}'";
 
 			$result = $this->Database->query($sql);
 			$row    = $this->Database->getRow($result);
@@ -192,7 +192,7 @@ class ChangeController extends Controller
 	 */
 	public function listChanges($order_by=NULL, $page=NULL)
 	{
-		$ids = $this->findChanges($order_by, $page);
+		$ids = $this->findChanges($page, null, null, null, null, $order_by);
 		
 		$page = (!$page) ? ceil(count($ids) / $this->changes_per_page) : $page;
 		

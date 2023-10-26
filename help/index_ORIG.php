@@ -51,7 +51,10 @@ $template->setColumn("left", "news.php");
 try {
 	$help_interface 	 = $help_controller->findHelpInterfaceFromCode($help_interface_ebsco_code);
 	$language            = $help_controller->findLanguageFromCode($language_ebsco_code);
-	$help_version        = $help_controller->findHelpVersionFromCode($help_version_ebsco_code, $help_interface->getPrimaryKey());
+	$help_version        = $help_controller->findHelpVersionFromCode(
+        $help_interface->getPrimaryKey(),
+        $help_version_ebsco_code
+    );
 	$database_help_pages = $database_help_controller->findLiveDatabaseHelpPages($ebsco_database_ids, $language->getPrimaryKey());
 	
 	$feature_id = NULL;

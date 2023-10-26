@@ -18,7 +18,7 @@ class LanguageController extends Controller
 		
 		$sql = "SELECT language_id FROM languages WHERE 1=1 ";
 		
-		$sql .= ($code) ? " AND ebsco_code = '${code}' " : '';
+		$sql .= ($code) ? " AND ebsco_code = '$code' " : '';
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
 		
 		return $this->performSql($sql);
@@ -35,9 +35,9 @@ class LanguageController extends Controller
 	{
 		$language_id = ($language_id) ? $language_id : 1;
 		
-		$onchange = ($onchange) ? " onchange=\"${onchange}\" " : ""; 
+		$onchange = ($onchange) ? " onchange=\"$onchange=\" " : "";
 		
-		echo "<select id=\"language_id\" name=\"language_id\"${onchange}>";
+		echo "<select id=\"language_id\" name=\"language_id\"$onchange>";
 		try {
 			$languages = $this->listLanguages('name_asc');
 			foreach($languages as $id => $language) {

@@ -727,7 +727,7 @@ function convert_tag_to_xhtml($tag)
     $closing_tag = FALSE;
 
     // Check if it is a closing tag
-	if($tag{0} == '/') {
+	if(substr($tag, 0, 1) == '/') {
 		$closing_tag = TRUE;
 		$tag = ltrim(substr($tag, 1));	
 	}
@@ -742,7 +742,7 @@ function convert_tag_to_xhtml($tag)
 		$attributes = rtrim(substr($tag, $space_pos, strlen($tag)-$space_pos-1));
 		if(strlen($attributes) > 0) {
 			// If a / is included at the end of the tag, strip it off
-			if($attributes{strlen($attributes)-1} == '/') {
+			if(substr($attributes, strlen($attributes) -1, 1) == '/') {
 				$attributes = substr($attributes, 0, strlen($attributes)-1);
 			}	
 			
@@ -754,7 +754,7 @@ function convert_tag_to_xhtml($tag)
 		}
 	} else {
 		$tag_name = strtolower(substr($tag, 0, strlen($tag)-1));
-		if($tag_name{strlen($tag_name)-1} == '/') {
+		if(substr($tag_name, strlen($tag_name) -1, 1) == '/') {
 			$tag_name = substr($tag_name, 0, strlen($tag_name)-1);
 		}	
 	}
@@ -809,7 +809,7 @@ function convert_tag_to_xhtml($tag)
                         $matches[2][$i] = '=' . $matches[3][$i] . '#' . $matches[3][$i];
                         $href_matches[1] = trim($href_matches[1]);
                         $attributes_to_add .= ' onclick=' . $matches[3][$i] . $href_matches[1];
-                        if ($href_matches[1]{strlen($href_matches[1])-1} != ';') {
+                        if (substr($href_matches[1], strlen($href_matches[1]) -1, 1) != ';') {
                             $attributes_to_add .= ';';
                         }   
                         $attributes_to_add .= ' return false;' . $matches[3][$i];     
@@ -1123,7 +1123,7 @@ function redirect_site($page)
 	if(ob_get_contents() === FALSE) { die('Please add \'ob_start();\' to the first line of this page'); }
     
 	if (stripos($page, server_address()) !== 0) {
-        if ($page{0} != '/') {
+        if (substr($page, 0, 1) != '/') {
             $page = '/' . $page;    
         }
         $page = server_address() . $page;    
@@ -1335,7 +1335,8 @@ function print_dom_js($html, $add_to_body=FALSE)
                 
                 // Handle event attributes
                 if (in_array($attribute[1], $event_attributes)) {
-                    if ($attribute[3]{strlen($attribute[3])-1} != ';' && $attribute[3]{strlen($attribute[3])-1} != '}') {
+                    if (substr($attributes[3], strlen($attributes[3]) -1, 1) != ';'
+                            && substr($attributes[3], strlen($attributes[3]) -1, 1) != '}') {
                         $attribute[3] .= ';';    
                     }
                     echo 'tag' . $tag_number . "." . $attribute[1] . " = function () { " . $attribute[3] . " }\n";
@@ -1375,7 +1376,7 @@ function print_dom_js($html, $add_to_body=FALSE)
             $last_tag = $match[2];
             
         // Text Node
-        } elseif ($match[0]{0} != '<') {
+        } elseif (substr($match[0], 0, 1) != '<') {
             if (trim($match[0])) {
                 $text = preg_replace('/^\s+|\s+$/', ' ', $match[0]);
                 $text = str_replace("\n", ' ', str_replace("'", "\\'", $text));
@@ -1480,7 +1481,7 @@ function html_entity_to_js_unicode($entity)
                                       '&rdquo;'   => '\u201d',  '&bdquo;'   => '\u201e',  '&dagger;'   => '\u2020',  '&Dagger;'  => '\u2021',
                                       '&permil;'  => '\u2030',  '&lsaquo;'  => '\u2039',  '&rsaquo;'   => '\u203a');
     
-    if ($entity{1} != '#') {
+    if (substr($entity, 1, 1) != '#') {
         $entity = $entity_to_unicode[$entity];   
     } elseif ($entity[2] == 'x') {
         $unicode = substr($entity, 3, strlen($entity)-1);
@@ -1678,17 +1679,4 @@ function xml_value($value)
 /* --------------------------------------------------------------------- */
 
 
-/**
- * Magic Quotes - version 4+ of this file expects magic quotes to be off
- * 
- */
-if (get_magic_quotes_gpc() === 1) {
-	echo "You're using version 4+ of iMarc's common.php library, which expects PHP's magic quotes to be off. ";
-	echo "Unfortunately, this site seems to have them on. To fix this edit Apache's VitualHost configuration ";
-	echo "for this domain by adding the following line: <br /><br />\n\n";
-	echo "php_flag magic_quotes_gpc 0 <br /><br />";
-	echo "Also, review code that interacts with the database. Variables going to the database should be ";
-	echo "wrapped with db_value(\$var)";
-	exit;
-}
 ?>

@@ -1,13 +1,18 @@
 <div id="help_content_holder">
-<div id="help_content">
-<?php
- $s = $_REQUEST['s'];
+    <div id="help_content">
+        <?php
+$s = $_REQUEST['s'] ?? '';
 
+
+$mysql_connection = $objects->Database->getConnection();
+
+// leave old approach just in case
 //connect to database
-$mysql_connection = mysqli_connect("supportdb102.epnet.com","supportUser","kn0wl3dge2g@1n$"); //(host, username, password)
+//mysqli_connect("supportdb102.epnet.com","supportUser","kn0wl3dge2g@1n$"); //(host, username, password)
+//$mysql_connection = mysqli_connect('db',"admin","admin"); //(host, username, password)
 
 //specify database
-mysqli_select_db($mysql_connection, "support_epnet") or die("Unable to select database");
+//mysqli_select_db($mysql_connection, "support_epnet") or die("Unable to select database");
 
  // SQL injection protection for the _GET
  foreach ($_GET as $key => $value) {
@@ -16,7 +21,7 @@ mysqli_select_db($mysql_connection, "support_epnet") or die("Unable to select da
  
  // Get the search variable
 
- 	$var = @$_GET['q'];
+ 	$var = $_GET['q'] ?? '';
 	$trimmed = trim($var); //trim whitespace from the stored variable
 
  // rows to return
@@ -36,6 +41,7 @@ mysqli_select_db($mysql_connection, "support_epnet") or die("Unable to select da
   		exit;
   	}
 
+$words = $_GET['words'];
 if ($words == 2) {
      // Build SQL Query
      $query = "select DISTINCT help_page_id, title from support_epnet.help_pages where content like '%$trimmed%' "
@@ -47,25 +53,14 @@ if ($words == 2) {
      ."INNER JOIN support_epnet.help_versions v "
      ."ON t.help_version_id=v.help_version_id "
      ."WHERE p.status='live' and language_id='1' and v.help_interface_id=".$help_interface->getPrimaryKey().") ORDER BY title";
-    } else {
+} else {
     $trimmed = explode(" ", $var);
+    $where = '';
     foreach ($trimmed as $word) {
-    if (isset($where)) {
-
-    if ($words == 1)
-
-        {
-            $where .= " AND ";
-        }
-
-    else
-
-        {
-        $where .= " OR ";
-        }
-
-    }
-    $where .= "content LIKE '%$word%'";
+        $where .= $where === ''
+            ? "content LIKE '%$word%'"
+            : ($words == 1 ? ' AND ' : ' OR ')."content LIKE '%$word%'"
+        ;
     }
 
     $query = "select DISTINCT help_page_id, title from support_epnet.help_pages WHERE ($where) ";
@@ -150,5 +145,5 @@ if ($words == 2) {
   echo "<p>Showing results $b to $a of $numrows</p>Visit the <a href='http://support.ebsco.com' target='_blank'>EBSCO Support Site</a> for more information. ";
 }
 ?>
-</div>
+    </div>
 </div>

@@ -238,7 +238,7 @@ class Template
 		$file_array = explode(',', $files);         // comma separated string
 		$tmp_array  = array();
 
-		while (list($key, $val) = each($file_array)) {
+		foreach ($file_array as $key => $val) {
 			if (strlen($val)) {
 				$file_to_include = $this->template_path . '/columns/' . $val;
 				if ($file_to_include) {

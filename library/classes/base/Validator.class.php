@@ -220,7 +220,7 @@ class Validator
 				foreach ($sub_fields as $current_sub_field) {
 					$name  .= ($name) ? ' <strong>or</strong> ' : '';
                     $value  = $this->getValue($current_sub_field);
-                    if ($current_sub_field{0} == '@') {
+                    if (substr($current_sub_field, 0, 1) == '@') {
                         $invalid_email = $invalid_email || (!$this->validateEmail($value, FALSE));
                     }
                     $values .= $value;
@@ -237,7 +237,7 @@ class Validator
 				$value = $this->getValue($current_field);
                 $name  = ucwords(str_replace('_', ' ', $current_field));
 				
-                if (!$this->validateValues($value, $name) || ($current_field{0} == '@' && !$this->validateEmail($value, FALSE))) {
+                if (!$this->validateValues($value, $name) || (substr($current_field, 0, 1) == '@' && !$this->validateEmail($value, FALSE))) {
                     $names[] = $name;
                     $this->addErrorField($name);
                 }
@@ -271,7 +271,7 @@ class Validator
 	 */
 	private function getValue($field)
 	{
-        $field = ($field{0} == '^' || $field{0} == '@') ? substr($field, 1) : $field;
+        $field = (substr($field, 0, 1) == '^' || substr($field, 0, 1) == '@') ? substr($field, 1) : $field;
         if (isset($_FILES[$field]['name'])) {
             return $_FILES[$field]['name'];
         } elseif (isset($_REQUEST[$field])) {

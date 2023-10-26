@@ -445,13 +445,13 @@ class Database
             foreach ($where as $row => $value) {
                 (is_array($where_sql)) ? array_push(
                     $where_sql,
-                    "${row} = '${value}'"
-                ) : $where_sql = array("WHERE ${row} = '${value}'");
+                    "$row = '$value'"
+                ) : $where_sql = array("WHERE $row = '$value'");
             }
             $where_sql = join(' AND ', $where_sql);
         }
 
-        $this->sql = "SELECT ${row_sql} FROM ${table_name} ${where_sql}";
+        $this->sql = "SELECT $row_sql FROM $table_name $where_sql";
 
         $result = $this->query($this->sql);
         $return = array();
@@ -579,6 +579,7 @@ class Database
         } else {
             $this->error = '';
             $func = $this->prefix.'fetch_assoc';
+
             $result = $func($result);
             if ($this->database_type == 'mssql' && $result) {
                 $new_result = array();
@@ -821,7 +822,7 @@ class Database
             $result = $this->query($sql);
             if ($this->numRows($result)) {
                 $row = $this->getRow($result);
-                $mysqli_version = $row['VERSION()']{0};
+                $mysqli_version = substr($row['VERSION()'], 0, 1);
             }
 
             foreach ($tables as $table) {
@@ -1122,11 +1123,11 @@ class Database
                                     )) {
                                         $regex = str_replace('#', '\#', $matches[3]);
                                         $regex = str_replace($matches[2].$matches[2], $matches[2], $regex);
-                                        if ($matches[1]{0} == '!') {
+                                        if (substr($matches[1], 0, 1) == '!') {
                                             $regex = '!('.$regex.')';
                                         }
                                         $regex = '#'.$regex.'#';
-                                        if ($matches[1]{strlen($matches[1]) - 1} == '*') {
+                                        if (substr($matches[1], strlen($matches[1]) -1, 1) == '*') {
                                             $regex .= 'i';
                                         }
                                         $output[$row['field']]['length'] = $row['length'] - 4;
@@ -1279,7 +1280,7 @@ class Database
             $result = $this->query("SELECT VERSION();");
             if ($this->numRows($result)) {
                 $row = $this->getRow($result);
-                $mysqli_version = $row['VERSION()']{0};
+                $mysqli_version = substr($row['VERSION()'], 0, 1);
             }
         }
 
@@ -1480,8 +1481,8 @@ class Database
 
                     // Get a list of foreign keys
                     $foreign_keys = array();
-                    foreach ($output[$table]['foreign_keys'] as $key => $value) {
-                        if ($key == 'field') {
+                    foreach ($output[$table]['foreign_keys'] as $value) {
+                        if (array_key_exists('field', $value)) {
                             $foreign_keys[] = $value['field'];
                         }
                     }
@@ -1490,7 +1491,7 @@ class Database
                     // Get a list of primary keys
                     $primary_keys = array();
                     foreach ($output[$table]['primary_keys'] as $key => $value) {
-                        if ($key == 'field') {
+                        if (array_key_exists('field', $value)) {
                             $primary_keys[] = $value['field'];
                         }
                     }

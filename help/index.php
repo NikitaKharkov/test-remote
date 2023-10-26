@@ -38,7 +38,7 @@ $help_page_id              = request_value('help_id');
 $help_topic_id             = request_value('help_topic_id');
 
 $database_help_page_id = NULL;
-if (substr($help_page_id, 0, 3) == 'DB:') {
+if (str_starts_with($help_page_id ?? '', 'DB:')) {
 	$database_help_page_id = substr($help_page_id, 3);
 }
 $ebsco_database_ids = $ebsco_database_controller->parseRequestedEbscoDatabaseIds();
@@ -51,7 +51,10 @@ $template->setColumn("left", "news.php");
 try {
 	$help_interface 	 = $help_controller->findHelpInterfaceFromCode($help_interface_ebsco_code);
 	$language            = $help_controller->findLanguageFromCode($language_ebsco_code);
-	$help_version        = $help_controller->findHelpVersionFromCode($help_version_ebsco_code, $help_interface->getPrimaryKey());
+	$help_version        = $help_controller->findHelpVersionFromCode(
+        $help_interface->getPrimaryKey(),
+        $help_version_ebsco_code
+    );
 	$database_help_pages = $database_help_controller->findLiveDatabaseHelpPages($ebsco_database_ids, $language->getPrimaryKey());
 	
 	$feature_id = NULL;
@@ -189,7 +192,7 @@ try {
 	include($_SERVER['DOCUMENT_ROOT'] . '/help/templates/navigation_template.php');
 	}
 		
-	if ($_GET['q']) {
+	if (!empty($_GET['q'])) {
 		//echo "|".$help_interface->getPrimaryKey()."|";
 		require 'search.php';  
 	 
@@ -198,14 +201,14 @@ try {
 }
 	$template->printFooter();
 		
-} catch (Exception $e) { 
+} catch (Exception $e) {
 	
 	// language was sent in the URL
 	// but it's invalid and not english. reload the page with english
 	if (strlen($language_ebsco_code) && $language_ebsco_code != 'en') {
 		redirect_site(preg_replace('/lang=' . $language_ebsco_code . '/', 'lang=en', $_SERVER['REQUEST_URI']));
 	}
-	if (strlen($help_version_ebsco_code) && $help_version_ebsco_code != 'live') {
+	if (strlen($help_version_ebsco_code ?? '') && $help_version_ebsco_code != 'live') {
 		redirect_site(preg_replace('/ver=' . $help_version_ebsco_code . '/', 'ver=live', $_SERVER['REQUEST_URI']));	
 	}	
 	

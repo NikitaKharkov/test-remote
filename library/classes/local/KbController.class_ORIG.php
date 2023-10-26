@@ -51,12 +51,12 @@ class KbController extends Controller
 		}
 			
 		$sql .= ($kb_page_ids)     ? " AND kbp.kb_page_id IN ('" . join("', '", $kb_page_ids) . "') " : '';
-		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('${kb_interface_id}') " : '';
-		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('${kb_topic_id}') " : '';
-		$sql .= ($language_id)     ? " AND kbp.language_id = '${language_id}' " : '';
+		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('{$kb_interface_id}') " : '';
+		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('{$kb_topic_id}') " : '';
+		$sql .= ($language_id)     ? " AND kbp.language_id = '{$language_id}' " : '';
 		$sql .= ($status)          ? " AND kbp.status IN ('" . join("', '", $status) . "') " : '';
-		$sql .= ($document_type)   ? " AND kbp.document_type = '${document_type}' " : '';
-		$sql .= ($ebsco_database_id) ? " AND kbed.ebsco_database_id = '${ebsco_database_id}' " : '';
+		$sql .= ($document_type)   ? " AND kbp.document_type = '{$document_type}' " : '';
+		$sql .= ($ebsco_database_id) ? " AND kbed.ebsco_database_id = '{$ebsco_database_id}' " : '';
     	$sql .= ($top)             ? " AND kbp.top = '1' " : '';
 		
 		//adding "score DESC"
@@ -66,7 +66,7 @@ class KbController extends Controller
 			$sql .= " ORDER BY kbp.top DESC " . ($order_by ? ", kbp." . $order_by . " " : '');
 		}
 		
-		$sql .= ($limit) ? " LIMIT ${limit} " : "";
+		$sql .= ($limit) ? " LIMIT {$limit} " : "";
 	
 		return $this->performSql($sql, 'KbPage');
 	}
@@ -111,12 +111,12 @@ class KbController extends Controller
 		$sql .= " WHERE 1 = 1 ";
 		
 		$sql .= ($keywords)        ? " AND " . $this->createLikeClause(array('kbp.title', 'kbp.content'), $keywords) . " " : '';
-		$sql .= ($kb_page_id)      ? " AND kbp.kb_page_id = '${kb_page_id}' " : '';
-		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('${kb_interface_id}') " : '';
-		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('${kb_topic_id}') " : '';
-		$sql .= ($language_id)     ? " AND kbp.language_id = '${language_id}' " : '';
+		$sql .= ($kb_page_id)      ? " AND kbp.kb_page_id = '{$kb_page_id}' " : '';
+		$sql .= ($kb_interface_id) ? " AND kbi.kb_interface_id IN ('{$kb_interface_id}') " : '';
+		$sql .= ($kb_topic_id)     ? " AND kbt.kb_topic_id IN ('{$kb_topic_id}') " : '';
+		$sql .= ($language_id)     ? " AND kbp.language_id = '{$language_id}' " : '';
 		$sql .= ($status)          ? " AND kbp.status IN ('" . join("', '", $status) . "') " : '';
-		$sql .= ($document_type)   ? " AND kbp.document_type = '${document_type}' " : '';
+		$sql .= ($document_type)   ? " AND kbp.document_type = '{$document_type}' " : '';
 	
 		$sql .= " ORDER BY kbp.top DESC" . ($order_by ? ", kbp." . $order_by . " " : '');
 
@@ -169,7 +169,7 @@ class KbController extends Controller
 		
 		$sql = "SELECT kb_interface_id FROM kb_interfaces WHERE 1 = 1 ";
 		
-		$sql .= ($status) ? " AND status = '${status}' " : '';
+		$sql .= ($status) ? " AND status = '{$status}' " : '';
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
 		
 		return $this->performSql($sql);
@@ -193,7 +193,7 @@ class KbController extends Controller
 					kb_interfaces AS i ON pi.kb_interface_id = i.kb_interface_id
 				WHERE 1 = 1 ";
 		
-		$sql .= ($kb_interface_id) ? " AND i.kb_interface_id = '${$kb_interface_id}' " : '';
+		$sql .= ($kb_interface_id) ? " AND i.kb_interface_id = '{$$kb_interface_id}' " : '';
 		
 		$sql .= ($order_by) ? " ORDER BY t." . $order_by . " " : " ";
 		
