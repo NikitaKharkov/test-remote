@@ -69,7 +69,7 @@ if ($page_function == "send") {
 		    function fputcsv($fp, $line, $separator = ',') {
 		      for ($i=0; $i < count($line); $i++) {
 		        if (false !== strpos($line[$i], '"')) {
-		          $line[$i] = ereg_replace('"', '""', $line[$i]);
+		          $line[$i] = preg_replace('#"#', '""', $line[$i]);
 		        }
 		        if (false !== strpos($line[$i], $separator) ||
 		            false !== strpos($line[$i], '"')) {

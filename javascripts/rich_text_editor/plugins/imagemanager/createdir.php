@@ -4,7 +4,7 @@
  *
  * @package MCImageManager.pages
  * @author Moxiecode
- * @copyright Copyright © 2005-2006, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 	require_once("includes/general.php");
@@ -18,8 +18,8 @@
 	$action = getRequestParam("action", "");
 	$dirname = getRequestParam("dirname", false);
 	$template = getRequestParam("template", "");
-	$fileFactory =& new FileFactory($mcImageManagerConfig, $rootpath);
-	$targetFile =& $fileFactory->getFile($path);
+	$fileFactory = new FileFactory($mcImageManagerConfig, $rootpath);
+	$targetFile = $fileFactory->getFile($path);
 	$config = $targetFile->getConfig();
 
 	addFileEventListeners($fileFactory);
@@ -107,7 +107,7 @@
 		}
 
 		// Setup first filter
-		$fileFilterA =& new BasicFileFilter();
+		$fileFilterA = new BasicFileFilter();
 		$fileFilterA->setIncludeDirectoryPattern($config['filesystem.include_directory_pattern']);
 		$fileFilterA->setExcludeDirectoryPattern($config['filesystem.exclude_directory_pattern']);
 		if (!$fileFilterA->accept($file)) {
@@ -116,7 +116,7 @@
 		}
 
 		// Setup second filter
-		$fileFilterB =& new BasicFileFilter();
+		$fileFilterB = new BasicFileFilter();
 		$fileFilterB->setIncludeDirectoryPattern($config['createdir.include_directory_pattern']);
 		$fileFilterB->setExcludeDirectoryPattern($config['createdir.exclude_directory_pattern']);
 		if (!$fileFilterB->accept($file)) {

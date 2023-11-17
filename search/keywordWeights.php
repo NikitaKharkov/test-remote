@@ -5,10 +5,10 @@ include "$settings_dir/database.php";
 
 $error = 0;
 
-mysql_query("drop table `".$mysql_table_prefix."filteredKeywords`");
-if (mysql_errno() > 0) { print "Error: " . mysql_error() . "<br>\n"; }
+mysqli_query($mysql_connection, "drop table `".$mysql_table_prefix."filteredKeywords`");
+if (mysqli_errno($mysql_connection) > 0) { print "Error: " . mysqli_error($mysql_connection) . "<br>\n"; }
 
-mysql_query("create table `".$mysql_table_prefix."filteredKeywords`
+mysqli_query($mysql_connection, "create table `".$mysql_table_prefix."filteredKeywords`
 	select k.keyword_id, k.keyword, sum(v.weight) as weight
 	from keywords k, links l, (
 		select * from link_keyword0 union all
@@ -35,5 +35,5 @@ mysql_query("create table `".$mysql_table_prefix."filteredKeywords`
 	having sum(v.weight) > 500
 	order by sum(v.weight) desc
 ");
-if (mysql_errno() > 0) { print "Error: " . mysql_error() . "<br>\n"; }
+if (mysqli_errno($mysql_connection) > 0) { print "Error: " . mysqli_error($mysql_connection) . "<br>\n"; }
 ?>

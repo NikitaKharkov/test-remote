@@ -64,6 +64,7 @@
     <?php } else {
         
             foreach($results['facets'] as $facet){
+                /** @var $facetName @see eit/samples/BentoBox_demo/individulbox.php:15 */
                 if(!empty($facet['Label'])&&$facet['Label']==$facetName){ ?>
                    <div id="out<?php echo $i ?>" style="margin: 10px;">
                <div><h4 title="<?php echo $description[$i] ?>" style="margin-bottom: 10px;background-color: lightgrey"><?php echo $_REQUEST['bn'] ?></h4></div>        

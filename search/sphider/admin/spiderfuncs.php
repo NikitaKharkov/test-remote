@@ -112,7 +112,7 @@ function url_status($url) {
 		fputs($fp, $request);
 		$answer = fgets($fp, 4096);
 		$regs = Array ();
-		if (ereg("HTTP/[0-9.]+ (([0-9])[0-9]{2})", $answer, $regs)) {
+		if (preg_match("#HTTP/[0-9.]+ (([0-9])[0-9]{2})#", $answer, $regs)) {
 			$httpcode = $regs[2];
 			$full_httpcode = $regs[1];
 
@@ -126,25 +126,25 @@ function url_status($url) {
 			while ($answer) {
 				$answer = fgets($fp, 4096);
 
-				if (ereg("Location: *([^\n\r ]+)", $answer, $regs) && $httpcode == 3 && $full_httpcode != 302) {
+				if (preg_match('#Location: *([^\n\r ]+)"#', $answer, $regs) && $httpcode == 3 && $full_httpcode != 302) {
 					$status['path'] = $regs[1];
 					$status['state'] = "Relocation: http $full_httpcode";
 					fclose($fp);
 					return $status;
 				}
 
-				if (eregi("Last-Modified: *([a-z0-9,: ]+)", $answer, $regs)) {
+				if (preg_match("#Last-Modified: *([a-z0-9,: ]+)#i", $answer, $regs)) {
 					$status['date'] = $regs[1];
 				}
 
-				if (eregi("Content-Type:", $answer)) {
+				if (preg_match("#Content-Type:#i", $answer)) {
 					$content = $answer;
 					$answer = '';
 					break;
 				}
 			}
 			$socket_status = socket_get_status($fp);
-			if (eregi("Content-Type: *([a-z/.-]*)", $content, $regs)) {
+			if (preg_match("#Content-Type: *([a-z/.-]*)#i", $content, $regs)) {
 				if ($regs[1] == 'text/html' || $regs[1] == 'text/' || $regs[1] == 'text/plain') {
 					$status['content'] = 'text';
 					$status['state'] = 'ok';
@@ -199,7 +199,7 @@ function check_robot_txt($url) {
 		$regs = Array ();
 		$this_agent= "";
 		while (list ($id, $line) = each($robot)) {
-			if (eregi("^user-agent: *([^#]+) *", $line, $regs)) {
+			if (preg_match("#^user-agent: *([^#]+) *#i", $line, $regs)) {
 				$this_agent = trim($regs[1]);
 				if ($this_agent == '*' || $this_agent == $user_agent)
 					$check = 1;
@@ -207,8 +207,8 @@ function check_robot_txt($url) {
 					$check = 0;
 			}
 
-			if (eregi("disallow: *([^#]+)", $line, $regs) && $check == 1) {
-				$disallow_str = eregi_replace("[\n ]+", "", $regs[1]);
+			if (preg_match("#disallow: *([^#]+)#i", $line, $regs) && $check == 1) {
+				$disallow_str = preg_replace("#[\n ]+#i", "", $regs[1]);
 				if (trim($disallow_str) != "") {
 					$omit[] = $disallow_str;
 				} else {
@@ -231,10 +231,10 @@ function remove_file_from_url($url) {
 	$path = $url_parts['path'];
 
 	$regs = Array ();
-	if (eregi('([^/]+)$', $path, $regs)) {
+	if (preg_match("#([^/]+)$#i", $path, $regs)) {
 		$file = $regs[1];
 		$check = $file.'$';
-		$path = eregi_replace($check, "", $path);
+		$path = preg_replace('#'.$check.'#i', "", $path);
 	}
 	$url = $url_parts['scheme']."://".$url_parts['host'].$path;
 	return $url;
@@ -264,7 +264,7 @@ function get_links($file, $url, $can_leave_domain) {
 		}
 
 		if (stristr($chunk, "frame") && stristr($chunk, "src")) {
-			while (eregi("(frame[^>]*src[[:blank:]]*)=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?", $chunk, $regs)) {
+			while (preg_match("@(frame[^>]*src[[:blank:]]*)=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?@i", $chunk, $regs)) {
 				if (($a = url_purify($regs[2], $url, $can_leave_domain)) != '')
 					$links[] = $a;
 
@@ -273,7 +273,7 @@ function get_links($file, $url, $can_leave_domain) {
 		}
 
 		if (stristr($chunk, "window") && stristr($chunk, "location")) {
-			while (eregi("(window[.]location)[[:blank:]]*=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?", $chunk, $regs)) {
+			while (preg_match("@(window[.]location)[[:blank:]]*=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?@i", $chunk, $regs)) {
 				if (($a = url_purify($regs[2], $url, $can_leave_domain)) != '')
 					$links[] = $a;
 
@@ -282,7 +282,7 @@ function get_links($file, $url, $can_leave_domain) {
 		}
 
 		if (stristr($chunk, "http-equiv")) {
-			while (eregi("(http-equiv=['\"]refresh['\"] *content=['\"][0-9]+;url)[[:blank:]]*=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?", $chunk, $regs)) {
+			while (preg_match("@(http-equiv=['\"]refresh['\"] *content=['\"][0-9]+;url)[[:blank:]]*=[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?@i", $chunk, $regs)) {
 				if (($a = url_purify($regs[2], $url, $can_leave_domain)) != '')
 					$links[] = $a;
 
@@ -291,7 +291,7 @@ function get_links($file, $url, $can_leave_domain) {
 		}
 
 		if (stristr($chunk, "window") && stristr($chunk, "open")) {
-			while (eregi("(window[.]open[[:blank:]]*[(])[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?", $chunk, $regs)) {
+			while (preg_match("@(window[.]open[[:blank:]]*[(])[[:blank:]]*[\'\"]?(([[a-z]{3,5}://(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?@i", $chunk, $regs)) {
 				if (($a = url_purify($regs[2], $url, $can_leave_domain)) != '')
 					$links[] = $a;
 
@@ -375,7 +375,7 @@ function url_purify($url, $parent_url, $can_leave_domain) {
 
 	$url = convert_url($url);
 	while (list ($id, $excl) = each($ext))
-		if (eregi("\.$excl$", $url))
+		if (preg_match("#\.$excl$#i", $url))
 			return '';
 
 	if (substr($url, -1) == '\\') {
@@ -390,7 +390,7 @@ function url_purify($url, $parent_url, $can_leave_domain) {
 		}
 	}
 
-	if (eregi("[/]?mailto:|[/]?javascript:|[/]?news:", $url)) {
+	if (preg_match("#[/]?mailto:|[/]?javascript:|[/]?news:#i", $url)) {
 		return '';
 	}
 	if (isset($urlparts['scheme'])) {
@@ -425,12 +425,12 @@ function url_purify($url, $parent_url, $can_leave_domain) {
 		$urlpath=$urlpath."/";
 
 	$regs = Array ();
-	while (ereg("[^/]*/[.]{2}/", $urlpath, $regs)) {
+	while (preg_match("#[^/]*/[.]{2}/#", $urlpath, $regs)) {
 		$urlpath = str_replace($regs[0], "", $urlpath);
 	}
 
 	//remove relative path instructions like ../ etc 
-	$urlpath = str_replace("./", "", ereg_replace("^[.]/", "", ereg_replace("[^/]*/[.]{2}/", "", ereg_replace("^[.]/", "", ereg_replace("/+", "/", $urlpath)))));
+	$urlpath = str_replace("./", "", preg_replace("#^[.]/", "", preg_replace("#[^/]*/[.]{2}/#", "", preg_replace("#^[.]/#", "", preg_replace("#/+#", "/", $urlpath)))));
 	$query = "";
 	if (isset($url_parts['query'])) {
 		$query = "?".$url_parts['query'];
@@ -455,24 +455,25 @@ function url_purify($url, $parent_url, $can_leave_domain) {
 }
 
 function save_keywords($wordarray, $link_id, $domain) {
-	global $mysql_table_prefix;
+	global $mysql_connection, $mysql_table_prefix;
 	reset($wordarray);
 
+    $inserts = [];
 	while ($thisword = each($wordarray)) {
 		$word = $thisword[1][1];
 		$wordmd5 = substr(md5($word), 0, 1);
 		$weight = $thisword[1][2];
 		if (strlen($word)<= 30) {
-			$result = mysql_query("select keyword_ID from ".$mysql_table_prefix."keywords where keyword='$word'");
-			echo mysql_error();
-			$rows = mysql_num_rows($result);
+			$result = mysqli_query($mysql_connection, "select keyword_ID from ".$mysql_table_prefix."keywords where keyword='$word'");
+			echo mysqli_error($mysql_connection);
+			$rows = mysqli_num_rows($result);
 
 			if ($rows == 0) {
-				mysql_query("insert into ".$mysql_table_prefix."keywords (keyword) values ('$word')");
-				$keyword_id = mysql_insert_id();
-				echo mysql_error();
+				mysqli_query($mysql_connection, "insert into ".$mysql_table_prefix."keywords (keyword) values ('$word')");
+				$keyword_id = mysqli_insert_id($mysql_connection);
+				echo mysqli_error($mysql_connection);
 			} else {
-				$row = mysql_fetch_row($result);
+				$row = mysqli_fetch_row($result);
 				$keyword_id = $row[0];
 			}
 			$inserts[$wordmd5] .= ",($link_id, $keyword_id, $weight, $domain)"; 
@@ -482,8 +483,8 @@ function save_keywords($wordarray, $link_id, $domain) {
 		$char = dechex($i);
 		$values= substr($inserts[$char], 1);
 		if ($values!="") {
-			mysql_query("insert into ".$mysql_table_prefix."link_keyword$char (link_id, keyword_id, weight, domain) values $values");
-			echo mysql_error();
+			mysqli_query($mysql_connection, "insert into ".$mysql_table_prefix."link_keyword$char (link_id, keyword_id, weight, domain) values $values");
+			echo mysqli_error($mysql_connection);
 		}
 		
 	
@@ -543,9 +544,9 @@ function clean_file($file, $url, $type) {
 	$urlparts = parse_url($url);
 	$host = $urlparts['host'];
 	//remove filename from path
-	$path = eregi_replace('([^/]+)$', "", $urlparts['path']);
+	$path = preg_replace("#([^/]+)$#i", "", $urlparts['path']);
 
-	$file = eregi_replace("<link rel[^<>]*>", " ", $file);
+	$file = preg_replace("#<link rel[^<>]*>#i", " ", $file);
 
 	$first = strpos(strtolower($file), "<!--sphider_noindex-->");
 	$count = 0;
@@ -579,14 +580,14 @@ function clean_file($file, $url, $type) {
 	$headdata = get_head_data($file);
 
 	$regs = Array ();
-	if (eregi("<title *>([^<>]*)</title *>", $file, $regs)) {
+	if (preg_match("#<title *>([^<>]*)</title *>#i", $file, $regs)) {
 		$title = $regs[1];
 		$file = str_replace($regs[0], "", $file);
 	} else if ($type == 'pdf' || $type == 'doc') { //the title of a non-html file is its first few words
 		$title = substr($file, 0, strrpos(substr($file, 0, 40), " "));
 	}
 
-	$file = eregi_replace("(<style[^>]*>[^<>]*</style>)", " ", $file);
+	$file = preg_replace("#(<style[^>]*>[^<>]*</style>)#i", " ", $file);
 
 	//create spaces between tags, so that remove tags doesnt concatenate strings
 	$file = preg_replace("/<[\w ]+>/", "\\0 ", $file);
@@ -611,14 +612,14 @@ function clean_file($file, $url, $type) {
 	}
 	reset($entities);
 	while ($char = each($entities)) {
-		$file = eregi_replace($char[0], $char[1], $file);
+		$file = preg_replace('#'.$char[0].'#i', $char[1], $file);
 	}
 
 	//replace codes with ascii chars
-	$file = ereg_replace('&#([0-9]+);', chr('\1'), $file);
+	$file = preg_replace("/&#([0-9]+);/", chr('\1'), $file);
 	$file = strtolower($file);
 
-	$file = ereg_replace("&[a-z]{1,6};", " ", $file);
+	$file = preg_replace("#&[a-z]{1,6};#", " ", $file);
 
 	$file = preg_replace("/[\*\^\+\?\\\.\[\]\^\$\|\{\)\(\}~!\"\/@#�$%&=`�;><:,]+/", " ", $file);
 	$file = preg_replace("/ +/", " ", $file);
@@ -638,10 +639,10 @@ function clean_file($file, $url, $type) {
 
 function calc_weights($wordarray, $title, $host, $path, $keywords) {
 	global $index_host, $index_meta_keywords;
-	$hostarray = unique_array(explode(" ", eregi_replace("[^[:alnum:]-]+", " ", strtolower($host))));
-	$patharray = unique_array(explode(" ", eregi_replace("[^[:alnum:]-]+", " ", strtolower($path))));
-	$titlearray = unique_array(explode(" ", eregi_replace("[^[:alnum:]-]+", " ", strtolower($title))));
-	$keywordsarray = unique_array(explode(" ", eregi_replace("[^[:alnum:]-]+", " ", strtolower($keywords))));
+	$hostarray = unique_array(explode(" ", preg_replace("#[^[:alnum:]-]+#i", " ", strtolower($host))));
+	$patharray = unique_array(explode(" ", preg_replace("#[^[:alnum:]-]+#i", " ", strtolower($path))));
+	$titlearray = unique_array(explode(" ", preg_replace("#[^[:alnum:]-]+#i", " ", strtolower($title))));
+	$keywordsarray = unique_array(explode(" ", preg_replace("#[^[:alnum:]-]+#i", " ", strtolower($keywords))));
 	$path_depth = countSubstrs($path, "/");
 
 	while (list ($wid, $word) = each($wordarray)) {
@@ -691,10 +692,10 @@ function calc_weights($wordarray, $title, $host, $path, $keywords) {
 }
 
 function isDuplicateMD5($md5sum) {
-	global $mysql_table_prefix;
-	$result = mysql_query("select link_id from ".$mysql_table_prefix."links where md5sum='$md5sum'");
-	echo mysql_error();
-	if (mysql_num_rows($result) > 0) {
+	global $mysql_connection, $mysql_table_prefix;
+	$result = mysqli_query($mysql_connection, "select link_id from ".$mysql_table_prefix."links where md5sum='$md5sum'");
+	echo mysqli_error($mysql_connection);
+	if (mysqli_num_rows($result) > 0) {
 		return true;
 	}
 	return false;
@@ -750,25 +751,25 @@ function check_include($link, $inc, $not_inc) {
 }
 
 function check_for_removal($url) {
-	global $mysql_table_prefix;
+	global $mysql_connection, $mysql_table_prefix;
 	global $command_line;
-	$result = mysql_query("select link_id, visible from ".$mysql_table_prefix."links"." where url='$url'");
-	echo mysql_error();
-	if (mysql_num_rows($result) > 0) {
-		$row = mysql_fetch_row($result);
+	$result = mysqli_query($mysql_connection, "select link_id, visible from ".$mysql_table_prefix."links"." where url='$url'");
+	echo mysqli_error($mysql_connection);
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_row($result);
 		$link_id = $row[0];
 		$visible = $row[1];
 		if ($visible > 0) {
 			$visible --;
-			mysql_query("update ".$mysql_table_prefix."links set visible=$visible where link_id=$link_id");
-			echo mysql_error();
+			mysqli_query($mysql_connection, "update ".$mysql_table_prefix."links set visible=$visible where link_id=$link_id");
+			echo mysqli_error($mysql_connection);
 		} else {
-			mysql_query("delete from ".$mysql_table_prefix."links where link_id=$link_id");
-			echo mysql_error();
+			mysqli_query($mysql_connection, "delete from ".$mysql_table_prefix."links where link_id=$link_id");
+			echo mysqli_error($mysql_connection);
 			for ($i=0;$i<=15; $i++) {
 				$char = dechex($i);
-				mysql_query("delete from ".$mysql_table_prefix."link_keyword$char where link_id=$link_id");
-				echo mysql_error();
+				mysqli_query($mysql_connection, "delete from ".$mysql_table_prefix."link_keyword$char where link_id=$link_id");
+				echo mysqli_error($mysql_connection);
 			}
 			printStandardReport('pageRemoved',$command_line);
 		}

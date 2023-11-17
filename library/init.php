@@ -5,22 +5,19 @@ ob_start();
 error_reporting(E_ALL | E_STRICT);
 date_default_timezone_set('America/New_York');
 
-define('DATABASE_NAME', 'support_epnet');
-define('DATABASE_USER', 'supportUser');
-define('DATABASE_PASS', 'kn0wl3dge2g@1n$');
-
 define('DATE_FORMAT', 'M j, Y');
 define('DATETIME_FORMAT', 'M j, Y g:ia');
 
 define('_PERSONAL_SEARCH_DICTIONARY', '/srv/www/support.epnet.com/knowledge_base/search_custom.pws'); // use the personal dictionary
 define('_DEFAULT_HELP_LOGO', '/images/logo_support.gif');
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/env.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/base.functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/local.functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/library/functions/debug.functions.php');
 
 $objects = Objects::getInstance();
-$objects->configureClass('Database', 'supportdb102.epnet.com', DATABASE_NAME, DATABASE_USER, DATABASE_PASS, 'mysql');
+$objects->configureClass('Database', DATABASE_HOST, DATABASE_NAME, DATABASE_USER, DATABASE_PASS, 'mysql');
 $objects->configureClass('Session', $objects->Database);
 $objects->configureClass('Inflector');
 $objects->configureClass('Validator');
@@ -28,6 +25,7 @@ $objects->configureClass('Cache', $_SERVER['DOCUMENT_ROOT'] . '/uploads/cache/ca
 $objects->configureClass('FileUpload');
 
 $objects->Inflector->addCustomRule('toc', 'tocs');
+$objects->Inflector->addCustomRule('database', 'databases');
 
 $inflector = $objects->Inflector;
 

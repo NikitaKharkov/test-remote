@@ -19,8 +19,8 @@ class HelpController extends Controller
 		
 		$sql = "SELECT help_topic_id FROM help_topics WHERE 1 = 1 ";
 		
-		$sql .= ($help_version_id) ? " AND help_version_id = '${help_version_id}' " : "";
-		$sql .= ($language_id) ? " AND language_id = '${language_id}' " : "";
+		$sql .= ($help_version_id) ? " AND help_version_id = '{$help_version_id}' " : "";
+		$sql .= ($language_id) ? " AND language_id = '{$language_id}' " : "";
 		
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : "";
 		
@@ -42,11 +42,11 @@ class HelpController extends Controller
 					 help_topics AS ht ON hp.help_topic_id = ht.help_topic_id LEFT JOIN 
 					 help_versions AS hv ON hv.help_version_id = ht.help_version_id WHERE 1 = 1 ";
 		
-		$sql .= ($help_version_id) ? " AND hv.help_version_id = '${help_version_id}' " : "";
-		$sql .= ($help_topic_id)   ? " AND ht.help_topic_id = '${help_topic_id}' " : "";
-		$sql .= ($language_id)     ? " AND ht.language_id = '${language_id}' " : "";
-		$sql .= ($feature_id)      ? " AND hp.feature_id = '${feature_id}' " : '';
-		$sql .= ($status) ? " AND hp.status = '${status}' " : '';
+		$sql .= ($help_version_id) ? " AND hv.help_version_id = '{$help_version_id}' " : "";
+		$sql .= ($help_topic_id)   ? " AND ht.help_topic_id = '{$help_topic_id}' " : "";
+		$sql .= ($language_id)     ? " AND ht.language_id = '{$language_id}' " : "";
+		$sql .= ($feature_id)      ? " AND hp.feature_id = '{$feature_id}' " : '';
+		$sql .= ($status) ? " AND hp.status = '{$status}' " : '';
 
 		
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : "";
@@ -76,15 +76,15 @@ class HelpController extends Controller
 		            FROM help_versions 
 		            WHERE 1 = 1";
 		
-		$sql .= ($interface_id) ? " AND help_interface_id = '${interface_id}' " : '';
+		$sql .= ($interface_id) ? " AND help_interface_id = '{$interface_id}' " : '';
 		
-		$sql .= ($ebsco_code) ? " AND ebsco_code = '${ebsco_code}' " : '';
+		$sql .= ($ebsco_code) ? " AND ebsco_code = '{$ebsco_code}' " : '';
 		
 		$sql .= ($ignore_ebsco_code) ? " AND ebsco_code != '{$ignore_ebsco_code}' " : '';
 				
 		$sql .= ($order_by) ? " ORDER BY help_interface_id ASC, " . $order_by . " " : " ";
 		
-		$sql .= ($limit) ? " LIMIT ${limit} " : " ";
+		$sql .= ($limit) ? " LIMIT {$limit} " : " ";
 
 		return $this->performSql($sql);
 	}
@@ -109,9 +109,9 @@ class HelpController extends Controller
 			
 		$sql = "SELECT help_interface_id FROM help_interfaces WHERE 1 = 1 ";
 		
-		$sql .= ($status) ? " AND status = '${status}' " : '';
-		$sql .= ($ebsco_code) ? " AND ebsco_code = '${ebsco_code}'" : '';																												
-		$sql .= ($limit_for_user_id) ? " AND help_interface_id IN (SELECT help_interface_id FROM users_help_interfaces WHERE user_id = '${limit_for_user_id}') " : "";
+		$sql .= ($status) ? " AND status = '{$status}' " : '';
+		$sql .= ($ebsco_code) ? " AND ebsco_code = '{$ebsco_code}'" : '';																												
+		$sql .= ($limit_for_user_id) ? " AND help_interface_id IN (SELECT help_interface_id FROM users_help_interfaces WHERE user_id = '{$limit_for_user_id}') " : "";
 		
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : " ";
 		
@@ -165,7 +165,7 @@ class HelpController extends Controller
 	 * @param string ebsco_code
 	 * @return object HelpVersion
 	 */
-	public function findHelpVersionFromCode($ebsco_code=NULL, $help_interface_id)
+	public function findHelpVersionFromCode($help_interface_id, $ebsco_code = NULL)
 	{
 		if (empty($ebsco_code)) {
 			$ebsco_code = 'live';
@@ -275,7 +275,7 @@ class HelpController extends Controller
 	{
 		$help_interfaces = $this->listHelpInterfaces('name_asc');
 		
-		echo "<select name=\"${name}\">";
+		echo "<select name=\"{$name}\">";
 		print_option($hl_id, '', 'None');
 
 		foreach($help_interfaces as $help_interface_id => $help_interface) {
@@ -288,7 +288,7 @@ class HelpController extends Controller
 							try {
 								$language = $help_language->createLanguage();
 								$selected = ($hl_id == $help_language_id) ? ' selected="selected" ' : '';
-								echo "<option value=\"${help_language_id}\"${selected}>" . $help_interface->getName() . " - " . $help_version->getName() . " - " . $language->getName() . "</option>";
+								echo "<option value=\"{$help_language_id}\"{$selected}>" . $help_interface->getName() . " - " . $help_version->getName() . " - " . $language->getName() . "</option>";
 							} catch (Exception $e) {}
 						}
 					} catch (Exception $e) {}
@@ -311,16 +311,16 @@ class HelpController extends Controller
 	{
 		$help_interfaces = $this->listHelpInterfaces('name_asc');
 		
-		$onchange = ($onchange) ? " onchange=\"${onchange}\" " : ""; 
+		$onchange = ($onchange) ? " onchange=\"{$onchange}\" " : ""; 
 		
-		echo "<select name=\"${name}\"${onchange} id=\"${name}\">";
+		echo "<select name=\"{$name}\"{$onchange} id=\"{$name}\">";
 
 		foreach($help_interfaces as $help_interface_id => $help_interface) {
 			try {
 				$help_versions = $help_interface->createHelpVersions();
 				foreach($help_versions as $help_version_id => $help_version) {
 					$selected = ($hv_id == $help_version_id) ? ' selected="selected" ' : '';
-					echo "<option value=\"${help_version_id}\"${selected}>" . $help_interface->getName() . " - " . $help_version->getName() . "</option>";
+					echo "<option value=\"{$help_version_id}\"{$selected}>" . $help_interface->getName() . " - " . $help_version->getName() . "</option>";
 				}
 			} catch (Exception $e) {}
 		}
@@ -336,7 +336,7 @@ class HelpController extends Controller
 	 * @param void
 	 * @return void
 	 */
-	public function printHelpTopicsSelect($ht_id=NULL, $help_version_id, $language_id)
+	public function printHelpTopicsSelect($help_version_id, $language_id, $ht_id=NULL)
 	{
 		$name = 'help_topic_id';
 			
@@ -344,11 +344,11 @@ class HelpController extends Controller
 			$help_topic_ids = $this->findHelpTopics('list_order_asc', $help_version_id, $language_id);
 			$help_topics = $this->createHelpTopics($help_topic_ids);
 		
-			echo "<select id=\"${name}\" name=\"${name}\">";
+			echo "<select id=\"{$name}\" name=\"{$name}\">";
 
 			foreach($help_topics as $help_topic_id => $help_topic) {
 				$selected = ($ht_id == $help_topic_id) ? ' selected="selected" ' : '';
-				echo "<option value=\"${help_topic_id}\"${selected}>" . $help_topic->getName() . "</option>";
+				echo "<option value=\"{$help_topic_id}\"{$selected}>" . $help_topic->getName() . "</option>";
 			}
 		
 			echo "</select>";

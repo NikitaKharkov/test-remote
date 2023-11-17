@@ -118,8 +118,8 @@ class dbObject {
 	/**
 	* NOP
 	*/
-	function dbObject( &$parent, $attributes = NULL ) {
-		$this->parent =& $parent;
+	function dbObject($parent, $attributes = NULL ) {
+		$this->parent = $parent;
 	}
 	
 	/**
@@ -157,7 +157,6 @@ class dbObject {
 	* Destroys the object
 	*/
 	function destroy() {
-		unset( $this );
 	}
 	
 	/**
@@ -248,8 +247,8 @@ class dbTable extends dbObject {
 	* @param string $prefix DB Object prefix
 	* @param array $attributes Array of table attributes.
 	*/
-	function dbTable( &$parent, $attributes = NULL ) {
-		$this->parent =& $parent;
+	function dbTable($parent, $attributes = NULL ) {
+		$this->parent = $parent;
 		$this->name = $this->prefix($attributes['NAME']);
 	}
 	
@@ -364,7 +363,7 @@ class dbTable extends dbObject {
 	*/
 	function &addIndex( $attributes ) {
 		$name = strtoupper( $attributes['NAME'] );
-		$this->indexes[$name] =& new dbIndex( $this, $attributes );
+		$this->indexes[$name] = new dbIndex( $this, $attributes );
 		return $this->indexes[$name];
 	}
 	
@@ -376,7 +375,7 @@ class dbTable extends dbObject {
 	*/
 	function &addData( $attributes ) {
 		if( !isset( $this->data ) ) {
-			$this->data =& new dbData( $this, $attributes );
+			$this->data = new dbData( $this, $attributes );
 		}
 		return $this->data;
 	}
@@ -474,7 +473,7 @@ class dbTable extends dbObject {
 	* @param object $xmls adoSchema object
 	* @return array Array containing table creation SQL
 	*/
-	function create( &$xmls ) {
+	function create($xmls ) {
 		$sql = array();
 		
 		// drop any existing indexes
@@ -548,18 +547,18 @@ class dbTable extends dbObject {
 		if( empty( $legacy_fields ) ) {
 			// Create the new table
 			$sql[] = $xmls->dict->CreateTableSQL( $this->name, $fldarray, $this->opts );
-			logMsg( end( $sql ), 'Generated CreateTableSQL' );
+			logMsg($this,  end( $sql ), 'Generated CreateTableSQL' );
 		} else {
 			// Upgrade an existing table
-			logMsg( "Upgrading {$this->name} using '{$xmls->upgrade}'" );
+			logMsg($this,  "Upgrading {$this->name} using '{$xmls->upgrade}'" );
 			switch( $xmls->upgrade ) {
 				// Use ChangeTableSQL
 				case 'ALTER':
-					logMsg( 'Generated ChangeTableSQL (ALTERing table)' );
+					logMsg($this,  'Generated ChangeTableSQL (ALTERing table)' );
 					$sql[] = $xmls->dict->ChangeTableSQL( $this->name, $fldarray, $this->opts );
 					break;
 				case 'REPLACE':
-					logMsg( 'Doing upgrade REPLACE (testing)' );
+					logMsg($this,  'Doing upgrade REPLACE (testing)' );
 					$sql[] = $xmls->dict->DropTableSQL( $this->name );
 					$sql[] = $xmls->dict->CreateTableSQL( $this->name, $fldarray, $this->opts );
 					break;
@@ -586,12 +585,12 @@ class dbTable extends dbObject {
 	function drop() {
 		if( isset( $this->current_field ) ) {
 			// Drop the current field
-			logMsg( "Dropping field '{$this->current_field}' from table '{$this->name}'" );
+			logMsg($this,  "Dropping field '{$this->current_field}' from table '{$this->name}'" );
 			// $this->drop_field[$this->current_field] = $xmls->dict->DropColumnSQL( $this->name, $this->current_field );
 			$this->drop_field[$this->current_field] = $this->current_field;
 		} else {
 			// Drop the current table
-			logMsg( "Dropping table '{$this->name}'" );
+			logMsg($this,  "Dropping table '{$this->name}'" );
 			// $this->drop_table = $xmls->dict->DropTableSQL( $this->name );
 			$this->drop_table = TRUE;
 		}
@@ -640,8 +639,8 @@ class dbIndex extends dbObject {
 	*
 	* @internal
 	*/
-	function dbIndex( &$parent, $attributes = NULL ) {
-		$this->parent =& $parent;
+	function dbIndex($parent, $attributes = NULL ) {
+		$this->parent = $parent;
 		
 		$this->name = $this->prefix ($attributes['NAME']);
 	}
@@ -711,7 +710,7 @@ class dbIndex extends dbObject {
 	* Adds a field to the index
 	*
 	* @param string $name Field name
-	* @return string Field list
+	* @return array Field list
 	*/
 	function addField( $name ) {
 		$this->columns[$this->FieldID( $name )] = $name;
@@ -739,7 +738,7 @@ class dbIndex extends dbObject {
 	* @param object $xmls adoSchema object
 	* @return array Array containing index creation SQL
 	*/
-	function create( &$xmls ) {
+	function create($xmls) {
 		if( $this->drop ) {
 			return NULL;
 		}
@@ -784,8 +783,8 @@ class dbData extends dbObject {
 	*
 	* @internal
 	*/
-	function dbData( &$parent, $attributes = NULL ) {
-		$this->parent =& $parent;
+	function dbData($parent, $attributes = NULL ) {
+		$this->parent = $parent;
 	}
 	
 	/**
@@ -885,7 +884,7 @@ class dbData extends dbObject {
 	* @param object $xmls adoSchema object
 	* @return array Array containing index creation SQL
 	*/
-	function create( &$xmls ) {
+	function create($xmls ) {
 		$table = $xmls->dict->TableName($this->parent->name);
 		$table_field_count = count($this->parent->fields);
 		$sql = array();
@@ -898,7 +897,8 @@ class dbData extends dbObject {
 			foreach( $row as $field_id => $field_data ) {
 				if( !array_key_exists( $field_id, $table_fields ) ) {
 					if( is_numeric( $field_id ) ) {
-						$field_id = reset( array_keys( $table_fields ) );
+                        $keys = array_keys($table_fields);
+						$field_id = reset($keys);
 					} else {
 						continue;
 					}
@@ -983,8 +983,8 @@ class dbQuerySet extends dbObject {
 	* @param object $parent Parent object
 	* @param array $attributes Attributes
 	*/
-	function dbQuerySet( &$parent, $attributes = NULL ) {
-		$this->parent =& $parent;
+	function dbQuerySet($parent, $attributes = NULL ) {
+		$this->parent = $parent;
 			
 		// Overrides the manual prefix key
 		if( isset( $attributes['KEY'] ) ) {
@@ -1130,7 +1130,7 @@ class dbQuerySet extends dbObject {
 	* @param object $xmls adoSchema object
 	* @return array Query set
 	*/
-	function create( &$xmls ) {
+	function create($xmls) {
 		foreach( $this->queries as $id => $query ) {
 			switch( $this->prefixMethod ) {
 				case 'AUTO':
@@ -1252,13 +1252,7 @@ class adoSchema {
 	var $objectPrefix = '';
 	
 	/**
-	* @var long	Original Magic Quotes Runtime value
-	* @access private
-	*/
-	var $mgq;
-	
-	/**
-	* @var long	System debug
+	* @var float System debug
 	* @access private
 	*/
 	var $debug;
@@ -1299,12 +1293,10 @@ class adoSchema {
 	*
 	* @param object $db ADOdb database connection object.
 	*/
-	function adoSchema( &$db ) {
+	function adoSchema($db) {
 		// Initialize the environment
-		$this->mgq = get_magic_quotes_runtime();
-		set_magic_quotes_runtime(0);
-		
-		$this->db =& $db;
+
+		$this->db = $db;
 		$this->debug = $this->db->debug;
 		$this->dict = NewDataDictionary( $this->db );
 		$this->sqlArray = array();
@@ -2044,14 +2036,14 @@ class adoSchema {
 		switch( TRUE ) {
 			// clear prefix
 			case empty( $prefix ):
-				logMsg( 'Cleared prefix' );
+				logMsg($this,  'Cleared prefix' );
 				$this->objectPrefix = '';
 				return TRUE;
 			// prefix too long
 			case strlen( $prefix ) > XMLS_PREFIX_MAXLEN:
 			// prefix contains invalid characters
 			case !preg_match( '/^[a-z][a-z0-9_]+$/i', $prefix ):
-				logMsg( 'Invalid prefix: ' . $prefix );
+				logMsg($this,  'Invalid prefix: ' . $prefix );
 				return FALSE;
 		}
 		
@@ -2060,7 +2052,7 @@ class adoSchema {
 		}
 		
 		// prefix valid
-		logMsg( 'Set prefix: ' . $prefix );
+		logMsg($this,  'Set prefix: ' . $prefix );
 		$this->objectPrefix = $prefix;
 		return TRUE;
 	}
@@ -2097,10 +2089,10 @@ class adoSchema {
 		$regex = '/^(\w*\|)*' . $this->db->databaseType . '(\|\w*)*$/';
 		
 		if( !isset( $platform ) OR preg_match( $regex, $platform ) ) {
-			logMsg( "Platform $platform is supported" );
+			logMsg($this,  "Platform $platform is supported" );
 			return TRUE;
 		} else {
-			logMsg( "Platform $platform is NOT supported" );
+			logMsg($this,  "Platform $platform is NOT supported" );
 			return FALSE;
 		}
 	}
@@ -2191,8 +2183,6 @@ class adoSchema {
 	* @deprecated adoSchema now cleans up automatically.
 	*/
 	function Destroy() {
-		set_magic_quotes_runtime( $this->mgq );
-		unset( $this );
 	}
 }
 
@@ -2201,7 +2191,7 @@ class adoSchema {
 *
 * @access private
 */
-function logMsg( $msg, $title = NULL, $force = FALSE ) {
+function logMsg($object, $msg, $title = NULL, $force = FALSE ) {
 	if( XMLS_DEBUG or $force ) {
 		echo '<pre>';
 		
@@ -2209,10 +2199,8 @@ function logMsg( $msg, $title = NULL, $force = FALSE ) {
 			echo '<h3>' . htmlentities( $title ) . '</h3>';
 		}
 		
-		if( is_object( $this ) ) {
-			echo '[' . get_class( $this ) . '] ';
-		}
-		
+        echo '[' . get_class( $object ) . '] ';
+
 		print_r( $msg );
 		
 		echo '</pre>';

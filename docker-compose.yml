@@ -1,0 +1,23 @@
+version: '2.4'
+services:
+    db:
+        container_name: support-db
+        image: mysql:8.0
+#        command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --innodb-file-format=Barracuda, --innodb-large-prefix=1, --innodb-file-per-table=1]
+        ports:
+            - "3030:3306"
+        volumes:
+            - .docker/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=ROOT
+            - MYSQL_USER=admin
+            - MYSQL_PASSWORD=admin
+
+    app:
+        container_name: support-app
+        build: .docker/
+        volumes:
+#            - ./.docker/apache2.conf:/etc/apache2/conf-enabled/apache2.conf
+            - ./:/var/www/html
+        ports:
+            - "3000:80"

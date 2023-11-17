@@ -1087,7 +1087,7 @@ name="connect_ex"></a></p>
 <h4><span style='mso-bookmark:connect_ex'>MySQL and Most Other Database Drivers</span></h4>
 
 <p><span style='mso-bookmark:connect_ex'>MySQL connections are very
-straightforward, and the parameters are identical to mysql_connect:</span></p>
+straightforward, and the parameters are identical to mysqli_connect:</span></p>
 
 <div style='mso-element:para-border-div;border:solid #DDDDDD 1.0pt;mso-border-alt:
 solid #DDDDDD .75pt;padding:9.0pt 18.0pt 9.0pt 18.0pt;background:#EEEEEE'><pre><span
@@ -1107,7 +1107,7 @@ style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span></
 style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span></span><span
 style='mso-bookmark:connect_ex'><span style='color:green'># a more complex example:</span></span></pre><pre><span
 style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span>$pwd = urlencode($pwd);</span></pre><pre><span
-style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span>$flags =<span style='mso-spacerun:yes'>  </span>MYSQL_CLIENT_COMPRESS;</span></pre><pre><span
+style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span>$flags =<span style='mso-spacerun:yes'>  </span>mysqli_CLIENT_COMPRESS;</span></pre><pre><span
 style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span>$dsn = &quot;mysql://user:$pwd@localhost/mydb?persist&amp;clientflags=$flags&quot;;</span></pre><pre><span
 style='mso-bookmark:connect_ex'><span style='mso-tab-count:1'>         </span>$conn = ADONewConnection($dsn);<span style='mso-spacerun:yes'>  </span># no need for PConnect()</span></pre><pre
 style='background:#EEEEEE'><span style='mso-bookmark:connect_ex'> </span></pre></div>
@@ -6866,7 +6866,7 @@ no bytea is used (2-5% improvement). </p>
 
 <p>Alex Rootoff rootoff#pisem.net contributed ukrainian language file. </p>
 
-<p>Added new mysql_option() support using $conn-&gt;optionFlags array. </p>
+<p>Added new mysqli_option() support using $conn-&gt;optionFlags array. </p>
 
 <p>Added support for ldap_set_option() using the $LDAP_CONNECT_OPTIONS global
 variable. Contributed by Josh Eldridge. </p>

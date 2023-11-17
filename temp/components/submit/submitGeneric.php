@@ -3,13 +3,17 @@
 <h1><span>CME/CE Form Completed</span></h1>
 <div id="inner">
 
-<?require('components/submit/insertInDatabase.php');?>
-
-<?require('components/submit/createEmailMessage.php');?>
-<?require('components/submit/sendEmail.php');?>
-
-
-<?require('components/submit/logEntry.php');?>
+<?php
+/**
+ * @var array $selectedLearningsStrings - see temp/submit.php and components/submit/prepareData.php;
+ * Put senseless string just to prevent errors from IDE;
+ */
+$selectedLearningsStrings = $selectedLearningsStrings;
+    require('insertInDatabase.php');
+    require('createEmailMessage.php');
+    require('sendEmail.php');
+    require('logEntry.php');
+?>
 
 
 	<p>Your CME/CE request has been successfully submitted. 

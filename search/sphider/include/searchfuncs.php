@@ -1,4 +1,4 @@
-<?php 
+<?php /** @noinspection ALL */
 /*******************************************
 * Sphider Version 1.3.x
 * This program is licensed under the GNU GPL.
@@ -42,24 +42,24 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function addmarks($a) {
-		$a = eregi_replace("[ ]+", " ", $a);
+		$a = preg_replace("#[ ]+#i", " ", $a);
 		$a = str_replace(" +", "+", $a);
 		$a = str_replace(" ", "+", $a);
 		return $a;
 	}
 
 	function makeboollist($a) {
-		global $entities, $stem_words;
+		global $mysql_connection, $entities, $stem_words;
 		while ($char = each($entities)) {
-			$a = eregi_replace($char[0], $char[1], $a);
+			$a = preg_replace('#'.$char[0].'#', $char[1], $a);
 		}
 		$a = trim($a);
 
-		$a = eregi_replace("&quot;", "\"", $a);
+		$a = preg_replace("#&quot;#i", "\"", $a);
 		$returnWords = array();
 		//get all phrases
 		$regs = Array();
-		while (eregi("([-]?)\"([^\"]+)\"", $a, $regs)) {
+		while (preg_match("#([-]?)\"([^\"]+)\"#i", $a, $regs)) {
 			if ($regs[1] == '') {
 				$returnWords['+s'][] = $regs[2];
 				$returnWords['hilight'][] = $regs[2];
@@ -68,7 +68,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 			}
 			$a = str_replace($regs[0], "", $a);
 		}
-		$a = strtolower(eregi_replace("[ ]+", " ", $a));
+		$a = strtolower(preg_replace("#[ ]+#i", " ", $a));
 //		$a = remove_accents($a);
 		$a = trim($a);
 		$words = explode(' ', $a);
@@ -107,7 +107,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 		//add words from phrases to includes
 		if (isset($returnWords['+s'])) {
 			foreach ($returnWords['+s'] as $phrase) {
-				$phrase = strtolower(eregi_replace("[ ]+", " ", $phrase));
+				$phrase = strtolower(preg_replace("#[ ]+#i", " ", $phrase));
 				$phrase = trim($phrase);
 				$temparr = explode(' ', $phrase);
 				foreach ($temparr as $w)
@@ -131,15 +131,13 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function ignoreword($word) {
-		global $common;
-		global $min_word_length;
-		global $index_numbers;
+		global $mysql_connection, $common, $min_word_length, $index_numbers;
 		if ($index_numbers == 1) {
 			$pattern = "[a-z0-9]+";
 		} else {
 			$pattern = "[a-z]+";
 		}
-		if (strlen($word) < $min_word_length || (!eregi($pattern, remove_accents($word))) || ($common[$word] == 1)) {
+		if (strlen($word) < $min_word_length || (!preg_match("#$pattern#i", remove_accents($word))) || ($common[$word] == 1)) {
 			return 1;
 		} else {
 			return 0;
@@ -147,12 +145,13 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 	function search($searchstr, $category, $start, $per_page, $type, $domain) {
-		global $length_of_link_desc,$mysql_table_prefix, $show_meta_description, $merge_site_results, $stem_words, $did_you_mean_enabled ;
+		global $mysql_connection, $length_of_link_desc, $mysql_table_prefix, $show_meta_description, $merge_site_results,
+			   $stem_words, $did_you_mean_enabled ;
 		
 		$possible_to_find = 1;
-		$result = mysql_query("select domain_id from ".$mysql_table_prefix."domains where domain = '$domain'");
-		if (mysql_num_rows($result)> 0) {
-			$thisrow = mysql_fetch_array($result);
+		$result = mysqli_query($mysql_connection, "select domain_id from ".$mysql_table_prefix."domains where domain = '$domain'");
+		if (mysqli_num_rows($result)> 0) {
+			$thisrow = mysqli_fetch_array($result);
 			$domain_qry = "and domain = ".$thisrow[0];
 		} else {
 			$domain_qry = "";
@@ -175,9 +174,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 
             $query1 = "SELECT link_id from ".$mysql_table_prefix."link_keyword$wordmd5, ".$mysql_table_prefix."keywords where ".$mysql_table_prefix."link_keyword$wordmd5.keyword_id= ".$mysql_table_prefix." keywords.keyword_id and keyword='$searchword'";
 
-			$result = mysql_query($query1);
+			$result = mysqli_query($mysql_connection, $query1);
 
-			while ($row = mysql_fetch_row($result)) {
+			while ($row = mysqli_fetch_row($result)) {
 				$notlist[$not_words]['id'][$row[0]] = 1;
 			}
 			$not_words++;
@@ -191,14 +190,14 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 			$searchword = addslashes($wordarray[$phrase_words]);
 			$query1 = "SELECT link_id from ".$mysql_table_prefix."links where fulltxt like '% $searchword%'";
-			echo mysql_error();
-			$result = mysql_query($query1);
-			$num_rows = mysql_num_rows($result);
+			echo mysqli_error($mysql_connection);
+			$result = mysqli_query($mysql_connection, $query1);
+			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				$possible_to_find = 0;
 				break;
 			}
-			while ($row = mysql_fetch_row($result)) {
+			while ($row = mysqli_fetch_row($result)) {
 				$phraselist[$phrase_words]['id'][$row[0]] = 1;
 			}
 			$phrase_words++;
@@ -209,13 +208,13 @@ error_reporting(E_ALL ^ E_NOTICE);
 			$allcats = get_cats($category);
 			$catlist = implode(",", $allcats);
 			$query1 = "select link_id from ".$mysql_table_prefix."links, ".$mysql_table_prefix."sites, ".$mysql_table_prefix."categories, ".$mysql_table_prefix."site_category where ".$mysql_table_prefix."links.site_id = ".$mysql_table_prefix."sites.site_id and ".$mysql_table_prefix."sites.site_id = ".$mysql_table_prefix."site_category.site_id and ".$mysql_table_prefix."site_category.category_id in ($catlist)";
-			$result = mysql_query($query1);
-			echo mysql_error();
-			$num_rows = mysql_num_rows($result);
+			$result = mysqli_query($mysql_connection, $query1);
+			echo mysqli_error($mysql_connection);
+			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				$possible_to_find = 0;
 			}
-			while ($row = mysql_fetch_row($result)) {
+			while ($row = mysqli_fetch_row($result)) {
 				$category_list[$row[0]] = 1;
 			}
 		}
@@ -233,9 +232,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 			}
 			$wordmd5 = substr(md5($searchword), 0, 1);
 			$query1 = "SELECT distinct link_id, weight, domain from ".$mysql_table_prefix."link_keyword$wordmd5, ".$mysql_table_prefix."keywords where ".$mysql_table_prefix."link_keyword$wordmd5.keyword_id= ".$mysql_table_prefix."keywords.keyword_id and keyword='$searchword' $domain_qry order by weight desc";
-			echo mysql_error();
-			$result = mysql_query($query1);
-			$num_rows = mysql_num_rows($result);
+			echo mysqli_error($mysql_connection);
+			$result = mysqli_query($mysql_connection, $query1);
+			$num_rows = mysqli_num_rows($result);
 			if ($num_rows == 0) {
 				if ($type != "or") {
 					$possible_to_find = 0;
@@ -248,7 +247,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 				$indx = $words;
 			}
 
-			while ($row = mysql_fetch_row($result)) {
+			while ($row = mysqli_fetch_row($result)) {
 				$linklist[$indx]['id'][] = $row[0];
 				$domains[$row[0]] = $row[2];
 				$linklist[$indx]['weight'][$row[0]] = $row[1];
@@ -325,10 +324,10 @@ error_reporting(E_ALL ^ E_NOTICE);
 			reset ($searchstr['+']);
 			foreach ($searchstr['+'] as $word) {
 				$word = addslashes($word);
-				$result = mysql_query("select keyword from ".$mysql_table_prefix."filteredKeywords");
+				$result = mysqli_query($mysql_connection, "select keyword from ".$mysql_table_prefix."filteredKeywords");
 				$max_distance = 100;
 				$near_word ="";
-				while ($row=mysql_fetch_row($result)) {
+				while ($row=mysqli_fetch_row($result)) {
 					$distance = levenshtein($row[0], $word) + 
 								levenshtein(metaphone($row[0]), metaphone($word));
 					if ($distance < $max_distance && $distance / strlen($word) < 0.5) {
@@ -401,11 +400,11 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 		$query1 = "SELECT distinct link_id, url, title, description,  $fulltxt, size FROM ".$mysql_table_prefix."links WHERE link_id in ($inlist)";
 
-		$result = mysql_query($query1);
-		echo mysql_error();
+		$result = mysqli_query($mysql_connection, $query1);
+		echo mysqli_error($mysql_connection);
 
 		$i = 0;
-		while ($row = mysql_fetch_row($result)) {
+		while ($row = mysqli_fetch_row($result)) {
 			$res[$i]['title'] = $row[2];
 			$res[$i]['url'] = $row[1];
 			if ($row[3] != null && $show_meta_description == 1)
@@ -414,8 +413,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 				$res[$i]['fulltxt'] = $row[4];
 			$res[$i]['size'] = $row[5];
 			$res[$i]['weight'] = $result_array[$row[0]];
-			$dom_result = mysql_query("select domain from ".$mysql_table_prefix."domains where domain_id='".$domains[$row[0]]."'");
-			$dom_row = mysql_fetch_row($dom_result);
+			$dom_result = mysqli_query($mysql_connection, "select domain from ".$mysql_table_prefix."domains where domain_id='".$domains[$row[0]]."'");
+			$dom_row = mysqli_fetch_row($dom_result);
 			$res[$i]['domain'] = $dom_row[0];
 			$i++;
 		}
@@ -427,7 +426,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 		} else {
 			usort($res, "cmp"); 	
 		}
-		echo mysql_error();
+		echo mysqli_error($mysql_connection);
 		$res['maxweight'] = $maxweight;
 		$res['results'] = $results;
 		return $res;
@@ -435,7 +434,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 	}
 
 function get_search_results($query, $start, $category, $searchtype, $results, $domain) {
-	global $sph_messages, $results_per_page,
+	global $mysql_connection, $sph_messages, $results_per_page,
 		$links_to_next,
 		$show_query_scores,
 		$mysql_table_prefix,
@@ -571,16 +570,16 @@ function get_search_results($query, $start, $category, $searchtype, $results, $d
 				$title = $sph_messages["Untitled"];
 			$regs = Array();
 			foreach($words['hilight'] as $change) {
-				while (@eregi("[^\>](".$change.")[^\<]", " ".$title." ", $regs)) {
-					$title = eregi_replace($regs[1], "<b>".$regs[1]."</b>", $title);
+				while (@preg_match("#[^\>](".$change.")[^\<]#i", " ".$title." ", $regs)) {
+					$title = preg_replace('#'.$regs[1].'#i', "<b>".$regs[1]."</b>", $title);
 				}
 
-				while (@eregi("[^\>](".$change.")[^\<]", " ".$fulltxt." ", $regs)) {
-					$fulltxt = eregi_replace($regs[1], "<b>".$regs[1]."</b>", $fulltxt);
+				while (@preg_match("#[^\>](".$change.")[^\<]#i", " ".$fulltxt." ", $regs)) {
+					$fulltxt = preg_replace('#'.$regs[1].'#i', "<b>".$regs[1]."</b>", $fulltxt);
 				}
 				$url2 = $url;
-				while (@eregi("[^\>](".$change.")[^\<]", $url2, $regs)) {
-					$url2 = eregi_replace($regs[1], "<b>".$regs[1]."</b>", $url2);
+				while (@preg_match("#[^\>](".$change.")[^\<]#i", $url2, $regs)) {
+					$url2 = preg_replace('#'.$regs[1].'#i', "<b>".$regs[1]."</b>", $url2);
 				}
 			}
 

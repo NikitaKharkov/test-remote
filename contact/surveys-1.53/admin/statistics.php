@@ -94,7 +94,7 @@ $statisticsoutput .= "</table>\n"
 
 //Select public language file
 $query = "SELECT datestamp FROM {$dbprefix}surveys WHERE sid=$surveyid";
-$result = db_execute_assoc($query) or die("Error selecting language: <br />".$query."<br />".mysql_error());
+$result = db_execute_assoc($query) or die("Error selecting language: <br />".$query."<br />".mysqli_error());
 while ($row=$result->FetchRow()) {$datestamp=$row['datestamp'];}
 
 // 1: Get list of questions from survey
@@ -1607,7 +1607,7 @@ function deletePattern($dir, $pattern = "")
 		$d = opendir($dir);
 		while ($file = readdir($d))
 		{
-			if (is_file($dir.$file) && ereg("^".$pattern."$", $file))
+			if (is_file($dir.$file) && preg_match("#^".$pattern."$#", $file))
 			{
 				if (unlink($dir.$file))
 				{
@@ -1632,7 +1632,7 @@ function deleteNotPattern($dir, $matchpattern, $pattern = "")
 		$d = opendir($dir);
 		while ($file = readdir($d))
 		{
-			if (is_file($dir.$file) && ereg("^".$matchpattern."$", $file) && !ereg("^".$pattern."$", $file))
+			if (is_file($dir.$file) && preg_match("#^".$matchpattern."$#", $file) && !preg_match("#^".$pattern."$#", $file))
 			{
 				if (unlink($dir.$file))
 				{

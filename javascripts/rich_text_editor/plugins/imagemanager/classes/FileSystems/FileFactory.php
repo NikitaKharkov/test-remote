@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 // File type contstants
@@ -95,7 +95,7 @@ class FileFactory {
 		// Fix the absolute path
 		$abs_path = removeTrailingSlash(toUnixPath($abs_path));
 		$abs_path = $abs_path == "" ? "/" : $abs_path;
-		$file =& new $this->_config['filesystem']($this, $abs_path, $file_name, $type);
+		$file = new $this->_config['filesystem']($this, $abs_path, $file_name, $type);
 
 		return $file;
 	}

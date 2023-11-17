@@ -48,8 +48,8 @@
 
 	switch($action) {
 		case "info":
-			$fileFactory =& new FileFactory($mcImageManagerConfig, $mcImageManagerConfig['filesystem.rootpath']);
-			$imageFile =& $fileFactory->getFile($path);
+			$fileFactory = new FileFactory($mcImageManagerConfig, $mcImageManagerConfig['filesystem.rootpath']);
+			$imageFile = $fileFactory->getFile($path);
 			$config = $imageFile->getConfig();
 
 			$imageInfo = array();
@@ -93,8 +93,8 @@
 		case "delete":
 			$filename = getRequestParam("filename");
 
-			$fileFactory =& new FileFactory($mcImageManagerConfig, $mcImageManagerConfig['filesystem.rootpath']);
-			$imageFile =& $fileFactory->getFile($path);
+			$fileFactory = new FileFactory($mcImageManagerConfig, $mcImageManagerConfig['filesystem.rootpath']);
+			$imageFile = $fileFactory->getFile($path);
 			$config = $imageFile->getConfig();
 
 			$selectedFiles = array();

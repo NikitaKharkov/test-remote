@@ -23,11 +23,11 @@ class DatabaseHelpController extends Controller
 		$sql = "SELECT database_help_page_id FROM database_help_pages";
 		
 		$sql .= " WHERE 1 = 1 ";
-		$sql .= ($language_id)       ? " AND language_id = '${language_id}' " : '';
-		$sql .= ($ebsco_database_id) ? " AND ebsco_database_id = '${ebsco_database_id}' " : '';		
-		$sql .= ($status)            ? " AND kbp.status = '${status}' " : '';
+		$sql .= ($language_id)       ? " AND language_id = '{$language_id}' " : '';
+		$sql .= ($ebsco_database_id) ? " AND ebsco_database_id = '{$ebsco_database_id}' " : '';		
+		$sql .= ($status)            ? " AND kbp.status = '{$status}' " : '';
 	
-		$sql .= ($order_by) ? " ORDER BY ${order_by} " : "";
+		$sql .= ($order_by) ? " ORDER BY {$order_by} " : "";
 		
 		return $this->performSql($sql);
 	}
@@ -45,7 +45,7 @@ class DatabaseHelpController extends Controller
 	{
 		$dhps = array();
 		try {
-			$sql = "SELECT database_help_page_id FROM database_help_pages WHERE 1=1 AND language_id = '${language_id}' ";
+			$sql = "SELECT database_help_page_id FROM database_help_pages WHERE 1=1 AND language_id = '{$language_id}' ";
 			$sql .= " AND ebsco_database_id IN ('" . join("','", $ebsco_database_ids). "') ";
 			$sql .= " AND status = 'live' ";
 			$sql .= " ORDER BY name ASC ";

@@ -117,7 +117,7 @@ abstract class Controller extends Foundation
 	    }	
 	
 	    // Break up the search terms by spaces
-	    $terms_array = split(' ', addslashes($terms));
+	    $terms_array = explode(' ', addslashes($terms));
 		    
 		if ($this->Database->getDatabaseType() == 'mysql' || $this->Database->getDatabaseType() == 'mssql') {
 		    $like = "LIKE";
@@ -202,7 +202,7 @@ abstract class Controller extends Foundation
      * @param  array $arguments     The arguments passed to the method
      * @return mixed  The return value of the helper method called
      */
-    protected function __call($method_name, $arguments)
+    public function __call($method_name, $arguments)
     {
         $underscore_method_name = $this->underscoreNotation($method_name);   
         list($method, $type) = explode('_', $underscore_method_name, 2); 
@@ -235,6 +235,8 @@ abstract class Controller extends Foundation
             $code .= ');';   
         }
         eval($code);
+
+        /** @var $return eval() function result */
         return $return;
     }
     
@@ -306,7 +308,8 @@ abstract class Controller extends Foundation
 	        
 	        $code  = '$return = $this->createObjects(\'' . $type . '\', $ids);';
 	        eval($code);
-	        
+
+            /** @var $return - eval() function result */
 	        return $return;     
 		} else {
 			throw new FatalException('list' . $plural_type . '() needs a method find' . $plural_type . '() to be defined to work properly');	

@@ -18,11 +18,12 @@
 	* @return array|null massiiv
 	 */
 	function sql_fetch_all($query) {
-		$result = mysql_query($query);
-		if($mysql_err = mysql_errno()) {
-			print $query.'<br>'.mysql_error();
+		global $mysql_connection;
+		$result = mysqli_query($mysql_connection, $query);
+		if($mysql_err = mysqli_errno($mysql_connection)) {
+			print $query.'<br>'.mysqli_error($mysql_connection);
 		} else {
-			while($row=mysql_fetch_array($result)) {
+			while($row=mysqli_fetch_array($result)) {
 				$data[]=$row;
 			}	
 		}		
@@ -53,13 +54,13 @@
 	}
 
 	function get_cats($parent) {
-		global $mysql_table_prefix;
+		global $mysql_table_prefix, $mysql_connection;
 		$query = "SELECT * FROM ".$mysql_table_prefix."categories WHERE parent_num=$parent";
-		echo mysql_error();
-		$result = mysql_query($query);
+		$result = mysqli_query($mysql_connection, $query);
+		echo mysqli_error($mysql_connection);
 		$arr[] = $parent;
-		if (mysql_num_rows($result) <> '') {
-			while ($row = mysql_fetch_array($result)) {
+		if (mysqli_num_rows($result) <> '') {
+			while ($row = mysqli_fetch_array($result)) {
 				$id = $row[category_id];
 				$arr = add_arrays($arr, get_cats($id));
 			}
@@ -668,6 +669,7 @@ function get_dir_contents($dir) {
 	*/
 	function cvc($str)
 	{
+		global $regex_consonant, $regex_vowel;
 		$c = $regex_consonant;
 		$v = $regex_vowel;
 

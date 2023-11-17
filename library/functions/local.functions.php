@@ -64,12 +64,13 @@ function print_order_by($order_by, $field_name, $display_name) {
  *
  * @param string order_by current_order_by
  * @param string transformed_order_by
- * @return void
+ *
+ * @return string|void
  */
 function parse_order_by($order_by) {
-  if (substr($order_by, -4, 4) == '_asc') {
+  if (substr($order_by ?? '', -4, 4) == '_asc') {
     return substr($order_by, 0, -4) . " ASC";
-  } else if (substr($order_by, -5, 5) == '_desc') {
+  } else if (substr($order_by ?? '', -5, 5) == '_desc') {
     return substr($order_by, 0, -5) . " DESC";
   }
 }
@@ -83,8 +84,8 @@ function parse_order_by($order_by) {
  * @return void
  */
 function print_label($display_name, $for=NULL) {
-  $for_attr = ($for) ? " for=\"${for}\"" : "";
-  echo "<label${for_attr}>${display_name}</label>";
+  $for_attr = ($for) ? " for=\"$for\"" : "";
+  echo "<label$for_attr>$display_name</label>";
 }
 
 
@@ -99,9 +100,9 @@ function print_label($display_name, $for=NULL) {
  */
 function print_input($type, $name, $value, $id=NULL, $maxlength=NULL) {
   $value = form_value($value);
-  $maxlength_attr = ($maxlength) ? "maxlength=\"${maxlength}\" " : "";
-  $id_attr = ($id) ? "id=\"${id}\" " : "";
-  echo "<input type=\"${type}\" name=\"${name}\" value=\"${value}\" class=\"${type}_input\" ${id_attr}${maxlength_attr}/>";
+  $maxlength_attr = ($maxlength) ? "maxlength=\"$maxlength\" " : "";
+  $id_attr = ($id) ? "id=\"$id\" " : "";
+  echo "<input type=\"$type\" name=\"$name\" value=\"$value\" class=\"{$type}_input\" {$id_attr}{$maxlength_attr}/>";
 }
 
 /**
@@ -116,10 +117,10 @@ function print_input($type, $name, $value, $id=NULL, $maxlength=NULL) {
  */
 function print_textarea($name, $value, $id=NULL, $rows=NULL, $cols=NULL) {
   $value = form_value($value);
-  $id_attr = ($id) ? " id=\"${id}\"" : "";
-  $rows_attr = ($rows) ? " rows=\"${rows}\"" : "rows=\"10\"";
-  $cols_attr = ($cols) ? " cols=\"${cols}\"" : "cols=\"40\"";
-  echo "<textarea name=\"${name}\" class=\"${name}_textarea\" ${id_attr}${rows_attr}${cols_attr}>${value}</textarea>";
+  $id_attr = ($id) ? " id=\"$id\"" : "";
+  $rows_attr = ($rows) ? " rows=\"$rows\"" : "rows=\"10\"";
+  $cols_attr = ($cols) ? " cols=\"$cols\"" : "cols=\"40\"";
+  echo "<textarea name=\"$name\" class=\"{$name}_textarea\" {$id_attr}{$rows_attr}{$cols_attr}>{$value}</textarea>";
 }
 
 /**
@@ -134,8 +135,8 @@ function print_option($variable, $value, $display, $id=NULL)
   $display = html_value($display);
   $selected = ($variable == $value) ? " selected=\"selected\"" : '';
   $value = form_value($value);
-  $id = ($id) ? "id=\"${id}\" " : '';
-  echo "<option ${id}value=\"{$value}\"{$selected}>{$display}</option>\n";
+  $id = ($id) ? "id=\"$id\" " : '';
+  echo "<option $id value=\"$value\"$selected>$display</option>\n";
 }
 
 /**
@@ -150,8 +151,8 @@ function print_option($variable, $value, $display, $id=NULL)
  * @return void
  */
 function print_select($name, $value, $valid_values, $id=NULL, $display_values=NULL, $add_all=NULL) {
-  $id_attr = ($id) ? " id=\"${id}\"" : "";
-  echo "<select name=\"${name}\"${id_attr}>";
+  $id_attr = ($id) ? " id=\"$id\"" : "";
+  echo "<select name=\"$name\"$id_attr>";
   if ($add_all) {
     print_option($value, '', 'All');
   }
@@ -210,7 +211,10 @@ function print_labeled_select($name, $value, $valid_values, $display_name, $add_
 209   * @return string  The converted string
 210   */
 function wordify($string) {
-  return preg_replace('/([^\w\']id($|[^\w\'])|(^|[^\w\'])[\w\'])/e', 'strtoupper("\1")', str_replace('_', ' ', $string));
+  return preg_replace_callback(
+      '/([^\w\']id($|[^\w\'])|(^|[^\w\'])[\w\'])/',
+      function ($m) { return strtoupper($m[1]);  },
+      str_replace('_', ' ', $string));
 }
 
 

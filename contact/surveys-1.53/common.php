@@ -86,8 +86,8 @@ $slashlesshome=str_replace(array("\\", "/"), "", $homedir);
 // Uncomment the following line for debug purposes
 // echo $slashlesspath." - ".$slashlesshome;
 
-if (eregi($slashlesshome, $slashlesspath) || eregi("dump", $_SERVER['PHP_SELF'])) {
-	if (!eregi($slashlesshome."install", $slashlesspath))
+if (preg_match('#'.$slashlesshome.'#i', $slashlesspath) || preg_match("#dump#i", $_SERVER['PHP_SELF'])) {
+	if (!preg_match('#'.$slashlesshome."install#i", $slashlesspath))
 	{
 		$sourcefrom="admin";
 	}
@@ -1238,7 +1238,7 @@ function fixmovedquestionConditions($qid,$oldgid,$newgid) //Function rewrites th
 		$mycfieldname=$crow['cfieldname'];
 		$cfnregs="";
 
-		if (ereg($surveyid."X".$oldgid."X".$qid."(.*)", $mycfieldname, $cfnregs) > 0) 
+		if (preg_match('#'.$surveyid."X".$oldgid."X".$qid."(.*)#", $mycfieldname, $cfnregs) > 0)
 		{
 			$newcfn=$surveyid."X".$newgid."X".$qid.$cfnregs[1];
 			$c2query="UPDATE ".db_table_name('conditions')
@@ -1398,7 +1398,7 @@ function returnquestiontitlefromfieldcode($fieldcode)
 
 function getsidgidqid($fieldcode)
 {
-	list($fsid, $fgid, $fqid) = split("X", $fieldcode);
+	list($fsid, $fgid, $fqid) = explode("X", $fieldcode);
 	//$legitqs=getLegitQids($fsid);
 	if (!$fqid) {$fqid=0;}
 	/*$oldfqid=$fqid;
@@ -2597,7 +2597,7 @@ function getreferringurl()
   // refurl is not set in session, read it from server variable
   if(isset($_SERVER["HTTP_REFERER"]))
   {
-    if(!ereg($_SERVER["SERVER_NAME"], $_SERVER["HTTP_REFERER"]))
+    if(!preg_match('#'.$_SERVER["SERVER_NAME"].'#', $_SERVER["HTTP_REFERER"]))
     {
       if (!isset($stripQueryFromRefurl) || !$stripQueryFromRefurl)
       {
@@ -2646,7 +2646,7 @@ function getArrayFiltersForGroup($gid)
 	// Get All Questions in Current Group
 	$qquery = "SELECT * FROM ".db_table_name('questions')." WHERE sid='$surveyid' AND gid='$gid' AND language='".$_SESSION['s_lang']."' ORDER BY qid";
 	$qresult = db_execute_assoc($qquery);
-	$grows = array(); //Create an empty array in case mysql_fetch_array does not return any rows
+	$grows = array(); //Create an empty array in case mysqli_fetch_array does not return any rows
 	// Store each result as an array with in the $grows array
 	while ($qrow = $qresult->FetchRow()) {
 		$grows[$qrow['qid']] = array('qid' => $qrow['qid'],'type' => $qrow['type'], 'mandatory' => $qrow['mandatory'], 'title' => $qrow['title']);

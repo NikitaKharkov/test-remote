@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -191,7 +191,7 @@ class ConfigFilteredFileTreeHandler extends BasicFileTreeHandler {
 			$this->_config = $parentFile->getConfig();
 		}
 
-		$filter =& new BasicFileFilter();
+		$filter = new BasicFileFilter();
 
 		$filter->setIncludeFilePattern($this->_config['filesystem.include_file_pattern']);
 		$filter->setExcludeFilePattern($this->_config['filesystem.exclude_file_pattern']);

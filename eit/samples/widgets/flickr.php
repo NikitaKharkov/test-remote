@@ -187,7 +187,8 @@
 		$resObj=simplexml_load_string($res);
 		
 		if ($resObj[0]->attributes()->stat !="ok") {
-			die ("Error retrieving images :".$b);
+            /** @var string $b - didn't find; looks like a string */
+			die ("Error retrieving images :".($b));
 		}
 		
 		$css2="float:left;width:45%;border:none; padding:2px;margin:0px;";

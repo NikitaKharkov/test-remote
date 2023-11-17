@@ -63,7 +63,7 @@ function spss_export_data ($na = null) {
 				#convert mysql  datestamp (yyyy-mm-dd hh:mm:ss) to SPSS datetime (dd-mmm-yyyy hh:mm:ss) format
 				if (isset($row[$fieldno]))
 				{
-					list( $year, $month, $day, $hour, $minute, $second ) = split( '([^0-9])', $row[$fieldno] );
+					list( $year, $month, $day, $hour, $minute, $second ) = preg_split('#([^0-9])#', $row[$fieldno] );
 					if ($year != '' && (int)$year >= 1970)
 					{
 						echo "'".date('d-m-Y H:i:s', mktime( $hour, $minute, $second, $month, $day, $year ) )."'";

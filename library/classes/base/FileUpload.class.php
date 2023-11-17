@@ -665,7 +665,7 @@ class FileUpload
 	{
 		$name = strtolower($name);
 		$name = str_replace(" ", "_", str_replace("%20", "_", $name) );
-		$name = ereg_replace("[^a-z0-9._]", "", $name);
+		$name = preg_replace("#[^a-z0-9._]#", "", $name);
 		if ($name[0] == '.') { // first char is dot
 			$name = "_".$name;
 		}
@@ -1169,14 +1169,14 @@ class FileUpload
 				$error_message[4] = "Somente arquivos do tipo " . str_replace(",", " ou ", $this->acceptable_mime_types) . " podem ser enviados.";
 				$error_message[5] = "O arquivo '" . $this->destination_dir . $this->file['name'] . "' j&aacute; existe.";
 				$error_message[6] = "Permiss&atilde; negado. N&atilde;o foi poss&iacute;vel copiar o arquivo  '" . $this->destination_dir . "'";
-				$error_message[7] = "Arquivos com as extens&otilde;oes " . str_replace(",", " ou ", $this->reject_extensions) . "n‹o podem ser enviados";
+				$error_message[7] = "Arquivos com as extens&otilde;oes " . str_replace(",", " ou ", $this->reject_extensions) . "nï¿½o podem ser enviados";
 				$error_message[8] = "Erro: O elemento Form deve conter: method=\"POST\" enctype=\"multipart/form-data\"";
 			break;
 
 			// Catalan
 			case 'ca':
 				$error_message[1] = "No s'ha pujat cap arxiu al servidor.";
-				$error_message[2] = "S'ha superat el tamany m&agrave;xim de l'arxiu. L'arxiu no pot pesar més de " . $this->max_filesize/1000 . " KB (" . $this->max_filesize . " bytes).";
+				$error_message[2] = "S'ha superat el tamany m&agrave;xim de l'arxiu. L'arxiu no pot pesar mï¿½s de " . $this->max_filesize/1000 . " KB (" . $this->max_filesize . " bytes).";
 				$error_message[3] = "S'han excedit les dimensions m&agrave;ximes de la imatge. La imatge no pot medir m&eacute;s de " . $this->max_image_width . " (w) x " . $this->max_image_height . " (h) p&iacute;xels.";
 				$error_message[4] = "El tipus d'arxiu no &eacute;s v&agrave;lid. Nom&eacute;s es permeten els arxius de tipus " . implode(" o ", $this->acceptable_mime_types) . ".";
 				$error_message[5] = "L'arxiu '" . $this->destination_dir . "/" . $this->file['name'] . "' ja existeix.";

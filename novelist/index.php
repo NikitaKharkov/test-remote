@@ -22,6 +22,7 @@
 	$curl = curl_init();
 
 	//CURL SETTINGS.
+        // @todo very strange: feed has a link to a new resource but new one is not secure and doesn't give any info ¯\_(ツ)_/¯
 	curl_setopt($curl, CURLOPT_URL, "http://feeds.feedburner.com/NovelistBlog-News");
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
@@ -36,7 +37,7 @@
 
 	$tempCounter = 0;
 
-	foreach ( $xmlObjRSS->channel->item as $item )
+	foreach ( $xmlObjRSS->channel->item ?? [] as $item )
 	{                    
 		//DISPLAY ONLY 1 ITEM.
 		if ( $tempCounter < 1 )

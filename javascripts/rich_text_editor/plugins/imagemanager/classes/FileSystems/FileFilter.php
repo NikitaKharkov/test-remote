@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -140,7 +140,7 @@ class BasicFileFilter extends FileFilter {
 	 */
 	function setExcludeFiles($files) {
 		if ($files != "")
-			$this->_excludeFiles = split(',', $files);
+			$this->_excludeFiles = explode(',', $files);
 	}
 
 	/**
@@ -150,7 +150,7 @@ class BasicFileFilter extends FileFilter {
 	 */
 	function setIncludeFiles($files) {
 		if ($files != "")
-			$this->_includeFiles = split(',', $files);
+			$this->_includeFiles = explode(',', $files);
 	}
 
 	/**
@@ -160,7 +160,7 @@ class BasicFileFilter extends FileFilter {
 	 */
 	function setExcludeFolders($folders) {
 		if ($folders != "")
-			$this->_excludeFolders = split(',', $folders);
+			$this->_excludeFolders = explode(',', $folders);
 	}
 
 	/**
@@ -170,7 +170,7 @@ class BasicFileFilter extends FileFilter {
 	 */
 	function setIncludeFolders($folders) {
 		if ($folders != "")
-			$this->_includeFolders = split(',', $folders);
+			$this->_includeFolders = explode(',', $folders);
 	}
 
 	/**
@@ -421,7 +421,7 @@ class BasicFileFilter extends FileFilter {
 	}
 
 	function _fnmatch($pattern, $file) {
-		return ereg($this->_fnmatch2regexp($pattern), $file);
+		return preg_match('#'.$this->_fnmatch2regexp($pattern).'#', $file);
 	}
 
 	function _fnmatch2regexp($str) {

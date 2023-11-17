@@ -22,9 +22,9 @@ class NewsItemController extends Controller
 		$status = ($status && !is_array($status)) ? array($status) : $status;
 		
 		$sql .= ($status)   ? " AND status IN ('" . join("','", $status) . "') " : '';
-		$sql .= ($display_page) ? " AND display_page = '${display_page}' " : '';
+		$sql .= ($display_page) ? " AND display_page = '{$display_page}' " : '';
 		$sql .= ($order_by) ? " ORDER BY " . $order_by . " " : '';
-		$sql .= ($limit) ? " LIMIT ${limit} " : '';
+		$sql .= ($limit) ? " LIMIT {$limit} " : '';
 				
 		return $this->performSql($sql);
 	}

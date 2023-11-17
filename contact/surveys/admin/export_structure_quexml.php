@@ -110,7 +110,7 @@ function create_fixed($qlid,$rotate=false,$labels=true)
 		$Query = "SELECT * FROM {$dbprefix}labels WHERE lid = $qlid ORDER BY sortorder ASC";
 	else
 		$Query = "SELECT code,answer as title,sortorder FROM {$dbprefix}answers WHERE qid = $qlid ORDER BY sortorder ASC";
-	//$QueryResult = mysql_query($Query) or die ("ERROR: $QueryResult<br />".mysql_error());
+	//$QueryResult = mysqli_query($Query) or die ("ERROR: $QueryResult<br />".mysqli_error());
 	$QueryResult = db_execute_assoc($Query);
 
 	$fixed = $dom->create_element("fixed");
@@ -144,7 +144,7 @@ function get_length($qid,$attribute,$default)
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
 	$Query = "SELECT value FROM {$dbprefix}question_attributes WHERE qid = $qid AND attribute = '$attribute'";
-	//$QueryResult = mysql_query($Query) or die ("ERROR: $QueryResult<br />".mysql_error());
+	//$QueryResult = mysqli_query($Query) or die ("ERROR: $QueryResult<br />".mysqli_error());
 	$QueryResult = db_execute_assoc($Query);
 	
 	$Row = $QueryResult->FetchRow();
@@ -164,7 +164,7 @@ function create_multi(&$question,$qid,$varname)
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
 	$Query = "SELECT * FROM {$dbprefix}answers WHERE qid = $qid ORDER BY sortorder ASC";
-	//$QueryResult = mysql_query($Query) or die ("ERROR: $QueryResult<br />".mysql_error());
+	//$QueryResult = mysqli_query($Query) or die ("ERROR: $QueryResult<br />".mysqli_error());
 	$QueryResult = db_execute_assoc($Query);
 	
 	while ($Row = $QueryResult->FetchRow())
@@ -201,7 +201,7 @@ function create_subQuestions(&$question,$qid,$varname)
 	global $connect ;
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	$Query = "SELECT * FROM {$dbprefix}answers WHERE qid = $qid ORDER BY sortorder ASC";
-	//$QueryResult = mysql_query($Query) or die ("ERROR: $QueryResult<br />".mysql_error());
+	//$QueryResult = mysqli_query($Query) or die ("ERROR: $QueryResult<br />".mysqli_error());
 	$QueryResult = db_execute_assoc($Query);
 	
 	while ($Row = $QueryResult->FetchRow())
@@ -387,8 +387,8 @@ while ($Row = $QueryResult->FetchRow())
 			    create_subQuestions(&$question,$qid,$RowQ['title']);
 			    $Query = "SELECT LENGTH(COUNT(*)) as sc FROM {$dbprefix}labels WHERE lid = $lid";
 			    $QRE = db_execute_assoc($Query);
-			    //$QRE = mysql_query($Query) or die ("ERROR: $QRE<br />".mysql_error());
-    			    //$QROW = mysql_fetch_assoc($QRE);
+			    //$QRE = mysqli_query($Query) or die ("ERROR: $QRE<br />".mysqli_error());
+    			    //$QROW = mysqli_fetch_assoc($QRE);
     			    $QROW = $QRE->FetchRow();
 			    $response->append_child(create_free("integer",$QROW['sc'],""));
 			    $question->append_child($response);		

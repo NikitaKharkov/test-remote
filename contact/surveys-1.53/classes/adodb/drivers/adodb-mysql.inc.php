@@ -15,8 +15,8 @@ V4.94 23 Jan 2007  (c) 2000-2007 John Lim (jlim#natsoft.com.my). All rights rese
 // security - hide paths
 if (!defined('ADODB_DIR')) die();
 
-if (! defined("_ADODB_MYSQL_LAYER")) {
- define("_ADODB_MYSQL_LAYER", 1 );
+if (! defined("_ADODB_mysqli_LAYER")) {
+ define("_ADODB_mysqli_LAYER", 1 );
 
 class ADODB_mysql extends ADOConnection {
 	var $databaseType = 'mysql';
@@ -129,14 +129,14 @@ class ADODB_mysql extends ADOConnection {
 	}
 
 	
-	// if magic quotes disabled, use mysql_real_escape_string()
+	// if magic quotes disabled, use mysqli_real_escape_string()
 	function qstr($s,$magic_quotes=false)
 	{
 		if (!$magic_quotes) {
 		
 			if (ADODB_PHPVER >= 0x4300) {
 				if (is_resource($this->_connectionID))
-					return "'".mysql_real_escape_string($s,$this->_connectionID)."'";
+					return "'".mysqli_real_escape_string($s,$this->_connectionID)."'";
 			}
 			if ($this->replaceQuote[0] == '\\'){
 				$s = adodb_str_replace(array('\\',"\0"),array('\\\\',"\\\0"),$s);
@@ -152,7 +152,7 @@ class ADODB_mysql extends ADOConnection {
 	function _insertid()
 	{
 		return ADOConnection::GetOne('SELECT LAST_INSERT_ID()');
-		//return mysql_insert_id($this->_connectionID);
+		//return mysqli_insert_id($this->_connectionID);
 	}
 	
 	function GetOne($sql,$inputarr=false)
@@ -177,7 +177,7 @@ class ADODB_mysql extends ADOConnection {
 	
 	function _affectedrows()
 	{
-			return mysql_affected_rows($this->_connectionID);
+			return mysqli_affected_rows($this->_connectionID);
 	}
   
  	// See http://www.mysql.com/doc/M/i/Miscellaneous_functions.html
@@ -219,7 +219,7 @@ class ADODB_mysql extends ADOConnection {
 		}
 		
 		if ($rs) {
-			$this->genID = mysql_insert_id($this->_connectionID);
+			$this->genID = mysqli_insert_id($this->_connectionID);
 			$rs->Close();
 		} else
 			$this->genID = 0;
@@ -230,12 +230,12 @@ class ADODB_mysql extends ADOConnection {
 	
   	function &MetaDatabases()
 	{
-		$qid = mysql_list_dbs($this->_connectionID);
+		$qid = mysqli_list_dbs($this->_connectionID);
 		$arr = array();
 		$i = 0;
-		$max = mysql_num_rows($qid);
+		$max = mysqli_num_rows($qid);
 		while ($i < $max) {
-			$db = mysql_tablename($qid,$i);
+			$db = mysqli_tablename($qid,$i);
 			if ($db != 'mysql') $arr[] = $db;
 			$i += 1;
 		}
@@ -359,13 +359,13 @@ class ADODB_mysql extends ADOConnection {
 		if (!empty($this->port)) $argHostname .= ":".$this->port;
 		
 		if (ADODB_PHPVER >= 0x4300)
-			$this->_connectionID = mysql_connect($argHostname,$argUsername,$argPassword,
+			$this->_connectionID = mysqli_connect($argHostname,$argUsername,$argPassword,
 												$this->forceNewConnect,$this->clientFlags);
 		else if (ADODB_PHPVER >= 0x4200)
-			$this->_connectionID = mysql_connect($argHostname,$argUsername,$argPassword,
+			$this->_connectionID = mysqli_connect($argHostname,$argUsername,$argPassword,
 												$this->forceNewConnect);
 		else
-			$this->_connectionID = mysql_connect($argHostname,$argUsername,$argPassword);
+			$this->_connectionID = mysqli_connect($argHostname,$argUsername,$argPassword);
 	
 		if ($this->_connectionID === false) return false;
 		if ($argDatabasename) return $this->SelectDB($argDatabasename);
@@ -378,9 +378,9 @@ class ADODB_mysql extends ADOConnection {
 		if (!empty($this->port)) $argHostname .= ":".$this->port;
 		
 		if (ADODB_PHPVER >= 0x4300)
-			$this->_connectionID = mysql_pconnect($argHostname,$argUsername,$argPassword,$this->clientFlags);
+			$this->_connectionID = mysqli_connect('p:'.$argHostname,$argUsername,$argPassword,$this->clientFlags);
 		else
-			$this->_connectionID = mysql_pconnect($argHostname,$argUsername,$argPassword);
+			$this->_connectionID = mysqli_connect('p:'.$argHostname,$argUsername,$argPassword);
 		if ($this->_connectionID === false) return false;
 		if ($this->autoRollback) $this->RollbackTrans();
 		if ($argDatabasename) return $this->SelectDB($argDatabasename);
@@ -478,7 +478,7 @@ class ADODB_mysql extends ADOConnection {
 		$this->database = $dbName;
 		$this->databaseName = $dbName; # obsolete, retained for compat with older adodb versions
 		if ($this->_connectionID) {
-			return @mysql_select_db($dbName,$this->_connectionID);
+			return @mysqli_select_db($dbName,$this->_connectionID);
 		}
 		else return false;	
 	}
@@ -502,8 +502,8 @@ class ADODB_mysql extends ADOConnection {
 	{
 	//global $ADODB_COUNTRECS;
 		//if($ADODB_COUNTRECS) 
-		return mysql_query($sql,$this->_connectionID);
-		//else return @mysql_unbuffered_query($sql,$this->_connectionID); // requires PHP >= 4.0.6
+		return mysqli_query($sql,$this->_connectionID);
+		//else return @mysqli_unbuffered_query($sql,$this->_connectionID); // requires PHP >= 4.0.6
 	}
 
 	/*	Returns: the last error message from previous database operation	*/	
@@ -511,8 +511,8 @@ class ADODB_mysql extends ADOConnection {
 	{
 	
 		if ($this->_logsql) return $this->_errorMsg;
-		if (empty($this->_connectionID)) $this->_errorMsg = @mysql_error();
-		else $this->_errorMsg = @mysql_error($this->_connectionID);
+		if (empty($this->_connectionID)) $this->_errorMsg = @mysqli_error();
+		else $this->_errorMsg = @mysqli_error($this->_connectionID);
 		return $this->_errorMsg;
 	}
 	
@@ -520,14 +520,14 @@ class ADODB_mysql extends ADOConnection {
 	function ErrorNo() 
 	{
 		if ($this->_logsql) return $this->_errorCode;
-		if (empty($this->_connectionID))  return @mysql_errno();
-		else return @mysql_errno($this->_connectionID);
+		if (empty($this->_connectionID))  return @mysqli_errno();
+		else return @mysqli_errno($this->_connectionID);
 	}
 	
 	// returns true or false
 	function _close()
 	{
-		@mysql_close($this->_connectionID);
+		@mysqli_close($this->_connectionID);
 		$this->_connectionID = false;
 	}
 
@@ -610,12 +610,12 @@ class ADORecordSet_mysql extends ADORecordSet{
 		}
 		switch ($mode)
 		{
-		case ADODB_FETCH_NUM: $this->fetchMode = MYSQL_NUM; break;
-		case ADODB_FETCH_ASSOC:$this->fetchMode = MYSQL_ASSOC; break;
+		case ADODB_FETCH_NUM: $this->fetchMode = mysqli_NUM; break;
+		case ADODB_FETCH_ASSOC:$this->fetchMode = mysqli_ASSOC; break;
 		case ADODB_FETCH_DEFAULT:
 		case ADODB_FETCH_BOTH:
 		default:
-			$this->fetchMode = MYSQL_BOTH; break;
+			$this->fetchMode = mysqli_BOTH; break;
 		}
 		$this->adodbFetchMode = $mode;
 		$this->ADORecordSet($queryID);	
@@ -624,23 +624,23 @@ class ADORecordSet_mysql extends ADORecordSet{
 	function _initrs()
 	{
 	//GLOBAL $ADODB_COUNTRECS;
-	//	$this->_numOfRows = ($ADODB_COUNTRECS) ? @mysql_num_rows($this->_queryID):-1;
-		$this->_numOfRows = @mysql_num_rows($this->_queryID);
-		$this->_numOfFields = @mysql_num_fields($this->_queryID);
+	//	$this->_numOfRows = ($ADODB_COUNTRECS) ? @mysqli_num_rows($this->_queryID):-1;
+		$this->_numOfRows = @mysqli_num_rows($this->_queryID);
+		$this->_numOfFields = @mysqli_num_fields($this->_queryID);
 	}
 	
 	function &FetchField($fieldOffset = -1) 
 	{	
 		if ($fieldOffset != -1) {
-			$o = @mysql_fetch_field($this->_queryID, $fieldOffset);
-			$f = @mysql_field_flags($this->_queryID,$fieldOffset);
-			$o->max_length = @mysql_field_len($this->_queryID,$fieldOffset); // suggested by: Jim Nicholson (jnich#att.com)
+			$o = @mysqli_fetch_field($this->_queryID, $fieldOffset);
+			$f = @mysqli_field_flags($this->_queryID,$fieldOffset);
+			$o->max_length = @mysqli_field_len($this->_queryID,$fieldOffset); // suggested by: Jim Nicholson (jnich#att.com)
 			//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
 			$o->binary = (strpos($f,'binary')!== false);
 		}
 		else if ($fieldOffset == -1) {	/*	The $fieldOffset argument is not provided thus its -1 	*/
-			$o = @mysql_fetch_field($this->_queryID);
-		$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich#att.com)
+			$o = @mysqli_fetch_field($this->_queryID);
+		$o->max_length = @mysqli_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich#att.com)
 		//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
 		}
 			
@@ -649,7 +649,7 @@ class ADORecordSet_mysql extends ADORecordSet{
 
 	function &GetRowAssoc($upper=true)
 	{
-		if ($this->fetchMode == MYSQL_ASSOC && !$upper) $row = $this->fields;
+		if ($this->fetchMode == mysqli_ASSOC && !$upper) $row = $this->fields;
 		else $row =& ADORecordSet::GetRowAssoc($upper);
 		return $row;
 	}
@@ -658,7 +658,7 @@ class ADORecordSet_mysql extends ADORecordSet{
 	function Fields($colname)
 	{	
 		// added @ by "Michael William Miller" <mille562@pilot.msu.edu>
-		if ($this->fetchMode != MYSQL_NUM) return @$this->fields[$colname];
+		if ($this->fetchMode != mysqli_NUM) return @$this->fields[$colname];
 		
 		if (!$this->bind) {
 			$this->bind = array();
@@ -673,14 +673,14 @@ class ADORecordSet_mysql extends ADORecordSet{
 	function _seek($row)
 	{
 		if ($this->_numOfRows == 0) return false;
-		return @mysql_data_seek($this->_queryID,$row);
+		return @mysqli_data_seek($this->_queryID,$row);
 	}
 	
 	function MoveNext()
 	{
 		//return adodb_movenext($this);
 		//if (defined('ADODB_EXTENSION')) return adodb_movenext($this);
-		if (@$this->fields = mysql_fetch_array($this->_queryID,$this->fetchMode)) {
+		if (@$this->fields = mysqli_fetch_array($this->_queryID,$this->fetchMode)) {
 			$this->_currentRow += 1;
 			return true;
 		}
@@ -693,12 +693,12 @@ class ADORecordSet_mysql extends ADORecordSet{
 	
 	function _fetch()
 	{
-		$this->fields =  @mysql_fetch_array($this->_queryID,$this->fetchMode);
+		$this->fields =  @mysqli_fetch_array($this->_queryID,$this->fetchMode);
 		return is_array($this->fields);
 	}
 	
 	function _close() {
-		@mysql_free_result($this->_queryID);
+		@mysqli_free_result($this->_queryID);
 		$this->_queryID = false;	
 	}
 	
@@ -766,12 +766,12 @@ class ADORecordSet_ext_mysql extends ADORecordSet_mysql {
 		}
 		switch ($mode)
 		{
-		case ADODB_FETCH_NUM: $this->fetchMode = MYSQL_NUM; break;
-		case ADODB_FETCH_ASSOC:$this->fetchMode = MYSQL_ASSOC; break;
+		case ADODB_FETCH_NUM: $this->fetchMode = mysqli_NUM; break;
+		case ADODB_FETCH_ASSOC:$this->fetchMode = mysqli_ASSOC; break;
 		case ADODB_FETCH_DEFAULT:
 		case ADODB_FETCH_BOTH:
 		default:
-		$this->fetchMode = MYSQL_BOTH; break;
+		$this->fetchMode = mysqli_BOTH; break;
 		}
 		$this->adodbFetchMode = $mode;
 		$this->ADORecordSet($queryID);

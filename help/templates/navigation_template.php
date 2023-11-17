@@ -22,7 +22,9 @@
 </div>
 	<div id="help_navigation">
 		<?
-		foreach ($help_topics as $ht_id => $help_topic) { 
+        // see help/index.php
+        /** @var array $help_topics */
+        foreach ($help_topics as $ht_id => $help_topic) {
 			$default_class   = ($ht_id == $help_topic_id) ? 'topic_current':'topic_off';
 			$mouseover_class = ($ht_id == $help_topic_id) ? 'topic_current':'topic_on';
 			?>

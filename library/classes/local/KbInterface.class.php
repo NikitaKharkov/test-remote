@@ -22,7 +22,7 @@ class KbInterface extends LoggedRecord {
 					kb_pages AS p ON pt.kb_page_id = p.kb_page_id LEFT JOIN
 					kb_pages_kb_interfaces AS pi ON p.kb_page_id = pi.kb_page_id LEFT JOIN
 					kb_interfaces AS i ON pi.kb_interface_id = i.kb_interface_id
-				WHERE i.kb_interface_id = '${kb_interface_id}' AND p.status = 'public' ORDER BY t.name ASC";
+				WHERE i.kb_interface_id = '{$kb_interface_id}' AND p.status = 'public' ORDER BY t.name ASC";
 		
 		$ids = array();
 		$result = $this->Database->query($sql);

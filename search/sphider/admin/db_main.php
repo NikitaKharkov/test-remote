@@ -69,16 +69,15 @@ function checkAll(theForm, cName, allNo_stat) {
   </tr>
  <?php
 
-
-		$stats  = mysql_query ("SHOW TABLE STATUS FROM $dbname LIKE '$dbprefix%'");
-		$num_tables = mysql_num_rows($stats);
+		$stats = mysqli_query($mysql_connection, "SHOW TABLE STATUS FROM $dbname LIKE '$dbprefix%'");
+		$num_tables = mysqli_num_rows($stats);
 		if ($num_tables==0) {
 			echo("ERROR: Database contains no tables");
 		}	
 
 		$bgcolor='grey';
 		$i=0;
-		while ($rows=mysql_fetch_array($stats) ) {
+		while ($rows=mysqli_fetch_array($stats) ) {
 			print "<tr><td class=".$bgcolor."><input type='checkbox' id='tables$i' class='check' name='tables[$i]' value='".$rows["Name"]."' ></td>";
 			print "<td class=".$bgcolor.">".$rows["Name"]."</td>";
 			print '<td align="center" class='.$bgcolor.'>'.$rows['Rows'].'</td>';
@@ -126,7 +125,7 @@ echo "
   
 
 if (isset($file) && $del==0) {
-	  if (eregi("gz",$file)) { 
+	  if (preg_match("#gz#i",$file)) {
 		 @unlink($backup_path."backup.sql");
 		 $fp = @fopen($backup_path."backup.sql","w");
 		 fwrite ($fp,"");
@@ -152,8 +151,9 @@ if (isset($file) && $del==0) {
 	set_time_limit(1000);
 	$file_temp=fread(fopen($backup_path.$file, "r"), filesize($backup_path.$file));
 	$query=explode(";#%%\n",$file_temp);
+    mysqli_select_db($mysql_connection, $dbname);
 	for ($i=0;$i < count($query)-1;$i++) {
-		mysql_db_query($dbname,$query[$i]) or die(mysql_error());
+        mysqli_query($mysql_connection, $query[$i]) or die(mysqli_error($mysql_connection));
 	}
 	unlink($backup_path.$file);
 	echo "<table width=\"94%\"><tr><td><b>Your restore 
@@ -183,7 +183,7 @@ if (isset($file) && $del==1) {
 		
 
 	while ($file = readdir ($dir)) { 
-		if ($file != "." && $file != ".." &&  (eregi("\.sql",$file) || eregi("\.gz",$file))){
+		if ($file != "." && $file != ".." &&  (preg_match("#\.sql#i",$file) || preg_match("#\.gz#i",$file))){
 			if($is_first==1){
 				echo "<tr> 
 				<td width=\"30%\" align=\"center\" class=\"greyHeading\"><b>File</b></td>
@@ -212,4 +212,5 @@ if (isset($file) && $del==1) {
 	</TR>
 	
   </TABLE>
+</FORM>
 </CENTER>
